@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.arrears.ArrearsCallSuccessInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfo" >
+    <id column="ARREARS_ID" property="arrearsId" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="ARREARS_PHONE" property="arrearsPhone" jdbcType="VARCHAR" />
+    <result column="IDENTITY_TYPE" property="identityType" jdbcType="SMALLINT" />
+    <result column="IDENTITY_NUM" property="identityNum" jdbcType="VARCHAR" />
+    <result column="ARREARS_TIME" property="arrearsTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ACCOUNT" property="account" jdbcType="BIGINT" />
+    <result column="ARREARS_MONEY" property="arrearsMoney" jdbcType="INTEGER" />
+    <result column="ARREARS_MONTH" property="arrearsMonth" jdbcType="INTEGER" />
+    <result column="ACCOUNT_MONEY" property="accountMoney" jdbcType="INTEGER" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ARREARS_ID, NAME, ARREARS_PHONE, IDENTITY_TYPE, IDENTITY_NUM, ARREARS_TIME, CREATE_TIME, 
+    ACCOUNT, ARREARS_MONEY, ARREARS_MONTH, ACCOUNT_MONEY, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from arrears_call_success_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from arrears_call_success_info
+    where ARREARS_ID = #{arrearsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from arrears_call_success_info
+    where ARREARS_ID = #{arrearsId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfoExample" >
+    delete from arrears_call_success_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfo" useGeneratedKeys="true" keyProperty="arrearsId">>
+    insert into arrears_call_success_info (ARREARS_ID, NAME, ARREARS_PHONE, 
+      IDENTITY_TYPE, IDENTITY_NUM, ARREARS_TIME, 
+      CREATE_TIME, ACCOUNT, ARREARS_MONEY, 
+      ARREARS_MONTH, ACCOUNT_MONEY, UPDATE_TIME
+      )
+    values (#{arrearsId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{arrearsPhone,jdbcType=VARCHAR}, 
+      #{identityType,jdbcType=SMALLINT}, #{identityNum,jdbcType=VARCHAR}, #{arrearsTime,jdbcType=TIMESTAMP}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{account,jdbcType=BIGINT}, #{arrearsMoney,jdbcType=INTEGER}, 
+      #{arrearsMonth,jdbcType=INTEGER}, #{accountMoney,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfo" >
+    insert into arrears_call_success_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="arrearsId != null" >
+        ARREARS_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="arrearsPhone != null" >
+        ARREARS_PHONE,
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE,
+      </if>
+      <if test="identityNum != null" >
+        IDENTITY_NUM,
+      </if>
+      <if test="arrearsTime != null" >
+        ARREARS_TIME,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="account != null" >
+        ACCOUNT,
+      </if>
+      <if test="arrearsMoney != null" >
+        ARREARS_MONEY,
+      </if>
+      <if test="arrearsMonth != null" >
+        ARREARS_MONTH,
+      </if>
+      <if test="accountMoney != null" >
+        ACCOUNT_MONEY,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="arrearsId != null" >
+        #{arrearsId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="arrearsPhone != null" >
+        #{arrearsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="identityNum != null" >
+        #{identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="arrearsTime != null" >
+        #{arrearsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=BIGINT},
+      </if>
+      <if test="arrearsMoney != null" >
+        #{arrearsMoney,jdbcType=INTEGER},
+      </if>
+      <if test="arrearsMonth != null" >
+        #{arrearsMonth,jdbcType=INTEGER},
+      </if>
+      <if test="accountMoney != null" >
+        #{accountMoney,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfoExample" resultType="java.lang.Integer" >
+    select count(*) from arrears_call_success_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update arrears_call_success_info
+    <set >
+      <if test="record.arrearsId != null" >
+        ARREARS_ID = #{record.arrearsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrearsPhone != null" >
+        ARREARS_PHONE = #{record.arrearsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityType != null" >
+        IDENTITY_TYPE = #{record.identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.identityNum != null" >
+        IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.arrearsTime != null" >
+        ARREARS_TIME = #{record.arrearsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.account != null" >
+        ACCOUNT = #{record.account,jdbcType=BIGINT},
+      </if>
+      <if test="record.arrearsMoney != null" >
+        ARREARS_MONEY = #{record.arrearsMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.arrearsMonth != null" >
+        ARREARS_MONTH = #{record.arrearsMonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountMoney != null" >
+        ACCOUNT_MONEY = #{record.accountMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update arrears_call_success_info
+    set ARREARS_ID = #{record.arrearsId,jdbcType=BIGINT},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      ARREARS_PHONE = #{record.arrearsPhone,jdbcType=VARCHAR},
+      IDENTITY_TYPE = #{record.identityType,jdbcType=SMALLINT},
+      IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      ARREARS_TIME = #{record.arrearsTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      ACCOUNT = #{record.account,jdbcType=BIGINT},
+      ARREARS_MONEY = #{record.arrearsMoney,jdbcType=INTEGER},
+      ARREARS_MONTH = #{record.arrearsMonth,jdbcType=INTEGER},
+      ACCOUNT_MONEY = #{record.accountMoney,jdbcType=INTEGER},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfo" >
+    update arrears_call_success_info
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="arrearsPhone != null" >
+        ARREARS_PHONE = #{arrearsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE = #{identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="identityNum != null" >
+        IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="arrearsTime != null" >
+        ARREARS_TIME = #{arrearsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="account != null" >
+        ACCOUNT = #{account,jdbcType=BIGINT},
+      </if>
+      <if test="arrearsMoney != null" >
+        ARREARS_MONEY = #{arrearsMoney,jdbcType=INTEGER},
+      </if>
+      <if test="arrearsMonth != null" >
+        ARREARS_MONTH = #{arrearsMonth,jdbcType=INTEGER},
+      </if>
+      <if test="accountMoney != null" >
+        ACCOUNT_MONEY = #{accountMoney,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ARREARS_ID = #{arrearsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.arrears.ArrearsCallSuccessInfo" >
+    update arrears_call_success_info
+    set NAME = #{name,jdbcType=VARCHAR},
+      ARREARS_PHONE = #{arrearsPhone,jdbcType=VARCHAR},
+      IDENTITY_TYPE = #{identityType,jdbcType=SMALLINT},
+      IDENTITY_NUM = #{identityNum,jdbcType=VARCHAR},
+      ARREARS_TIME = #{arrearsTime,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ACCOUNT = #{account,jdbcType=BIGINT},
+      ARREARS_MONEY = #{arrearsMoney,jdbcType=INTEGER},
+      ARREARS_MONTH = #{arrearsMonth,jdbcType=INTEGER},
+      ACCOUNT_MONEY = #{accountMoney,jdbcType=INTEGER},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ARREARS_ID = #{arrearsId,jdbcType=BIGINT}
+  </update>
+
+  <insert id="insertArrearsCalls"  parameterType="java.util.List">
+    insert into arrears_call_success_info
+    (ARREARS_ID,NAME,ARREARS_PHONE,IDENTITY_TYPE,IDENTITY_NUM,ARREARS_TIME,CREATE_TIME,ACCOUNT,ARREARS_MONEY,ARREARS_MONTH,ACCOUNT_MONEY,UPDATE_TIME)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{item.arrearsId,jdbcType=BIGINT}, #{item.name,jdbcType=VARCHAR}, #{item.arrearsPhone,jdbcType=VARCHAR},
+      #{item.identityType,jdbcType=SMALLINT}, #{item.identityNum,jdbcType=VARCHAR}, #{arrearsTime,jdbcType=TIMESTAMP},
+      sysdate(), #{item.account,jdbcType=BIGINT}, #{item.arrearsMoney,jdbcType=INTEGER},
+      #{item.arrearsMonth,jdbcType=INTEGER}, #{item.accountMoney,jdbcType=INTEGER}, #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+</mapper>

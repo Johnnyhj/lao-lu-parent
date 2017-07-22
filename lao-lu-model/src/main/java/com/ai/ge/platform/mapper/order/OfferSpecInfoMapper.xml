@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.OfferSpecInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.OfferSpecInfo" >
+    <id column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="COMP_OFFER" property="compOffer" jdbcType="VARCHAR" />
+    <result column="BUSI_TYPE_CD" property="busiTypeCd" jdbcType="SMALLINT" />
+    <result column="FEE_TYPE" property="feeType" jdbcType="SMALLINT" />
+    <result column="LIFECYCLE_RULE_CD" property="lifecycleRuleCd" jdbcType="VARCHAR" />
+    <result column="APP_START_DT" property="appStartDt" jdbcType="TIMESTAMP" />
+    <result column="APP_END_DT" property="appEndDt" jdbcType="TIMESTAMP" />
+    <result column="TIME_UNIT_CD" property="timeUnitCd" jdbcType="SMALLINT" />
+    <result column="EFF_TIME" property="effTime" jdbcType="INTEGER" />
+    <result column="CHANGE_EFF_TIME" property="changeEffTime" jdbcType="INTEGER" />
+    <result column="PRE_SALE_TIME" property="preSaleTime" jdbcType="INTEGER" />
+    <result column="IN_USE_TIME" property="inUseTime" jdbcType="INTEGER" />
+    <result column="RPMONTH" property="rpmonth" jdbcType="BIGINT" />
+    <result column="COST_DESC" property="costDesc" jdbcType="VARCHAR" />
+    <result column="FLOW_DESC" property="flowDesc" jdbcType="VARCHAR" />
+    <result column="CALL_DESC" property="callDesc" jdbcType="VARCHAR" />
+    <result column="SALE_DESC" property="saleDesc" jdbcType="VARCHAR" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OFFER_SPEC_ID, COMP_OFFER, BUSI_TYPE_CD, FEE_TYPE, LIFECYCLE_RULE_CD, APP_START_DT, 
+    APP_END_DT, TIME_UNIT_CD, EFF_TIME, CHANGE_EFF_TIME, PRE_SALE_TIME, IN_USE_TIME, 
+    RPMONTH, COST_DESC, FLOW_DESC, CALL_DESC, SALE_DESC, PROVINCE_AEAR_ID, CITY_AEAR_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.OfferSpecInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from offer_spec_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from offer_spec_info
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from offer_spec_info
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.OfferSpecInfoExample" >
+    delete from offer_spec_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.OfferSpecInfo" >
+    insert into offer_spec_info (OFFER_SPEC_ID, COMP_OFFER, BUSI_TYPE_CD, 
+      FEE_TYPE, LIFECYCLE_RULE_CD, APP_START_DT, 
+      APP_END_DT, TIME_UNIT_CD, EFF_TIME, 
+      CHANGE_EFF_TIME, PRE_SALE_TIME, IN_USE_TIME, 
+      RPMONTH, COST_DESC, FLOW_DESC, 
+      CALL_DESC, SALE_DESC, PROVINCE_AEAR_ID, 
+      CITY_AEAR_ID)
+    values (#{offerSpecId,jdbcType=BIGINT}, #{compOffer,jdbcType=VARCHAR}, #{busiTypeCd,jdbcType=SMALLINT}, 
+      #{feeType,jdbcType=SMALLINT}, #{lifecycleRuleCd,jdbcType=VARCHAR}, #{appStartDt,jdbcType=TIMESTAMP}, 
+      #{appEndDt,jdbcType=TIMESTAMP}, #{timeUnitCd,jdbcType=SMALLINT}, #{effTime,jdbcType=INTEGER}, 
+      #{changeEffTime,jdbcType=INTEGER}, #{preSaleTime,jdbcType=INTEGER}, #{inUseTime,jdbcType=INTEGER}, 
+      #{rpmonth,jdbcType=BIGINT}, #{costDesc,jdbcType=VARCHAR}, #{flowDesc,jdbcType=VARCHAR}, 
+      #{callDesc,jdbcType=VARCHAR}, #{saleDesc,jdbcType=VARCHAR}, #{provinceAearId,jdbcType=BIGINT}, 
+      #{cityAearId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.OfferSpecInfo" >
+    insert into offer_spec_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="compOffer != null" >
+        COMP_OFFER,
+      </if>
+      <if test="busiTypeCd != null" >
+        BUSI_TYPE_CD,
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE,
+      </if>
+      <if test="lifecycleRuleCd != null" >
+        LIFECYCLE_RULE_CD,
+      </if>
+      <if test="appStartDt != null" >
+        APP_START_DT,
+      </if>
+      <if test="appEndDt != null" >
+        APP_END_DT,
+      </if>
+      <if test="timeUnitCd != null" >
+        TIME_UNIT_CD,
+      </if>
+      <if test="effTime != null" >
+        EFF_TIME,
+      </if>
+      <if test="changeEffTime != null" >
+        CHANGE_EFF_TIME,
+      </if>
+      <if test="preSaleTime != null" >
+        PRE_SALE_TIME,
+      </if>
+      <if test="inUseTime != null" >
+        IN_USE_TIME,
+      </if>
+      <if test="rpmonth != null" >
+        RPMONTH,
+      </if>
+      <if test="costDesc != null" >
+        COST_DESC,
+      </if>
+      <if test="flowDesc != null" >
+        FLOW_DESC,
+      </if>
+      <if test="callDesc != null" >
+        CALL_DESC,
+      </if>
+      <if test="saleDesc != null" >
+        SALE_DESC,
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="compOffer != null" >
+        #{compOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="busiTypeCd != null" >
+        #{busiTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="feeType != null" >
+        #{feeType,jdbcType=SMALLINT},
+      </if>
+      <if test="lifecycleRuleCd != null" >
+        #{lifecycleRuleCd,jdbcType=VARCHAR},
+      </if>
+      <if test="appStartDt != null" >
+        #{appStartDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appEndDt != null" >
+        #{appEndDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeUnitCd != null" >
+        #{timeUnitCd,jdbcType=SMALLINT},
+      </if>
+      <if test="effTime != null" >
+        #{effTime,jdbcType=INTEGER},
+      </if>
+      <if test="changeEffTime != null" >
+        #{changeEffTime,jdbcType=INTEGER},
+      </if>
+      <if test="preSaleTime != null" >
+        #{preSaleTime,jdbcType=INTEGER},
+      </if>
+      <if test="inUseTime != null" >
+        #{inUseTime,jdbcType=INTEGER},
+      </if>
+      <if test="rpmonth != null" >
+        #{rpmonth,jdbcType=BIGINT},
+      </if>
+      <if test="costDesc != null" >
+        #{costDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flowDesc != null" >
+        #{flowDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="callDesc != null" >
+        #{callDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="saleDesc != null" >
+        #{saleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        #{cityAearId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.OfferSpecInfoExample" resultType="java.lang.Integer" >
+    select count(*) from offer_spec_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update offer_spec_info
+    <set >
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.compOffer != null" >
+        COMP_OFFER = #{record.compOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.busiTypeCd != null" >
+        BUSI_TYPE_CD = #{record.busiTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.feeType != null" >
+        FEE_TYPE = #{record.feeType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.lifecycleRuleCd != null" >
+        LIFECYCLE_RULE_CD = #{record.lifecycleRuleCd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appStartDt != null" >
+        APP_START_DT = #{record.appStartDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appEndDt != null" >
+        APP_END_DT = #{record.appEndDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.timeUnitCd != null" >
+        TIME_UNIT_CD = #{record.timeUnitCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.effTime != null" >
+        EFF_TIME = #{record.effTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.changeEffTime != null" >
+        CHANGE_EFF_TIME = #{record.changeEffTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.preSaleTime != null" >
+        PRE_SALE_TIME = #{record.preSaleTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.inUseTime != null" >
+        IN_USE_TIME = #{record.inUseTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.rpmonth != null" >
+        RPMONTH = #{record.rpmonth,jdbcType=BIGINT},
+      </if>
+      <if test="record.costDesc != null" >
+        COST_DESC = #{record.costDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flowDesc != null" >
+        FLOW_DESC = #{record.flowDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callDesc != null" >
+        CALL_DESC = #{record.callDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleDesc != null" >
+        SALE_DESC = #{record.saleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityAearId != null" >
+        CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update offer_spec_info
+    set OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      COMP_OFFER = #{record.compOffer,jdbcType=VARCHAR},
+      BUSI_TYPE_CD = #{record.busiTypeCd,jdbcType=SMALLINT},
+      FEE_TYPE = #{record.feeType,jdbcType=SMALLINT},
+      LIFECYCLE_RULE_CD = #{record.lifecycleRuleCd,jdbcType=VARCHAR},
+      APP_START_DT = #{record.appStartDt,jdbcType=TIMESTAMP},
+      APP_END_DT = #{record.appEndDt,jdbcType=TIMESTAMP},
+      TIME_UNIT_CD = #{record.timeUnitCd,jdbcType=SMALLINT},
+      EFF_TIME = #{record.effTime,jdbcType=INTEGER},
+      CHANGE_EFF_TIME = #{record.changeEffTime,jdbcType=INTEGER},
+      PRE_SALE_TIME = #{record.preSaleTime,jdbcType=INTEGER},
+      IN_USE_TIME = #{record.inUseTime,jdbcType=INTEGER},
+      RPMONTH = #{record.rpmonth,jdbcType=BIGINT},
+      COST_DESC = #{record.costDesc,jdbcType=VARCHAR},
+      FLOW_DESC = #{record.flowDesc,jdbcType=VARCHAR},
+      CALL_DESC = #{record.callDesc,jdbcType=VARCHAR},
+      SALE_DESC = #{record.saleDesc,jdbcType=VARCHAR},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.OfferSpecInfo" >
+    update offer_spec_info
+    <set >
+      <if test="compOffer != null" >
+        COMP_OFFER = #{compOffer,jdbcType=VARCHAR},
+      </if>
+      <if test="busiTypeCd != null" >
+        BUSI_TYPE_CD = #{busiTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="feeType != null" >
+        FEE_TYPE = #{feeType,jdbcType=SMALLINT},
+      </if>
+      <if test="lifecycleRuleCd != null" >
+        LIFECYCLE_RULE_CD = #{lifecycleRuleCd,jdbcType=VARCHAR},
+      </if>
+      <if test="appStartDt != null" >
+        APP_START_DT = #{appStartDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appEndDt != null" >
+        APP_END_DT = #{appEndDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeUnitCd != null" >
+        TIME_UNIT_CD = #{timeUnitCd,jdbcType=SMALLINT},
+      </if>
+      <if test="effTime != null" >
+        EFF_TIME = #{effTime,jdbcType=INTEGER},
+      </if>
+      <if test="changeEffTime != null" >
+        CHANGE_EFF_TIME = #{changeEffTime,jdbcType=INTEGER},
+      </if>
+      <if test="preSaleTime != null" >
+        PRE_SALE_TIME = #{preSaleTime,jdbcType=INTEGER},
+      </if>
+      <if test="inUseTime != null" >
+        IN_USE_TIME = #{inUseTime,jdbcType=INTEGER},
+      </if>
+      <if test="rpmonth != null" >
+        RPMONTH = #{rpmonth,jdbcType=BIGINT},
+      </if>
+      <if test="costDesc != null" >
+        COST_DESC = #{costDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="flowDesc != null" >
+        FLOW_DESC = #{flowDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="callDesc != null" >
+        CALL_DESC = #{callDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="saleDesc != null" >
+        SALE_DESC = #{saleDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.OfferSpecInfo" >
+    update offer_spec_info
+    set COMP_OFFER = #{compOffer,jdbcType=VARCHAR},
+      BUSI_TYPE_CD = #{busiTypeCd,jdbcType=SMALLINT},
+      FEE_TYPE = #{feeType,jdbcType=SMALLINT},
+      LIFECYCLE_RULE_CD = #{lifecycleRuleCd,jdbcType=VARCHAR},
+      APP_START_DT = #{appStartDt,jdbcType=TIMESTAMP},
+      APP_END_DT = #{appEndDt,jdbcType=TIMESTAMP},
+      TIME_UNIT_CD = #{timeUnitCd,jdbcType=SMALLINT},
+      EFF_TIME = #{effTime,jdbcType=INTEGER},
+      CHANGE_EFF_TIME = #{changeEffTime,jdbcType=INTEGER},
+      PRE_SALE_TIME = #{preSaleTime,jdbcType=INTEGER},
+      IN_USE_TIME = #{inUseTime,jdbcType=INTEGER},
+      RPMONTH = #{rpmonth,jdbcType=BIGINT},
+      COST_DESC = #{costDesc,jdbcType=VARCHAR},
+      FLOW_DESC = #{flowDesc,jdbcType=VARCHAR},
+      CALL_DESC = #{callDesc,jdbcType=VARCHAR},
+      SALE_DESC = #{saleDesc,jdbcType=VARCHAR},
+      PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </update>
+</mapper>

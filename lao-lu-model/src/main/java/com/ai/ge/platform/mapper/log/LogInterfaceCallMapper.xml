@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.log.LogInterfaceCallMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.log.LogInterfaceCall">
+        <id column="INTERFACE_CALL_ID" property="interfaceCallId" jdbcType="DECIMAL" />
+        <result column="PHONE_NUM" property="phoneNum" jdbcType="VARCHAR" />
+        <result column="URL" property="url" jdbcType="VARCHAR" />
+        <result column="ACTION_NAME" property="actionName" jdbcType="VARCHAR" />
+        <result column="REQUEST_TIMES" property="requestTimes" jdbcType="TIMESTAMP" />
+        <result column="HTTP_CODE" property="httpCode" jdbcType="DECIMAL" />
+        <result column="RESPONSE_TIMES" property="responseTimes" jdbcType="TIMESTAMP" />
+        <result column="INTERFACE_CALL_TIMES" property="interfaceCallTimes" jdbcType="DECIMAL" />
+        <result column="RESULT" property="result" jdbcType="DECIMAL" />
+        <result column="EXTERNAL_ORDER_SEQ" property="externalOrderSeq" jdbcType="VARCHAR" />
+        <result column="ORDER_GROUP_SEQ" property="orderGroupSeq" jdbcType="VARCHAR" />
+        <result column="REPEATE_CALL_NUM" property="repeateCallNum" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.ai.ge.platform.model.log.LogInterfaceCallWithBLOBs" extends="BaseResultMap">
+        <result column="PARAMS" property="params" jdbcType="CLOB" />
+        <result column="RESULT_TEXT" property="resultText" jdbcType="CLOB" />
+        <result column="FAIL_REASON" property="failReason" jdbcType="CLOB" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        INTERFACE_CALL_ID, PHONE_NUM, URL, ACTION_NAME, REQUEST_TIMES, HTTP_CODE, RESPONSE_TIMES,
+        INTERFACE_CALL_TIMES, RESULT, EXTERNAL_ORDER_SEQ, ORDER_GROUP_SEQ, REPEATE_CALL_NUM,
+        CREATE_TIME, REMARKS
+    </sql>
+    <sql id="Blob_Column_List">
+        PARAMS, RESULT_TEXT, FAIL_REASON
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from LOG_INTERFACE_CALL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from LOG_INTERFACE_CALL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from LOG_INTERFACE_CALL
+        where INTERFACE_CALL_ID = #{interfaceCallId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from LOG_INTERFACE_CALL
+        where INTERFACE_CALL_ID = #{interfaceCallId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallExample">
+        delete from LOG_INTERFACE_CALL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallWithBLOBs">
+        <selectKey resultType="long" keyProperty="interfaceCallId" order="AFTER">
+            select last_insert_id() as interfaceCallId
+        </selectKey>
+        insert into LOG_INTERFACE_CALL (PHONE_NUM, URL,
+        ACTION_NAME, REQUEST_TIMES, HTTP_CODE,
+        RESPONSE_TIMES, INTERFACE_CALL_TIMES, RESULT,
+        EXTERNAL_ORDER_SEQ, ORDER_GROUP_SEQ, REPEATE_CALL_NUM,
+        CREATE_TIME, REMARKS, PARAMS,
+        RESULT_TEXT, FAIL_REASON)
+        values (#{phoneNum,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        #{actionName,jdbcType=VARCHAR}, #{requestTimes,jdbcType=TIMESTAMP}, #{httpCode,jdbcType=DECIMAL},
+        #{responseTimes,jdbcType=TIMESTAMP}, #{interfaceCallTimes,jdbcType=DECIMAL}, #{result,jdbcType=DECIMAL},
+        #{externalOrderSeq,jdbcType=VARCHAR}, #{orderGroupSeq,jdbcType=VARCHAR}, #{repeateCallNum,jdbcType=DECIMAL},
+        #{createTime,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{params,jdbcType=CLOB},
+        #{resultText,jdbcType=CLOB}, #{failReason,jdbcType=CLOB})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallWithBLOBs" useGeneratedKeys="true" keyProperty="interfaceCallId">
+
+        insert into LOG_INTERFACE_CALL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            INTERFACE_CALL_ID,
+            <if test="phoneNum != null">
+                PHONE_NUM,
+            </if>
+            <if test="url != null">
+                URL,
+            </if>
+            <if test="actionName != null">
+                ACTION_NAME,
+            </if>
+            <if test="requestTimes != null">
+                REQUEST_TIMES,
+            </if>
+            <if test="httpCode != null">
+                HTTP_CODE,
+            </if>
+            <if test="responseTimes != null">
+                RESPONSE_TIMES,
+            </if>
+            <if test="interfaceCallTimes != null">
+                INTERFACE_CALL_TIMES,
+            </if>
+            <if test="result != null">
+                RESULT,
+            </if>
+            <if test="externalOrderSeq != null">
+                EXTERNAL_ORDER_SEQ,
+            </if>
+            <if test="orderGroupSeq != null">
+                ORDER_GROUP_SEQ,
+            </if>
+            <if test="repeateCallNum != null">
+                REPEATE_CALL_NUM,
+            </if>
+                CREATE_TIME,
+            <if test="remarks != null">
+                REMARKS,
+            </if>
+            <if test="params != null">
+                PARAMS,
+            </if>
+            <if test="resultText != null">
+                RESULT_TEXT,
+            </if>
+            <if test="failReason != null">
+                FAIL_REASON,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{interfaceCallId},
+            <if test="phoneNum != null">
+                #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="actionName != null">
+                #{actionName,jdbcType=VARCHAR},
+            </if>
+            <if test="requestTimes != null">
+                #{requestTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="httpCode != null">
+                #{httpCode,jdbcType=DECIMAL},
+            </if>
+            <if test="responseTimes != null">
+                #{responseTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interfaceCallTimes != null">
+                #{interfaceCallTimes,jdbcType=DECIMAL},
+            </if>
+            <if test="result != null">
+                #{result,jdbcType=DECIMAL},
+            </if>
+            <if test="externalOrderSeq != null">
+                #{externalOrderSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGroupSeq != null">
+                #{orderGroupSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="repeateCallNum != null">
+                #{repeateCallNum,jdbcType=DECIMAL},
+            </if>
+                sysdate(),
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="params != null">
+                #{params,jdbcType=CLOB},
+            </if>
+            <if test="resultText != null">
+                #{resultText,jdbcType=CLOB},
+            </if>
+            <if test="failReason != null">
+                #{failReason,jdbcType=CLOB},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallExample" resultType="java.lang.Integer">
+        select count(*) from LOG_INTERFACE_CALL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update LOG_INTERFACE_CALL
+        <set>
+            <if test="record.interfaceCallId != null">
+                INTERFACE_CALL_ID = #{record.interfaceCallId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.phoneNum != null">
+                PHONE_NUM = #{record.phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="record.url != null">
+                URL = #{record.url,jdbcType=VARCHAR},
+            </if>
+            <if test="record.actionName != null">
+                ACTION_NAME = #{record.actionName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.requestTimes != null">
+                REQUEST_TIMES = #{record.requestTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.httpCode != null">
+                HTTP_CODE = #{record.httpCode,jdbcType=DECIMAL},
+            </if>
+            <if test="record.responseTimes != null">
+                RESPONSE_TIMES = #{record.responseTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.interfaceCallTimes != null">
+                INTERFACE_CALL_TIMES = #{record.interfaceCallTimes,jdbcType=DECIMAL},
+            </if>
+            <if test="record.result != null">
+                RESULT = #{record.result,jdbcType=DECIMAL},
+            </if>
+            <if test="record.externalOrderSeq != null">
+                EXTERNAL_ORDER_SEQ = #{record.externalOrderSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="record.orderGroupSeq != null">
+                ORDER_GROUP_SEQ = #{record.orderGroupSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="record.repeateCallNum != null">
+                REPEATE_CALL_NUM = #{record.repeateCallNum,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.remarks != null">
+                REMARKS = #{record.remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="record.params != null">
+                PARAMS = #{record.params,jdbcType=CLOB},
+            </if>
+            <if test="record.resultText != null">
+                RESULT_TEXT = #{record.resultText,jdbcType=CLOB},
+            </if>
+            <if test="record.failReason != null">
+                FAIL_REASON = #{record.failReason,jdbcType=CLOB},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update LOG_INTERFACE_CALL
+        set INTERFACE_CALL_ID = #{record.interfaceCallId,jdbcType=DECIMAL},
+        PHONE_NUM = #{record.phoneNum,jdbcType=VARCHAR},
+        URL = #{record.url,jdbcType=VARCHAR},
+        ACTION_NAME = #{record.actionName,jdbcType=VARCHAR},
+        REQUEST_TIMES = #{record.requestTimes,jdbcType=TIMESTAMP},
+        HTTP_CODE = #{record.httpCode,jdbcType=DECIMAL},
+        RESPONSE_TIMES = #{record.responseTimes,jdbcType=TIMESTAMP},
+        INTERFACE_CALL_TIMES = #{record.interfaceCallTimes,jdbcType=DECIMAL},
+        RESULT = #{record.result,jdbcType=DECIMAL},
+        EXTERNAL_ORDER_SEQ = #{record.externalOrderSeq,jdbcType=VARCHAR},
+        ORDER_GROUP_SEQ = #{record.orderGroupSeq,jdbcType=VARCHAR},
+        REPEATE_CALL_NUM = #{record.repeateCallNum,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+        PARAMS = #{record.params,jdbcType=CLOB},
+        RESULT_TEXT = #{record.resultText,jdbcType=CLOB},
+        FAIL_REASON = #{record.failReason,jdbcType=CLOB}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update LOG_INTERFACE_CALL
+        set INTERFACE_CALL_ID = #{record.interfaceCallId,jdbcType=DECIMAL},
+        PHONE_NUM = #{record.phoneNum,jdbcType=VARCHAR},
+        URL = #{record.url,jdbcType=VARCHAR},
+        ACTION_NAME = #{record.actionName,jdbcType=VARCHAR},
+        REQUEST_TIMES = #{record.requestTimes,jdbcType=TIMESTAMP},
+        HTTP_CODE = #{record.httpCode,jdbcType=DECIMAL},
+        RESPONSE_TIMES = #{record.responseTimes,jdbcType=TIMESTAMP},
+        INTERFACE_CALL_TIMES = #{record.interfaceCallTimes,jdbcType=DECIMAL},
+        RESULT = #{record.result,jdbcType=DECIMAL},
+        EXTERNAL_ORDER_SEQ = #{record.externalOrderSeq,jdbcType=VARCHAR},
+        ORDER_GROUP_SEQ = #{record.orderGroupSeq,jdbcType=VARCHAR},
+        REPEATE_CALL_NUM = #{record.repeateCallNum,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        REMARKS = #{record.remarks,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallWithBLOBs">
+        update LOG_INTERFACE_CALL
+        <set>
+            <if test="phoneNum != null">
+                PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                URL = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="actionName != null">
+                ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+            </if>
+            <if test="requestTimes != null">
+                REQUEST_TIMES = #{requestTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="httpCode != null">
+                HTTP_CODE = #{httpCode,jdbcType=DECIMAL},
+            </if>
+            <if test="responseTimes != null">
+                RESPONSE_TIMES = #{responseTimes,jdbcType=TIMESTAMP},
+            </if>
+            <if test="interfaceCallTimes != null">
+                INTERFACE_CALL_TIMES = #{interfaceCallTimes,jdbcType=DECIMAL},
+            </if>
+            <if test="result != null">
+                RESULT = #{result,jdbcType=DECIMAL},
+            </if>
+            <if test="externalOrderSeq != null">
+                EXTERNAL_ORDER_SEQ = #{externalOrderSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="orderGroupSeq != null">
+                ORDER_GROUP_SEQ = #{orderGroupSeq,jdbcType=VARCHAR},
+            </if>
+            <if test="repeateCallNum != null">
+                REPEATE_CALL_NUM = #{repeateCallNum,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                REMARKS = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="params != null">
+                PARAMS = #{params,jdbcType=CLOB},
+            </if>
+            <if test="resultText != null">
+                RESULT_TEXT = #{resultText,jdbcType=CLOB},
+            </if>
+            <if test="failReason != null">
+                FAIL_REASON = #{failReason,jdbcType=CLOB},
+            </if>
+        </set>
+        where INTERFACE_CALL_ID = #{interfaceCallId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ai.ge.platform.model.log.LogInterfaceCallWithBLOBs">
+        update LOG_INTERFACE_CALL
+        set PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+        URL = #{url,jdbcType=VARCHAR},
+        ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+        REQUEST_TIMES = #{requestTimes,jdbcType=TIMESTAMP},
+        HTTP_CODE = #{httpCode,jdbcType=DECIMAL},
+        RESPONSE_TIMES = #{responseTimes,jdbcType=TIMESTAMP},
+        INTERFACE_CALL_TIMES = #{interfaceCallTimes,jdbcType=DECIMAL},
+        RESULT = #{result,jdbcType=DECIMAL},
+        EXTERNAL_ORDER_SEQ = #{externalOrderSeq,jdbcType=VARCHAR},
+        ORDER_GROUP_SEQ = #{orderGroupSeq,jdbcType=VARCHAR},
+        REPEATE_CALL_NUM = #{repeateCallNum,jdbcType=DECIMAL},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+        PARAMS = #{params,jdbcType=CLOB},
+        RESULT_TEXT = #{resultText,jdbcType=CLOB},
+        FAIL_REASON = #{failReason,jdbcType=CLOB}
+        where INTERFACE_CALL_ID = #{interfaceCallId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.log.LogInterfaceCall">
+        update LOG_INTERFACE_CALL
+        set PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+        URL = #{url,jdbcType=VARCHAR},
+        ACTION_NAME = #{actionName,jdbcType=VARCHAR},
+        REQUEST_TIMES = #{requestTimes,jdbcType=TIMESTAMP},
+        HTTP_CODE = #{httpCode,jdbcType=DECIMAL},
+        RESPONSE_TIMES = #{responseTimes,jdbcType=TIMESTAMP},
+        INTERFACE_CALL_TIMES = #{interfaceCallTimes,jdbcType=DECIMAL},
+        RESULT = #{result,jdbcType=DECIMAL},
+        EXTERNAL_ORDER_SEQ = #{externalOrderSeq,jdbcType=VARCHAR},
+        ORDER_GROUP_SEQ = #{orderGroupSeq,jdbcType=VARCHAR},
+        REPEATE_CALL_NUM = #{repeateCallNum,jdbcType=DECIMAL},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        REMARKS = #{remarks,jdbcType=VARCHAR}
+        where INTERFACE_CALL_ID = #{interfaceCallId,jdbcType=DECIMAL}
+    </update>
+</mapper>

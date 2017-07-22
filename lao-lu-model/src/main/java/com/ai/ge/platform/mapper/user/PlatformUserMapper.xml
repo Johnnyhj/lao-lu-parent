@@ -1,0 +1,912 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.PlatformUserMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.PlatformUser" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_TYPE_VALUE" property="userTypeValue" jdbcType="VARCHAR" />
+    <result column="USER_STATUS" property="userStatus" jdbcType="VARCHAR" />
+    <result column="FIRM_NAME" property="firmName" jdbcType="VARCHAR" />
+    <result column="REAL_NAME" property="realName" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="GENDER" property="gender" jdbcType="VARCHAR" />
+    <result column="CERT_TYPE_VALUE" property="certTypeValue" jdbcType="VARCHAR" />
+    <result column="ADDRESS_CODE" property="addressCode" jdbcType="VARCHAR" />
+    <result column="ALIPAY_USER_ID" property="alipayUserId" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="IDCARD_CORRECT_URL" property="idcardCorrectUrl" jdbcType="VARCHAR" />
+    <result column="IDCARD_OPPOSITE_URL" property="idcardOppositeUrl" jdbcType="VARCHAR" />
+    <result column="IDCARD_HAND_URL" property="idcardHandUrl" jdbcType="VARCHAR" />
+    <result column="AVATAR" property="avatar" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="IS_CERTIFIED" property="isCertified" jdbcType="VARCHAR" />
+    <result column="IS_BANK_AUTH" property="isBankAuth" jdbcType="VARCHAR" />
+    <result column="IS_ID_AUTH" property="isIdAuth" jdbcType="VARCHAR" />
+    <result column="IS_MOBILE_AUTH" property="isMobileAuth" jdbcType="VARCHAR" />
+    <result column="IS_LICENCE_AUTH" property="isLicenceAuth" jdbcType="VARCHAR" />
+    <result column="DELIVER_PHONE" property="deliverPhone" jdbcType="VARCHAR" />
+    <result column="DELIVER_MOBILE" property="deliverMobile" jdbcType="VARCHAR" />
+    <result column="DELIVER_FULLNAME" property="deliverFullname" jdbcType="VARCHAR" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="CITY" property="city" jdbcType="VARCHAR" />
+    <result column="AREA" property="area" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="ZIP" property="zip" jdbcType="VARCHAR" />
+    <result column="DELIVER_PROVINCE" property="deliverProvince" jdbcType="VARCHAR" />
+    <result column="DELIVER_CITY" property="deliverCity" jdbcType="VARCHAR" />
+    <result column="DELIVER_AREA" property="deliverArea" jdbcType="VARCHAR" />
+    <result column="DEFAULT_DELIVER_ADDRESS" property="defaultDeliverAddress" jdbcType="VARCHAR" />
+    <result column="IS_STUDENT_CERTIFIED" property="isStudentCertified" jdbcType="VARCHAR" />
+    <result column="IS_CERTIFY_GRADE_A" property="isCertifyGradeA" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="FAMILY_NAME" property="familyName" jdbcType="VARCHAR" />
+    <result column="REDUCED_BIRTHDAY" property="reducedBirthday" jdbcType="VARCHAR" />
+    <result column="IS_BALANCE_FROZEN" property="isBalanceFrozen" jdbcType="VARCHAR" />
+    <result column="BALANCE_FREEZE_TYPE" property="balanceFreezeType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, USER_TYPE_VALUE, USER_STATUS, FIRM_NAME, REAL_NAME, USERNAME, EMAIL, 
+    CERT_NO, GENDER, CERT_TYPE_VALUE, ADDRESS_CODE, ALIPAY_USER_ID, PHONE, MOBILE, IDCARD_CORRECT_URL, 
+    IDCARD_OPPOSITE_URL, IDCARD_HAND_URL, AVATAR, CREATE_TIME, UPDATE_TIME, IS_CERTIFIED, 
+    IS_BANK_AUTH, IS_ID_AUTH, IS_MOBILE_AUTH, IS_LICENCE_AUTH, DELIVER_PHONE, DELIVER_MOBILE, 
+    DELIVER_FULLNAME, PROVINCE, CITY, AREA, ADDRESS, ZIP, DELIVER_PROVINCE, DELIVER_CITY, 
+    DELIVER_AREA, DEFAULT_DELIVER_ADDRESS, IS_STUDENT_CERTIFIED, IS_CERTIFY_GRADE_A, 
+    BIRTHDAY, NICK_NAME, FAMILY_NAME, REDUCED_BIRTHDAY, IS_BALANCE_FROZEN, BALANCE_FREEZE_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.PlatformUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from platform_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from platform_user
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from platform_user
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.PlatformUserExample" >
+    delete from platform_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.user.PlatformUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into platform_user (USER_ID, USER_TYPE_VALUE, USER_STATUS, 
+      FIRM_NAME, REAL_NAME, USERNAME, 
+      EMAIL, CERT_NO, GENDER, 
+      CERT_TYPE_VALUE, ADDRESS_CODE, ALIPAY_USER_ID, 
+      PHONE, MOBILE, IDCARD_CORRECT_URL, 
+      IDCARD_OPPOSITE_URL, IDCARD_HAND_URL, AVATAR, 
+      CREATE_TIME, UPDATE_TIME, IS_CERTIFIED, 
+      IS_BANK_AUTH, IS_ID_AUTH, IS_MOBILE_AUTH, 
+      IS_LICENCE_AUTH, DELIVER_PHONE, DELIVER_MOBILE, 
+      DELIVER_FULLNAME, PROVINCE, CITY, 
+      AREA, ADDRESS, ZIP, 
+      DELIVER_PROVINCE, DELIVER_CITY, DELIVER_AREA, 
+      DEFAULT_DELIVER_ADDRESS, IS_STUDENT_CERTIFIED, 
+      IS_CERTIFY_GRADE_A, BIRTHDAY, NICK_NAME, 
+      FAMILY_NAME, REDUCED_BIRTHDAY, IS_BALANCE_FROZEN, 
+      BALANCE_FREEZE_TYPE)
+    values (#{userId,jdbcType=VARCHAR}, #{userTypeValue,jdbcType=VARCHAR}, #{userStatus,jdbcType=VARCHAR}, 
+      #{firmName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{certNo,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{certTypeValue,jdbcType=VARCHAR}, #{addressCode,jdbcType=VARCHAR}, #{alipayUserId,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{idcardCorrectUrl,jdbcType=VARCHAR}, 
+      #{idcardOppositeUrl,jdbcType=VARCHAR}, #{idcardHandUrl,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isCertified,jdbcType=VARCHAR}, 
+      #{isBankAuth,jdbcType=VARCHAR}, #{isIdAuth,jdbcType=VARCHAR}, #{isMobileAuth,jdbcType=VARCHAR}, 
+      #{isLicenceAuth,jdbcType=VARCHAR}, #{deliverPhone,jdbcType=VARCHAR}, #{deliverMobile,jdbcType=VARCHAR}, 
+      #{deliverFullname,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{zip,jdbcType=VARCHAR}, 
+      #{deliverProvince,jdbcType=VARCHAR}, #{deliverCity,jdbcType=VARCHAR}, #{deliverArea,jdbcType=VARCHAR}, 
+      #{defaultDeliverAddress,jdbcType=VARCHAR}, #{isStudentCertified,jdbcType=VARCHAR}, 
+      #{isCertifyGradeA,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{familyName,jdbcType=VARCHAR}, #{reducedBirthday,jdbcType=VARCHAR}, #{isBalanceFrozen,jdbcType=VARCHAR}, 
+      #{balanceFreezeType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.PlatformUser" useGeneratedKeys="true" keyProperty="id" >
+    insert into platform_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userTypeValue != null" >
+        USER_TYPE_VALUE,
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS,
+      </if>
+      <if test="firmName != null" >
+        FIRM_NAME,
+      </if>
+      <if test="realName != null" >
+        REAL_NAME,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="gender != null" >
+        GENDER,
+      </if>
+      <if test="certTypeValue != null" >
+        CERT_TYPE_VALUE,
+      </if>
+      <if test="addressCode != null" >
+        ADDRESS_CODE,
+      </if>
+      <if test="alipayUserId != null" >
+        ALIPAY_USER_ID,
+      </if>
+      <if test="phone != null" >
+        PHONE,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="idcardCorrectUrl != null" >
+        IDCARD_CORRECT_URL,
+      </if>
+      <if test="idcardOppositeUrl != null" >
+        IDCARD_OPPOSITE_URL,
+      </if>
+      <if test="idcardHandUrl != null" >
+        IDCARD_HAND_URL,
+      </if>
+      <if test="avatar != null" >
+        AVATAR,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="isCertified != null" >
+        IS_CERTIFIED,
+      </if>
+      <if test="isBankAuth != null" >
+        IS_BANK_AUTH,
+      </if>
+      <if test="isIdAuth != null" >
+        IS_ID_AUTH,
+      </if>
+      <if test="isMobileAuth != null" >
+        IS_MOBILE_AUTH,
+      </if>
+      <if test="isLicenceAuth != null" >
+        IS_LICENCE_AUTH,
+      </if>
+      <if test="deliverPhone != null" >
+        DELIVER_PHONE,
+      </if>
+      <if test="deliverMobile != null" >
+        DELIVER_MOBILE,
+      </if>
+      <if test="deliverFullname != null" >
+        DELIVER_FULLNAME,
+      </if>
+      <if test="province != null" >
+        PROVINCE,
+      </if>
+      <if test="city != null" >
+        CITY,
+      </if>
+      <if test="area != null" >
+        AREA,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="zip != null" >
+        ZIP,
+      </if>
+      <if test="deliverProvince != null" >
+        DELIVER_PROVINCE,
+      </if>
+      <if test="deliverCity != null" >
+        DELIVER_CITY,
+      </if>
+      <if test="deliverArea != null" >
+        DELIVER_AREA,
+      </if>
+      <if test="defaultDeliverAddress != null" >
+        DEFAULT_DELIVER_ADDRESS,
+      </if>
+      <if test="isStudentCertified != null" >
+        IS_STUDENT_CERTIFIED,
+      </if>
+      <if test="isCertifyGradeA != null" >
+        IS_CERTIFY_GRADE_A,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME,
+      </if>
+      <if test="familyName != null" >
+        FAMILY_NAME,
+      </if>
+      <if test="reducedBirthday != null" >
+        REDUCED_BIRTHDAY,
+      </if>
+      <if test="isBalanceFrozen != null" >
+        IS_BALANCE_FROZEN,
+      </if>
+      <if test="balanceFreezeType != null" >
+        BALANCE_FREEZE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userTypeValue != null" >
+        #{userTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="firmName != null" >
+        #{firmName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="certTypeValue != null" >
+        #{certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        #{addressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserId != null" >
+        #{alipayUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCorrectUrl != null" >
+        #{idcardCorrectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOppositeUrl != null" >
+        #{idcardOppositeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardHandUrl != null" >
+        #{idcardHandUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isCertified != null" >
+        #{isCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="isBankAuth != null" >
+        #{isBankAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isIdAuth != null" >
+        #{isIdAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isMobileAuth != null" >
+        #{isMobileAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isLicenceAuth != null" >
+        #{isLicenceAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverPhone != null" >
+        #{deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverMobile != null" >
+        #{deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverFullname != null" >
+        #{deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProvince != null" >
+        #{deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverCity != null" >
+        #{deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverArea != null" >
+        #{deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDeliverAddress != null" >
+        #{defaultDeliverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isStudentCertified != null" >
+        #{isStudentCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="isCertifyGradeA != null" >
+        #{isCertifyGradeA,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null" >
+        #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="reducedBirthday != null" >
+        #{reducedBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="isBalanceFrozen != null" >
+        #{isBalanceFrozen,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceFreezeType != null" >
+        #{balanceFreezeType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.user.PlatformUserExample" resultType="java.lang.Integer" >
+    select count(*) from platform_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update platform_user
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userTypeValue != null" >
+        USER_TYPE_VALUE = #{record.userTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        USER_STATUS = #{record.userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firmName != null" >
+        FIRM_NAME = #{record.firmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realName != null" >
+        REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certNo != null" >
+        CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gender != null" >
+        GENDER = #{record.gender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certTypeValue != null" >
+        CERT_TYPE_VALUE = #{record.certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressCode != null" >
+        ADDRESS_CODE = #{record.addressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayUserId != null" >
+        ALIPAY_USER_ID = #{record.alipayUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        PHONE = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardCorrectUrl != null" >
+        IDCARD_CORRECT_URL = #{record.idcardCorrectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardOppositeUrl != null" >
+        IDCARD_OPPOSITE_URL = #{record.idcardOppositeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcardHandUrl != null" >
+        IDCARD_HAND_URL = #{record.idcardHandUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatar != null" >
+        AVATAR = #{record.avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isCertified != null" >
+        IS_CERTIFIED = #{record.isCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBankAuth != null" >
+        IS_BANK_AUTH = #{record.isBankAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isIdAuth != null" >
+        IS_ID_AUTH = #{record.isIdAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMobileAuth != null" >
+        IS_MOBILE_AUTH = #{record.isMobileAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isLicenceAuth != null" >
+        IS_LICENCE_AUTH = #{record.isLicenceAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverPhone != null" >
+        DELIVER_PHONE = #{record.deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverMobile != null" >
+        DELIVER_MOBILE = #{record.deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverFullname != null" >
+        DELIVER_FULLNAME = #{record.deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        PROVINCE = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null" >
+        CITY = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null" >
+        AREA = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zip != null" >
+        ZIP = #{record.zip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverProvince != null" >
+        DELIVER_PROVINCE = #{record.deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverCity != null" >
+        DELIVER_CITY = #{record.deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverArea != null" >
+        DELIVER_AREA = #{record.deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultDeliverAddress != null" >
+        DEFAULT_DELIVER_ADDRESS = #{record.defaultDeliverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isStudentCertified != null" >
+        IS_STUDENT_CERTIFIED = #{record.isStudentCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCertifyGradeA != null" >
+        IS_CERTIFY_GRADE_A = #{record.isCertifyGradeA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null" >
+        NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.familyName != null" >
+        FAMILY_NAME = #{record.familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reducedBirthday != null" >
+        REDUCED_BIRTHDAY = #{record.reducedBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isBalanceFrozen != null" >
+        IS_BALANCE_FROZEN = #{record.isBalanceFrozen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceFreezeType != null" >
+        BALANCE_FREEZE_TYPE = #{record.balanceFreezeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update platform_user
+    set ID = #{record.id,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_TYPE_VALUE = #{record.userTypeValue,jdbcType=VARCHAR},
+      USER_STATUS = #{record.userStatus,jdbcType=VARCHAR},
+      FIRM_NAME = #{record.firmName,jdbcType=VARCHAR},
+      REAL_NAME = #{record.realName,jdbcType=VARCHAR},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      GENDER = #{record.gender,jdbcType=VARCHAR},
+      CERT_TYPE_VALUE = #{record.certTypeValue,jdbcType=VARCHAR},
+      ADDRESS_CODE = #{record.addressCode,jdbcType=VARCHAR},
+      ALIPAY_USER_ID = #{record.alipayUserId,jdbcType=VARCHAR},
+      PHONE = #{record.phone,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      IDCARD_CORRECT_URL = #{record.idcardCorrectUrl,jdbcType=VARCHAR},
+      IDCARD_OPPOSITE_URL = #{record.idcardOppositeUrl,jdbcType=VARCHAR},
+      IDCARD_HAND_URL = #{record.idcardHandUrl,jdbcType=VARCHAR},
+      AVATAR = #{record.avatar,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      IS_CERTIFIED = #{record.isCertified,jdbcType=VARCHAR},
+      IS_BANK_AUTH = #{record.isBankAuth,jdbcType=VARCHAR},
+      IS_ID_AUTH = #{record.isIdAuth,jdbcType=VARCHAR},
+      IS_MOBILE_AUTH = #{record.isMobileAuth,jdbcType=VARCHAR},
+      IS_LICENCE_AUTH = #{record.isLicenceAuth,jdbcType=VARCHAR},
+      DELIVER_PHONE = #{record.deliverPhone,jdbcType=VARCHAR},
+      DELIVER_MOBILE = #{record.deliverMobile,jdbcType=VARCHAR},
+      DELIVER_FULLNAME = #{record.deliverFullname,jdbcType=VARCHAR},
+      PROVINCE = #{record.province,jdbcType=VARCHAR},
+      CITY = #{record.city,jdbcType=VARCHAR},
+      AREA = #{record.area,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      ZIP = #{record.zip,jdbcType=VARCHAR},
+      DELIVER_PROVINCE = #{record.deliverProvince,jdbcType=VARCHAR},
+      DELIVER_CITY = #{record.deliverCity,jdbcType=VARCHAR},
+      DELIVER_AREA = #{record.deliverArea,jdbcType=VARCHAR},
+      DEFAULT_DELIVER_ADDRESS = #{record.defaultDeliverAddress,jdbcType=VARCHAR},
+      IS_STUDENT_CERTIFIED = #{record.isStudentCertified,jdbcType=VARCHAR},
+      IS_CERTIFY_GRADE_A = #{record.isCertifyGradeA,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=VARCHAR},
+      NICK_NAME = #{record.nickName,jdbcType=VARCHAR},
+      FAMILY_NAME = #{record.familyName,jdbcType=VARCHAR},
+      REDUCED_BIRTHDAY = #{record.reducedBirthday,jdbcType=VARCHAR},
+      IS_BALANCE_FROZEN = #{record.isBalanceFrozen,jdbcType=VARCHAR},
+      BALANCE_FREEZE_TYPE = #{record.balanceFreezeType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.PlatformUser" >
+    update platform_user
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userTypeValue != null" >
+        USER_TYPE_VALUE = #{userTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="firmName != null" >
+        FIRM_NAME = #{firmName,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null" >
+        REAL_NAME = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        GENDER = #{gender,jdbcType=VARCHAR},
+      </if>
+      <if test="certTypeValue != null" >
+        CERT_TYPE_VALUE = #{certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        ADDRESS_CODE = #{addressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayUserId != null" >
+        ALIPAY_USER_ID = #{alipayUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardCorrectUrl != null" >
+        IDCARD_CORRECT_URL = #{idcardCorrectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardOppositeUrl != null" >
+        IDCARD_OPPOSITE_URL = #{idcardOppositeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="idcardHandUrl != null" >
+        IDCARD_HAND_URL = #{idcardHandUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        AVATAR = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isCertified != null" >
+        IS_CERTIFIED = #{isCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="isBankAuth != null" >
+        IS_BANK_AUTH = #{isBankAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isIdAuth != null" >
+        IS_ID_AUTH = #{isIdAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isMobileAuth != null" >
+        IS_MOBILE_AUTH = #{isMobileAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="isLicenceAuth != null" >
+        IS_LICENCE_AUTH = #{isLicenceAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverPhone != null" >
+        DELIVER_PHONE = #{deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverMobile != null" >
+        DELIVER_MOBILE = #{deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverFullname != null" >
+        DELIVER_FULLNAME = #{deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        CITY = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        ZIP = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProvince != null" >
+        DELIVER_PROVINCE = #{deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverCity != null" >
+        DELIVER_CITY = #{deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverArea != null" >
+        DELIVER_AREA = #{deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDeliverAddress != null" >
+        DEFAULT_DELIVER_ADDRESS = #{defaultDeliverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isStudentCertified != null" >
+        IS_STUDENT_CERTIFIED = #{isStudentCertified,jdbcType=VARCHAR},
+      </if>
+      <if test="isCertifyGradeA != null" >
+        IS_CERTIFY_GRADE_A = #{isCertifyGradeA,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="familyName != null" >
+        FAMILY_NAME = #{familyName,jdbcType=VARCHAR},
+      </if>
+      <if test="reducedBirthday != null" >
+        REDUCED_BIRTHDAY = #{reducedBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="isBalanceFrozen != null" >
+        IS_BALANCE_FROZEN = #{isBalanceFrozen,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceFreezeType != null" >
+        BALANCE_FREEZE_TYPE = #{balanceFreezeType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.PlatformUser" >
+    update platform_user
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_TYPE_VALUE = #{userTypeValue,jdbcType=VARCHAR},
+      USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+      FIRM_NAME = #{firmName,jdbcType=VARCHAR},
+      REAL_NAME = #{realName,jdbcType=VARCHAR},
+      USERNAME = #{username,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=VARCHAR},
+      CERT_TYPE_VALUE = #{certTypeValue,jdbcType=VARCHAR},
+      ADDRESS_CODE = #{addressCode,jdbcType=VARCHAR},
+      ALIPAY_USER_ID = #{alipayUserId,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      MOBILE = #{mobile,jdbcType=VARCHAR},
+      IDCARD_CORRECT_URL = #{idcardCorrectUrl,jdbcType=VARCHAR},
+      IDCARD_OPPOSITE_URL = #{idcardOppositeUrl,jdbcType=VARCHAR},
+      IDCARD_HAND_URL = #{idcardHandUrl,jdbcType=VARCHAR},
+      AVATAR = #{avatar,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      IS_CERTIFIED = #{isCertified,jdbcType=VARCHAR},
+      IS_BANK_AUTH = #{isBankAuth,jdbcType=VARCHAR},
+      IS_ID_AUTH = #{isIdAuth,jdbcType=VARCHAR},
+      IS_MOBILE_AUTH = #{isMobileAuth,jdbcType=VARCHAR},
+      IS_LICENCE_AUTH = #{isLicenceAuth,jdbcType=VARCHAR},
+      DELIVER_PHONE = #{deliverPhone,jdbcType=VARCHAR},
+      DELIVER_MOBILE = #{deliverMobile,jdbcType=VARCHAR},
+      DELIVER_FULLNAME = #{deliverFullname,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      ZIP = #{zip,jdbcType=VARCHAR},
+      DELIVER_PROVINCE = #{deliverProvince,jdbcType=VARCHAR},
+      DELIVER_CITY = #{deliverCity,jdbcType=VARCHAR},
+      DELIVER_AREA = #{deliverArea,jdbcType=VARCHAR},
+      DEFAULT_DELIVER_ADDRESS = #{defaultDeliverAddress,jdbcType=VARCHAR},
+      IS_STUDENT_CERTIFIED = #{isStudentCertified,jdbcType=VARCHAR},
+      IS_CERTIFY_GRADE_A = #{isCertifyGradeA,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+      NICK_NAME = #{nickName,jdbcType=VARCHAR},
+      FAMILY_NAME = #{familyName,jdbcType=VARCHAR},
+      REDUCED_BIRTHDAY = #{reducedBirthday,jdbcType=VARCHAR},
+      IS_BALANCE_FROZEN = #{isBalanceFrozen,jdbcType=VARCHAR},
+      BALANCE_FREEZE_TYPE = #{balanceFreezeType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="listBySelective" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.PlatformUser" >
+    SELECT <include refid="Base_Column_List"/> from platform_user where 1=1
+      <if test="id != null and '' != id" >
+          and ID like concat('%', #{id,jdbcType=BIGINT}, '%')
+      </if>
+      <if test="userId != null and '' != userId" >
+          and USER_ID = #{userId,jdbcType=VARCHAR}
+      </if>
+      <if test="userTypeValue != null and '' != userTypeValue" >
+          and USER_TYPE_VALUE = #{userTypeValue,jdbcType=VARCHAR}
+      </if>
+      <if test="userStatus != null and '' != userStatus" >
+          and USER_STATUS = #{userStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="firmName != null and '' != firmName" >
+          and FIRM_NAME like concat('%', #{firmName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="realName != null and '' != realName" >
+          and REAL_NAME like concat('%', #{realName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="email != null and '' != email" >
+          and EMAIL like concat('%', #{email,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="certNo != null and '' != certNo" >
+          and CERT_NO like concat('%', #{certNo,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="gender != null and '' != gender" >
+          and GENDER = #{gender,jdbcType=VARCHAR}
+      </if>
+      <if test="certTypeValue != null and '' != certTypeValue" >
+          and CERT_TYPE_VALUE = #{certTypeValue,jdbcType=VARCHAR}
+      </if>
+      <if test="addressCode != null and '' = addressCode" >
+         and ADDRESS_CODE = #{addressCode,jdbcType=VARCHAR}
+      </if>
+      <if test="alipayUserId != null and '' != alipayUserId" >
+          and ALIPAY_USER_ID like concat('%', #{alipayUserId,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="phone != null and '' != phone" >
+          and PHONE like concat('%', #{phone,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="mobile != null and '' != mobile" >
+          and MOBILE like concat('%', #{mobile,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="idcardCorrectUrl != null and '' != idcardCorrectUrl" >
+          and IDCARD_CORRECT_URL = #{idcardCorrectUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="idcardOppositeUrl != null and '' != idcardOppositeUrl" >
+          and IDCARD_OPPOSITE_URL = #{idcardOppositeUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="idcardHandUrl != null and '' != idcardHandUrl" >
+          and IDCARD_HAND_URL = #{idcardHandUrl,jdbcType=VARCHAR}
+      </if>
+      <if test="avatar != null and '' != avatar" >
+          and AVATAR = #{avatar,jdbcType=VARCHAR}
+      </if>
+  </select>
+</mapper>

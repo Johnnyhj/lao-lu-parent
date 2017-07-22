@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.DeliverAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.DeliverAddress" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="PLATFORM_USER_ID" property="platformUserId" jdbcType="BIGINT" />
+    <result column="DELIVER_FULLNAME" property="deliverFullname" jdbcType="VARCHAR" />
+    <result column="DEFAULT_DELIVER_ADDRE" property="defaultDeliverAddre" jdbcType="VARCHAR" />
+    <result column="DELIVER_PHONE" property="deliverPhone" jdbcType="VARCHAR" />
+    <result column="DELIVER_MOBILE" property="deliverMobile" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="ZIP" property="zip" jdbcType="VARCHAR" />
+    <result column="DELIVER_PROVINCE" property="deliverProvince" jdbcType="VARCHAR" />
+    <result column="DELIVER_CITY" property="deliverCity" jdbcType="VARCHAR" />
+    <result column="DELIVER_AREA" property="deliverArea" jdbcType="VARCHAR" />
+    <result column="ADDRESS_CODE" property="addressCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, PLATFORM_USER_ID, DELIVER_FULLNAME, DEFAULT_DELIVER_ADDRE, DELIVER_PHONE, DELIVER_MOBILE, 
+    ADDRESS, ZIP, DELIVER_PROVINCE, DELIVER_CITY, DELIVER_AREA, ADDRESS_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.DeliverAddressExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from deliver_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from deliver_address
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from deliver_address
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.DeliverAddressExample" >
+    delete from deliver_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.user.DeliverAddress" useGeneratedKeys="true" keyProperty="id" >
+    insert into deliver_address (PLATFORM_USER_ID, DELIVER_FULLNAME, DEFAULT_DELIVER_ADDRE, 
+      DELIVER_PHONE, DELIVER_MOBILE, ADDRESS, 
+      ZIP, DELIVER_PROVINCE, DELIVER_CITY, 
+      DELIVER_AREA, ADDRESS_CODE)
+    values (#{platformUserId,jdbcType=BIGINT}, #{deliverFullname,jdbcType=VARCHAR}, #{defaultDeliverAddre,jdbcType=VARCHAR}, 
+      #{deliverPhone,jdbcType=VARCHAR}, #{deliverMobile,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{zip,jdbcType=VARCHAR}, #{deliverProvince,jdbcType=VARCHAR}, #{deliverCity,jdbcType=VARCHAR}, 
+      #{deliverArea,jdbcType=VARCHAR}, #{addressCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.DeliverAddress" useGeneratedKeys="true" keyProperty="id" >
+    insert into deliver_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="platformUserId != null" >
+        PLATFORM_USER_ID,
+      </if>
+      <if test="deliverFullname != null" >
+        DELIVER_FULLNAME,
+      </if>
+      <if test="defaultDeliverAddre != null" >
+        DEFAULT_DELIVER_ADDRE,
+      </if>
+      <if test="deliverPhone != null" >
+        DELIVER_PHONE,
+      </if>
+      <if test="deliverMobile != null" >
+        DELIVER_MOBILE,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="zip != null" >
+        ZIP,
+      </if>
+      <if test="deliverProvince != null" >
+        DELIVER_PROVINCE,
+      </if>
+      <if test="deliverCity != null" >
+        DELIVER_CITY,
+      </if>
+      <if test="deliverArea != null" >
+        DELIVER_AREA,
+      </if>
+      <if test="addressCode != null" >
+        ADDRESS_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="platformUserId != null" >
+        #{platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverFullname != null" >
+        #{deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDeliverAddre != null" >
+        #{defaultDeliverAddre,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverPhone != null" >
+        #{deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverMobile != null" >
+        #{deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProvince != null" >
+        #{deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverCity != null" >
+        #{deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverArea != null" >
+        #{deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        #{addressCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.user.DeliverAddressExample" resultType="java.lang.Integer" >
+    select count(*) from deliver_address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update deliver_address
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.platformUserId != null" >
+        PLATFORM_USER_ID = #{record.platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliverFullname != null" >
+        DELIVER_FULLNAME = #{record.deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.defaultDeliverAddre != null" >
+        DEFAULT_DELIVER_ADDRE = #{record.defaultDeliverAddre,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverPhone != null" >
+        DELIVER_PHONE = #{record.deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverMobile != null" >
+        DELIVER_MOBILE = #{record.deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zip != null" >
+        ZIP = #{record.zip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverProvince != null" >
+        DELIVER_PROVINCE = #{record.deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverCity != null" >
+        DELIVER_CITY = #{record.deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deliverArea != null" >
+        DELIVER_AREA = #{record.deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addressCode != null" >
+        ADDRESS_CODE = #{record.addressCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update deliver_address
+    set ID = #{record.id,jdbcType=BIGINT},
+      PLATFORM_USER_ID = #{record.platformUserId,jdbcType=BIGINT},
+      DELIVER_FULLNAME = #{record.deliverFullname,jdbcType=VARCHAR},
+      DEFAULT_DELIVER_ADDRE = #{record.defaultDeliverAddre,jdbcType=VARCHAR},
+      DELIVER_PHONE = #{record.deliverPhone,jdbcType=VARCHAR},
+      DELIVER_MOBILE = #{record.deliverMobile,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      ZIP = #{record.zip,jdbcType=VARCHAR},
+      DELIVER_PROVINCE = #{record.deliverProvince,jdbcType=VARCHAR},
+      DELIVER_CITY = #{record.deliverCity,jdbcType=VARCHAR},
+      DELIVER_AREA = #{record.deliverArea,jdbcType=VARCHAR},
+      ADDRESS_CODE = #{record.addressCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.DeliverAddress" >
+    update deliver_address
+    <set >
+      <if test="platformUserId != null" >
+        PLATFORM_USER_ID = #{platformUserId,jdbcType=BIGINT},
+      </if>
+      <if test="deliverFullname != null" >
+        DELIVER_FULLNAME = #{deliverFullname,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultDeliverAddre != null" >
+        DEFAULT_DELIVER_ADDRE = #{defaultDeliverAddre,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverPhone != null" >
+        DELIVER_PHONE = #{deliverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverMobile != null" >
+        DELIVER_MOBILE = #{deliverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zip != null" >
+        ZIP = #{zip,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverProvince != null" >
+        DELIVER_PROVINCE = #{deliverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverCity != null" >
+        DELIVER_CITY = #{deliverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="deliverArea != null" >
+        DELIVER_AREA = #{deliverArea,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCode != null" >
+        ADDRESS_CODE = #{addressCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.DeliverAddress" >
+    update deliver_address
+    set PLATFORM_USER_ID = #{platformUserId,jdbcType=BIGINT},
+      DELIVER_FULLNAME = #{deliverFullname,jdbcType=VARCHAR},
+      DEFAULT_DELIVER_ADDRE = #{defaultDeliverAddre,jdbcType=VARCHAR},
+      DELIVER_PHONE = #{deliverPhone,jdbcType=VARCHAR},
+      DELIVER_MOBILE = #{deliverMobile,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      ZIP = #{zip,jdbcType=VARCHAR},
+      DELIVER_PROVINCE = #{deliverProvince,jdbcType=VARCHAR},
+      DELIVER_CITY = #{deliverCity,jdbcType=VARCHAR},
+      DELIVER_AREA = #{deliverArea,jdbcType=VARCHAR},
+      ADDRESS_CODE = #{addressCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteByPlatformuserid">
+    delete from deliver_address
+    where PLATFORM_USER_ID = #{platformUserId,jdbcType=BIGINT}
+  </delete>
+
+
+  <insert id="insertDeliverAddresses"  parameterType="java.util.List">
+    insert into deliver_address (PLATFORM_USER_ID, DELIVER_FULLNAME, DEFAULT_DELIVER_ADDRE,
+    DELIVER_PHONE, DELIVER_MOBILE, ADDRESS,
+    ZIP, DELIVER_PROVINCE, DELIVER_CITY,
+    DELIVER_AREA, ADDRESS_CODE)
+    values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (#{item.platformUserId,jdbcType=BIGINT}, #{item.deliverFullname,jdbcType=VARCHAR}, #{item.defaultDeliverAddre,jdbcType=VARCHAR},
+      #{item.deliverPhone,jdbcType=VARCHAR}, #{item.deliverMobile,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR},
+      #{item.zip,jdbcType=VARCHAR}, #{item.deliverProvince,jdbcType=VARCHAR}, #{item.deliverCity,jdbcType=VARCHAR},
+      #{item.deliverArea,jdbcType=VARCHAR}, #{item.addressCode,jdbcType=VARCHAR})
+    </foreach >
+  </insert>
+
+</mapper>

@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.OfferSpecMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.OfferSpec" >
+    <id column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="MANAGE_CODE" property="manageCode" jdbcType="VARCHAR" />
+    <result column="SIMPLE_SPELL" property="simpleSpell" jdbcType="VARCHAR" />
+    <result column="AGREEMENT_TYPE_CD" property="agreementTypeCd" jdbcType="SMALLINT" />
+    <result column="OFFER_TYPE_CD" property="offerTypeCd" jdbcType="SMALLINT" />
+    <result column="AREA_ID" property="areaId" jdbcType="INTEGER" />
+    <result column="SUMMARY" property="summary" jdbcType="VARCHAR" />
+    <result column="START_DT" property="startDt" jdbcType="TIMESTAMP" />
+    <result column="END_DT" property="endDt" jdbcType="TIMESTAMP" />
+    <result column="STATUS_CD" property="statusCd" jdbcType="SMALLINT" />
+    <result column="STATUS_DT" property="statusDt" jdbcType="TIMESTAMP" />
+    <result column="CREATE_DT" property="createDt" jdbcType="TIMESTAMP" />
+    <result column="VERSION" property="version" jdbcType="TIMESTAMP" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+  </resultMap>
+
+    <!-- 和其他表重名的列取个别名 -->
+  <resultMap id="AliasBaseResultMap" type="com.ai.ge.platform.model.order.OfferSpec" extends="BaseResultMap">
+    <id column="os_OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="os_PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="oc_CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+  </resultMap>
+
+  <resultMap id="OfferSpecDtoResultMap" type="com.ai.ge.platform.dto.order.OfferSpecDto" extends="AliasBaseResultMap">
+    <association property="offerSpecInfo" javaType="com.ai.ge.platform.model.order.OfferSpecInfo" column="os_OFFER_SPEC_ID"
+                 select="com.ai.ge.platform.mapper.order.OfferSpecInfoMapper.selectByPrimaryKey"
+                 resultMap="com.ai.ge.platform.mapper.order.OfferSpecInfoMapper.BaseResultMap"></association>
+  </resultMap>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OFFER_SPEC_ID, NAME, CODE, MANAGE_CODE, SIMPLE_SPELL, AGREEMENT_TYPE_CD, OFFER_TYPE_CD, 
+    AREA_ID, SUMMARY, START_DT, END_DT, STATUS_CD, STATUS_DT, CREATE_DT, VERSION, PROVINCE_AEAR_ID, CITY_AEAR_ID
+  </sql>
+
+    <!-- 与其他表重名的列取别名 -->
+    <sql id="Alias_Base_Column_List">
+    OFFER_SPEC_ID os_OFFER_SPEC_ID, NAME, CODE, MANAGE_CODE, SIMPLE_SPELL, AGREEMENT_TYPE_CD, OFFER_TYPE_CD,
+    AREA_ID, SUMMARY, START_DT, END_DT, STATUS_CD, STATUS_DT, CREATE_DT, VERSION, PROVINCE_AEAR_ID os_PROVINCE_AEAR_ID, CITY_AEAR_ID os_CITY_AEAR_ID
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.OfferSpecExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from offer_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="AliasBaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Alias_Base_Column_List" />
+    from offer_spec
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from offer_spec
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.OfferSpecExample" >
+    delete from offer_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.OfferSpec" >
+    insert into offer_spec (OFFER_SPEC_ID, NAME, CODE, 
+      MANAGE_CODE, SIMPLE_SPELL, AGREEMENT_TYPE_CD, 
+      OFFER_TYPE_CD, AREA_ID, SUMMARY, 
+      START_DT, END_DT, STATUS_CD, 
+      STATUS_DT, CREATE_DT, VERSION, 
+      PROVINCE_AEAR_ID, CITY_AEAR_ID)
+    values (#{offerSpecId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
+      #{manageCode,jdbcType=VARCHAR}, #{simpleSpell,jdbcType=VARCHAR}, #{agreementTypeCd,jdbcType=SMALLINT}, 
+      #{offerTypeCd,jdbcType=SMALLINT}, #{areaId,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, 
+      #{startDt,jdbcType=TIMESTAMP}, #{endDt,jdbcType=TIMESTAMP}, #{statusCd,jdbcType=SMALLINT}, 
+      #{statusDt,jdbcType=TIMESTAMP}, #{createDt,jdbcType=TIMESTAMP}, #{version,jdbcType=TIMESTAMP}, 
+      #{provinceAearId,jdbcType=BIGINT}, #{cityAearId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.OfferSpec" >
+    insert into offer_spec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="code != null" >
+        CODE,
+      </if>
+      <if test="manageCode != null" >
+        MANAGE_CODE,
+      </if>
+      <if test="simpleSpell != null" >
+        SIMPLE_SPELL,
+      </if>
+      <if test="agreementTypeCd != null" >
+        AGREEMENT_TYPE_CD,
+      </if>
+      <if test="offerTypeCd != null" >
+        OFFER_TYPE_CD,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="summary != null" >
+        SUMMARY,
+      </if>
+      <if test="startDt != null" >
+        START_DT,
+      </if>
+      <if test="endDt != null" >
+        END_DT,
+      </if>
+      <if test="statusCd != null" >
+        STATUS_CD,
+      </if>
+      <if test="statusDt != null" >
+        STATUS_DT,
+      </if>
+      <if test="createDt != null" >
+        CREATE_DT,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="manageCode != null" >
+        #{manageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleSpell != null" >
+        #{simpleSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementTypeCd != null" >
+        #{agreementTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="offerTypeCd != null" >
+        #{offerTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="startDt != null" >
+        #{startDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDt != null" >
+        #{endDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null" >
+        #{statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="statusDt != null" >
+        #{statusDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDt != null" >
+        #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        #{cityAearId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.OfferSpecExample" resultType="java.lang.Integer" >
+    select count(*) from offer_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+    update offer_spec
+    <set >
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.code != null" >
+        CODE = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manageCode != null" >
+        MANAGE_CODE = #{record.manageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simpleSpell != null" >
+        SIMPLE_SPELL = #{record.simpleSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementTypeCd != null" >
+        AGREEMENT_TYPE_CD = #{record.agreementTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.offerTypeCd != null" >
+        OFFER_TYPE_CD = #{record.offerTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.areaId != null" >
+        AREA_ID = #{record.areaId,jdbcType=INTEGER},
+      </if>
+      <if test="record.summary != null" >
+        SUMMARY = #{record.summary,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startDt != null" >
+        START_DT = #{record.startDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDt != null" >
+        END_DT = #{record.endDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statusCd != null" >
+        STATUS_CD = #{record.statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.statusDt != null" >
+        STATUS_DT = #{record.statusDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createDt != null" >
+        CREATE_DT = #{record.createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityAearId != null" >
+        CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update offer_spec
+    set OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      CODE = #{record.code,jdbcType=VARCHAR},
+      MANAGE_CODE = #{record.manageCode,jdbcType=VARCHAR},
+      SIMPLE_SPELL = #{record.simpleSpell,jdbcType=VARCHAR},
+      AGREEMENT_TYPE_CD = #{record.agreementTypeCd,jdbcType=SMALLINT},
+      OFFER_TYPE_CD = #{record.offerTypeCd,jdbcType=SMALLINT},
+      AREA_ID = #{record.areaId,jdbcType=INTEGER},
+      SUMMARY = #{record.summary,jdbcType=VARCHAR},
+      START_DT = #{record.startDt,jdbcType=TIMESTAMP},
+      END_DT = #{record.endDt,jdbcType=TIMESTAMP},
+      STATUS_CD = #{record.statusCd,jdbcType=SMALLINT},
+      STATUS_DT = #{record.statusDt,jdbcType=TIMESTAMP},
+      CREATE_DT = #{record.createDt,jdbcType=TIMESTAMP},
+      VERSION = #{record.version,jdbcType=TIMESTAMP},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.OfferSpec" >
+    update offer_spec
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="manageCode != null" >
+        MANAGE_CODE = #{manageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="simpleSpell != null" >
+        SIMPLE_SPELL = #{simpleSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementTypeCd != null" >
+        AGREEMENT_TYPE_CD = #{agreementTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="offerTypeCd != null" >
+        OFFER_TYPE_CD = #{offerTypeCd,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null" >
+        AREA_ID = #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="summary != null" >
+        SUMMARY = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="startDt != null" >
+        START_DT = #{startDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDt != null" >
+        END_DT = #{endDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statusCd != null" >
+        STATUS_CD = #{statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="statusDt != null" >
+        STATUS_DT = #{statusDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDt != null" >
+        CREATE_DT = #{createDt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=TIMESTAMP},
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.OfferSpec" >
+    update offer_spec
+    set NAME = #{name,jdbcType=VARCHAR},
+      CODE = #{code,jdbcType=VARCHAR},
+      MANAGE_CODE = #{manageCode,jdbcType=VARCHAR},
+      SIMPLE_SPELL = #{simpleSpell,jdbcType=VARCHAR},
+      AGREEMENT_TYPE_CD = #{agreementTypeCd,jdbcType=SMALLINT},
+      OFFER_TYPE_CD = #{offerTypeCd,jdbcType=SMALLINT},
+      AREA_ID = #{areaId,jdbcType=INTEGER},
+      SUMMARY = #{summary,jdbcType=VARCHAR},
+      START_DT = #{startDt,jdbcType=TIMESTAMP},
+      END_DT = #{endDt,jdbcType=TIMESTAMP},
+      STATUS_CD = #{statusCd,jdbcType=SMALLINT},
+      STATUS_DT = #{statusDt,jdbcType=TIMESTAMP},
+      CREATE_DT = #{createDt,jdbcType=TIMESTAMP},
+      VERSION = #{version,jdbcType=TIMESTAMP},
+      PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+    where OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+  </update>
+
+    <select id="listBySelective" resultMap="OfferSpecDtoResultMap" parameterType="com.ai.ge.platform.model.order.OfferSpec">
+        SELECT <include refid="Alias_Base_Column_List"/> from offer_spec where 1=1
+        <if test="name != null" >
+            and NAME like concat('%', #{name,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="code != null" >
+            and CODE like concat('%', #{code,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="manageCode != null" >
+            and MANAGE_CODE like concat('%', #{manageCode,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="offerSpecId != null" >
+            and OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+        </if>
+
+        <choose>
+          <when test="userType == 1">
+            and PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT}
+          </when>
+          <when test="userType == 2">
+            and CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+          </when>
+        </choose>
+
+    </select>
+
+
+  <select id="findListByArea" resultMap="OfferSpecDtoResultMap" parameterType="com.ai.ge.platform.model.order.OfferSpec">
+    SELECT <include refid="Alias_Base_Column_List"/> from offer_spec where 1=1
+    <if test="name != null" >
+      and NAME like concat('%', #{name,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="code != null" >
+      and CODE like concat('%', #{code,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="manageCode != null" >
+      and MANAGE_CODE like concat('%', #{manageCode,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="offerSpecId != null" >
+      and OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+    </if>
+    <if test="provinceAearId != null">
+      and PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT}
+    </if>
+    <if test="cityAearId != null">
+      and CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+    </if>
+  </select>
+
+</mapper>

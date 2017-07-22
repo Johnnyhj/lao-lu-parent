@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.log.LogAuthProcessMapper" >
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.log.LogAuthProcess" >
+        <id column="PROCESS_ID" property="processId" jdbcType="DECIMAL" />
+        <result column="SYS_USER_ID" property="sysUserId" jdbcType="DECIMAL" />
+        <result column="AUTH_SYS_USER_ID" property="authSysUserId" jdbcType="DECIMAL" />
+        <result column="AUTH_ROLE_NAME" property="authRoleName" jdbcType="VARCHAR" />
+        <result column="EFFECTIVE_TIME" property="effectiveTime" jdbcType="TIMESTAMP" />
+        <result column="FAIL_TIME" property="failTime" jdbcType="TIMESTAMP" />
+        <result column="AUTH_TYPE" property="authType" jdbcType="DECIMAL" />
+        <result column="OPERATE_TYPE" property="operateType" jdbcType="DECIMAL" />
+        <result column="RESOURCE_ID" property="resourceId" jdbcType="DECIMAL" />
+        <result column="RESOURCE_NAME" property="resourceName" jdbcType="VARCHAR" />
+        <result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+        <result column="ROLE_NAME" property="roleName" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs" extends="BaseResultMap" >
+        <result column="OLD_VAL" property="oldVal" jdbcType="CLOB" />
+        <result column="NEW_VAL" property="newVal" jdbcType="CLOB" />
+    </resultMap>
+
+    <resultMap id="LogAuthProcessDtoMap" type="com.ai.ge.platform.dto.log.LogAuthProcessDto" extends="ResultMapWithBLOBs" >
+        <result column="auth_User_Name" property="authUserName" jdbcType="VARCHAR" />
+        <association property="sysUser" column="id" javaType="com.ai.ge.platform.model.user.SysUser" resultMap="com.ai.ge.platform.mapper.user.SysUserMapper.BaseResultMap">
+
+        </association>
+    </resultMap>
+
+    <sql id="Example_Where_Clause" >
+        <where >
+            <foreach collection="oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause" >
+        <where >
+            <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+                <if test="criteria.valid" >
+                    <trim prefix="(" suffix=")" prefixOverrides="and" >
+                        <foreach collection="criteria.criteria" item="criterion" >
+                            <choose >
+                                <when test="criterion.noValue" >
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue" >
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue" >
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue" >
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List" >
+        PROCESS_ID, SYS_USER_ID, AUTH_SYS_USER_ID, AUTH_ROLE_NAME, EFFECTIVE_TIME, FAIL_TIME,
+        AUTH_TYPE, OPERATE_TYPE, RESOURCE_ID, RESOURCE_NAME, ROLE_ID, ROLE_NAME, CREATE_TIME,
+        REMARK
+    </sql>
+    <sql id="Blob_Column_List" >
+        OLD_VAL, NEW_VAL
+    </sql>
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ai.ge.platform.model.log.LogAuthProcessExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from LOG_AUTH_PROCESS
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogAuthProcessExample" >
+        select
+        <if test="distinct" >
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from LOG_AUTH_PROCESS
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null" >
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        ,
+        <include refid="Blob_Column_List" />
+        from LOG_AUTH_PROCESS
+        where PROCESS_ID = #{processId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+        delete from LOG_AUTH_PROCESS
+        where PROCESS_ID = #{processId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.log.LogAuthProcessExample" >
+        delete from LOG_AUTH_PROCESS
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs" >
+        insert into LOG_AUTH_PROCESS (PROCESS_ID, SYS_USER_ID, AUTH_SYS_USER_ID,
+        AUTH_ROLE_NAME, EFFECTIVE_TIME, FAIL_TIME,
+        AUTH_TYPE, OPERATE_TYPE, RESOURCE_ID,
+        RESOURCE_NAME, ROLE_ID, ROLE_NAME,
+        CREATE_TIME, REMARK, OLD_VAL,
+        NEW_VAL)
+        values (#{processId,jdbcType=DECIMAL}, #{sysUserId,jdbcType=DECIMAL}, #{authSysUserId,jdbcType=DECIMAL},
+        #{authRoleName,jdbcType=VARCHAR}, #{effectiveTime,jdbcType=TIMESTAMP}, #{failTime,jdbcType=TIMESTAMP},
+        #{authType,jdbcType=DECIMAL}, #{operateType,jdbcType=DECIMAL}, #{resourceId,jdbcType=DECIMAL},
+        #{resourceName,jdbcType=VARCHAR}, #{roleId,jdbcType=DECIMAL}, #{roleName,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, #{oldVal,jdbcType=CLOB},
+        #{newVal,jdbcType=CLOB})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs" >
+        <selectKey keyProperty="processId" order="AFTER" resultType="long">
+            select last_insert_id() as processId
+        </selectKey>
+        insert into LOG_AUTH_PROCESS
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="sysUserId != null" >
+                SYS_USER_ID,
+            </if>
+            <if test="authSysUserId != null" >
+                AUTH_SYS_USER_ID,
+            </if>
+            <if test="authRoleName != null" >
+                AUTH_ROLE_NAME,
+            </if>
+            <if test="effectiveTime != null" >
+                EFFECTIVE_TIME,
+            </if>
+            <if test="failTime != null" >
+                FAIL_TIME,
+            </if>
+            <if test="authType != null" >
+                AUTH_TYPE,
+            </if>
+            <if test="operateType != null" >
+                OPERATE_TYPE,
+            </if>
+            <if test="resourceId != null" >
+                RESOURCE_ID,
+            </if>
+            <if test="resourceName != null" >
+                RESOURCE_NAME,
+            </if>
+            <if test="roleId != null" >
+                ROLE_ID,
+            </if>
+            <if test="roleName != null" >
+                ROLE_NAME,
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME,
+            </if>
+            <if test="remark != null" >
+                REMARK,
+            </if>
+            <if test="oldVal != null" >
+                OLD_VAL,
+            </if>
+            <if test="newVal != null" >
+                NEW_VAL,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="sysUserId != null" >
+                #{sysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="authSysUserId != null" >
+                #{authSysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="authRoleName != null" >
+                #{authRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="effectiveTime != null" >
+                #{effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failTime != null" >
+                #{failTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authType != null" >
+                #{authType,jdbcType=DECIMAL},
+            </if>
+            <if test="operateType != null" >
+                #{operateType,jdbcType=DECIMAL},
+            </if>
+            <if test="resourceId != null" >
+                #{resourceId,jdbcType=DECIMAL},
+            </if>
+            <if test="resourceName != null" >
+                #{resourceName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleName != null" >
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="oldVal != null" >
+                #{oldVal,jdbcType=CLOB},
+            </if>
+            <if test="newVal != null" >
+                #{newVal,jdbcType=CLOB},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.log.LogAuthProcessExample" resultType="java.lang.Integer" >
+        select count(*) from LOG_AUTH_PROCESS
+        <if test="_parameter != null" >
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+        update LOG_AUTH_PROCESS
+        <set >
+            <if test="record.processId != null" >
+                PROCESS_ID = #{record.processId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.sysUserId != null" >
+                SYS_USER_ID = #{record.sysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.authSysUserId != null" >
+                AUTH_SYS_USER_ID = #{record.authSysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.authRoleName != null" >
+                AUTH_ROLE_NAME = #{record.authRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.effectiveTime != null" >
+                EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.failTime != null" >
+                FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.authType != null" >
+                AUTH_TYPE = #{record.authType,jdbcType=DECIMAL},
+            </if>
+            <if test="record.operateType != null" >
+                OPERATE_TYPE = #{record.operateType,jdbcType=DECIMAL},
+            </if>
+            <if test="record.resourceId != null" >
+                RESOURCE_ID = #{record.resourceId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.resourceName != null" >
+                RESOURCE_NAME = #{record.resourceName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roleId != null" >
+                ROLE_ID = #{record.roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.roleName != null" >
+                ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null" >
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.remark != null" >
+                REMARK = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.oldVal != null" >
+                OLD_VAL = #{record.oldVal,jdbcType=CLOB},
+            </if>
+            <if test="record.newVal != null" >
+                NEW_VAL = #{record.newVal,jdbcType=CLOB},
+            </if>
+        </set>
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map" >
+        update LOG_AUTH_PROCESS
+        set PROCESS_ID = #{record.processId,jdbcType=DECIMAL},
+        SYS_USER_ID = #{record.sysUserId,jdbcType=DECIMAL},
+        AUTH_SYS_USER_ID = #{record.authSysUserId,jdbcType=DECIMAL},
+        AUTH_ROLE_NAME = #{record.authRoleName,jdbcType=VARCHAR},
+        EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+        AUTH_TYPE = #{record.authType,jdbcType=DECIMAL},
+        OPERATE_TYPE = #{record.operateType,jdbcType=DECIMAL},
+        RESOURCE_ID = #{record.resourceId,jdbcType=DECIMAL},
+        RESOURCE_NAME = #{record.resourceName,jdbcType=VARCHAR},
+        ROLE_ID = #{record.roleId,jdbcType=DECIMAL},
+        ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+        OLD_VAL = #{record.oldVal,jdbcType=CLOB},
+        NEW_VAL = #{record.newVal,jdbcType=CLOB}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map" >
+        update LOG_AUTH_PROCESS
+        set PROCESS_ID = #{record.processId,jdbcType=DECIMAL},
+        SYS_USER_ID = #{record.sysUserId,jdbcType=DECIMAL},
+        AUTH_SYS_USER_ID = #{record.authSysUserId,jdbcType=DECIMAL},
+        AUTH_ROLE_NAME = #{record.authRoleName,jdbcType=VARCHAR},
+        EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+        AUTH_TYPE = #{record.authType,jdbcType=DECIMAL},
+        OPERATE_TYPE = #{record.operateType,jdbcType=DECIMAL},
+        RESOURCE_ID = #{record.resourceId,jdbcType=DECIMAL},
+        RESOURCE_NAME = #{record.resourceName,jdbcType=VARCHAR},
+        ROLE_ID = #{record.roleId,jdbcType=DECIMAL},
+        ROLE_NAME = #{record.roleName,jdbcType=VARCHAR},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        REMARK = #{record.remark,jdbcType=VARCHAR}
+        <if test="_parameter != null" >
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs" >
+        update LOG_AUTH_PROCESS
+        <set >
+            <if test="sysUserId != null" >
+                SYS_USER_ID = #{sysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="authSysUserId != null" >
+                AUTH_SYS_USER_ID = #{authSysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="authRoleName != null" >
+                AUTH_ROLE_NAME = #{authRoleName,jdbcType=VARCHAR},
+            </if>
+            <if test="effectiveTime != null" >
+                EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failTime != null" >
+                FAIL_TIME = #{failTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authType != null" >
+                AUTH_TYPE = #{authType,jdbcType=DECIMAL},
+            </if>
+            <if test="operateType != null" >
+                OPERATE_TYPE = #{operateType,jdbcType=DECIMAL},
+            </if>
+            <if test="resourceId != null" >
+                RESOURCE_ID = #{resourceId,jdbcType=DECIMAL},
+            </if>
+            <if test="resourceName != null" >
+                RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                ROLE_ID = #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleName != null" >
+                ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remark != null" >
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="oldVal != null" >
+                OLD_VAL = #{oldVal,jdbcType=CLOB},
+            </if>
+            <if test="newVal != null" >
+                NEW_VAL = #{newVal,jdbcType=CLOB},
+            </if>
+        </set>
+        where PROCESS_ID = #{processId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs" >
+        update LOG_AUTH_PROCESS
+        set SYS_USER_ID = #{sysUserId,jdbcType=DECIMAL},
+        AUTH_SYS_USER_ID = #{authSysUserId,jdbcType=DECIMAL},
+        AUTH_ROLE_NAME = #{authRoleName,jdbcType=VARCHAR},
+        EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{failTime,jdbcType=TIMESTAMP},
+        AUTH_TYPE = #{authType,jdbcType=DECIMAL},
+        OPERATE_TYPE = #{operateType,jdbcType=DECIMAL},
+        RESOURCE_ID = #{resourceId,jdbcType=DECIMAL},
+        RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        REMARK = #{remark,jdbcType=VARCHAR},
+        OLD_VAL = #{oldVal,jdbcType=CLOB},
+        NEW_VAL = #{newVal,jdbcType=CLOB}
+        where PROCESS_ID = #{processId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.log.LogAuthProcess" >
+        update LOG_AUTH_PROCESS
+        set SYS_USER_ID = #{sysUserId,jdbcType=DECIMAL},
+        AUTH_SYS_USER_ID = #{authSysUserId,jdbcType=DECIMAL},
+        AUTH_ROLE_NAME = #{authRoleName,jdbcType=VARCHAR},
+        EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{failTime,jdbcType=TIMESTAMP},
+        AUTH_TYPE = #{authType,jdbcType=DECIMAL},
+        OPERATE_TYPE = #{operateType,jdbcType=DECIMAL},
+        RESOURCE_ID = #{resourceId,jdbcType=DECIMAL},
+        RESOURCE_NAME = #{resourceName,jdbcType=VARCHAR},
+        ROLE_ID = #{roleId,jdbcType=DECIMAL},
+        ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        REMARK = #{remark,jdbcType=VARCHAR}
+        where PROCESS_ID = #{processId,jdbcType=DECIMAL}
+    </update>
+
+    <select id="findAllLog" resultMap="LogAuthProcessDtoMap" parameterType="com.ai.ge.platform.model.log.LogAuthProcessWithBLOBs">
+        select a.*, b.* from
+        (
+            SELECT <include refid="Base_Column_List"/>, <include refid="Blob_Column_List"/> from log_auth_process lap
+            where 1=1
+            <if test="null != sysUserId">
+                and lap.sys_user_id = #{sysUserId}
+            </if>
+            <if test="null != operateType">
+                and lap.operate_type = #{operateType}
+            </if>
+            <if test="null != authType">
+                and lap.auth_type = #{authType}
+            </if>
+            <if test="null != createTime">
+                <![CDATA[
+                 and TO_CHAR(trunc(CREATE_TIME),'yyyy-mm-dd') = to_char(trunc(#{createTime}),'yyyy-mm-dd')
+                ]]>
+            </if>
+        ) a
+        left join
+        (
+            select su.id, su.username from sys_user su
+        ) b
+        on b.id = a.sys_user_id
+    </select>
+    <select id="queryLogDetailByProcessId" resultMap="LogAuthProcessDtoMap" parameterType="long">
+        select l.*, s.USERNAME, l.AUTH_SYS_USER_ID, s2.username auth_User_Name  from log_auth_process l
+        left join sys_user s on l.sys_user_id = s.id
+        left join sys_user s2 on l.auth_sys_user_id = s2.id
+        where l.process_id = #{processId}
+    </select>
+</mapper>

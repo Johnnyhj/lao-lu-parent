@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.arrears.CreditListMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.arrears.CreditList" >
+    <id column="CREDIT_ID" property="creditId" jdbcType="BIGINT" />
+    <result column="ARR_AU_ID" property="arrAuId" jdbcType="BIGINT" />
+    <result column="AU_ID" property="auId" jdbcType="VARCHAR" />
+    <result column="CREDIT_TYPE" property="creditType" jdbcType="SMALLINT" />
+    <result column="CREDIT_DESC" property="creditDesc" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CREDIT_ID, ARR_AU_ID, AU_ID, CREDIT_TYPE, CREDIT_DESC, STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.arrears.CreditListExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from credit_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from credit_list
+    where CREDIT_ID = #{creditId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from credit_list
+    where CREDIT_ID = #{creditId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.arrears.CreditListExample" >
+    delete from credit_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.arrears.CreditList" >
+    insert into credit_list (CREDIT_ID, ARR_AU_ID, AU_ID, 
+      CREDIT_TYPE, CREDIT_DESC, STATUS, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{creditId,jdbcType=BIGINT}, #{arrAuId,jdbcType=BIGINT}, #{auId,jdbcType=VARCHAR}, 
+      #{creditType,jdbcType=SMALLINT}, #{creditDesc,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.arrears.CreditList" >
+    insert into credit_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="creditId != null" >
+        CREDIT_ID,
+      </if>
+      <if test="arrAuId != null" >
+        ARR_AU_ID,
+      </if>
+      <if test="auId != null" >
+        AU_ID,
+      </if>
+      <if test="creditType != null" >
+        CREDIT_TYPE,
+      </if>
+      <if test="creditDesc != null" >
+        CREDIT_DESC,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="creditId != null" >
+        #{creditId,jdbcType=BIGINT},
+      </if>
+      <if test="arrAuId != null" >
+        #{arrAuId,jdbcType=BIGINT},
+      </if>
+      <if test="auId != null" >
+        #{auId,jdbcType=VARCHAR},
+      </if>
+      <if test="creditType != null" >
+        #{creditType,jdbcType=SMALLINT},
+      </if>
+      <if test="creditDesc != null" >
+        #{creditDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.arrears.CreditListExample" resultType="java.lang.Integer" >
+    select count(*) from credit_list
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update credit_list
+    <set >
+      <if test="record.creditId != null" >
+        CREDIT_ID = #{record.creditId,jdbcType=BIGINT},
+      </if>
+      <if test="record.arrAuId != null" >
+        ARR_AU_ID = #{record.arrAuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.auId != null" >
+        AU_ID = #{record.auId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creditType != null" >
+        CREDIT_TYPE = #{record.creditType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.creditDesc != null" >
+        CREDIT_DESC = #{record.creditDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update credit_list
+    set CREDIT_ID = #{record.creditId,jdbcType=BIGINT},
+      ARR_AU_ID = #{record.arrAuId,jdbcType=BIGINT},
+      AU_ID = #{record.auId,jdbcType=VARCHAR},
+      CREDIT_TYPE = #{record.creditType,jdbcType=SMALLINT},
+      CREDIT_DESC = #{record.creditDesc,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.arrears.CreditList" >
+    update credit_list
+    <set >
+      <if test="arrAuId != null" >
+        ARR_AU_ID = #{arrAuId,jdbcType=BIGINT},
+      </if>
+      <if test="auId != null" >
+        AU_ID = #{auId,jdbcType=VARCHAR},
+      </if>
+      <if test="creditType != null" >
+        CREDIT_TYPE = #{creditType,jdbcType=SMALLINT},
+      </if>
+      <if test="creditDesc != null" >
+        CREDIT_DESC = #{creditDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CREDIT_ID = #{creditId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.arrears.CreditList" >
+    update credit_list
+    set ARR_AU_ID = #{arrAuId,jdbcType=BIGINT},
+      AU_ID = #{auId,jdbcType=VARCHAR},
+      CREDIT_TYPE = #{creditType,jdbcType=SMALLINT},
+      CREDIT_DESC = #{creditDesc,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=SMALLINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where CREDIT_ID = #{creditId,jdbcType=BIGINT}
+  </update>
+</mapper>

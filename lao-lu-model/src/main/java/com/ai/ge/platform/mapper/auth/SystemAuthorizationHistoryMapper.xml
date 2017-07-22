@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.auth.SystemAuthorizationHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.auth.SystemAuthorizationHistory" >
+    <id column="SYS_AUTH_ID" property="sysAuthId" jdbcType="DECIMAL" />
+    <result column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="PHONE_NUM" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="REQ_IP" property="reqIp" jdbcType="VARCHAR" />
+    <result column="AUTH_RESULT" property="authResult" jdbcType="DECIMAL" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="DECIMAL" />
+    <result column="FAIL_REASON_TEXT" property="failReasonText" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="INVALID_TIME" property="invalidTime" jdbcType="TIMESTAMP" />
+    <result column="TOKEN_USE_TIME" property="tokenUseTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SYS_AUTH_ID, TOKEN, PHONE_NUM, USER_NAME, PASSWORD, REQ_IP, AUTH_RESULT, FAIL_REASON, 
+    FAIL_REASON_TEXT, CREATE_TIME, INVALID_TIME, TOKEN_USE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYSTEM_AUTHORIZATION_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYSTEM_AUTHORIZATION_HISTORY
+    where SYS_AUTH_ID = #{sysAuthId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYSTEM_AUTHORIZATION_HISTORY
+    where SYS_AUTH_ID = #{sysAuthId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistoryExample" >
+    delete from SYSTEM_AUTHORIZATION_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistory" >
+    insert into SYSTEM_AUTHORIZATION_HISTORY (SYS_AUTH_ID, TOKEN, PHONE_NUM, 
+      USER_NAME, PASSWORD, REQ_IP, 
+      AUTH_RESULT, FAIL_REASON, FAIL_REASON_TEXT, 
+      CREATE_TIME, INVALID_TIME, TOKEN_USE_TIME
+      )
+    values (#{sysAuthId,jdbcType=DECIMAL}, #{token,jdbcType=VARCHAR}, #{phoneNum,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{reqIp,jdbcType=VARCHAR}, 
+      #{authResult,jdbcType=DECIMAL}, #{failReason,jdbcType=DECIMAL}, #{failReasonText,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{invalidTime,jdbcType=DATE}, #{tokenUseTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistory" >
+    insert into SYSTEM_AUTHORIZATION_HISTORY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysAuthId != null" >
+        SYS_AUTH_ID,
+      </if>
+      <if test="token != null" >
+        TOKEN,
+      </if>
+      <if test="phoneNum != null" >
+        PHONE_NUM,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="reqIp != null" >
+        REQ_IP,
+      </if>
+      <if test="authResult != null" >
+        AUTH_RESULT,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="failReasonText != null" >
+        FAIL_REASON_TEXT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME,
+      </if>
+      <if test="tokenUseTime != null" >
+        TOKEN_USE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysAuthId != null" >
+        #{sysAuthId,jdbcType=DECIMAL},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="reqIp != null" >
+        #{reqIp,jdbcType=VARCHAR},
+      </if>
+      <if test="authResult != null" >
+        #{authResult,jdbcType=DECIMAL},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=DECIMAL},
+      </if>
+      <if test="failReasonText != null" >
+        #{failReasonText,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=DATE},
+      </if>
+      <if test="tokenUseTime != null" >
+        #{tokenUseTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistoryExample" resultType="java.lang.Integer" >
+    select count(*) from SYSTEM_AUTHORIZATION_HISTORY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYSTEM_AUTHORIZATION_HISTORY
+    <set >
+      <if test="record.sysAuthId != null" >
+        SYS_AUTH_ID = #{record.sysAuthId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.token != null" >
+        TOKEN = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNum != null" >
+        PHONE_NUM = #{record.phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqIp != null" >
+        REQ_IP = #{record.reqIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authResult != null" >
+        AUTH_RESULT = #{record.authResult,jdbcType=DECIMAL},
+      </if>
+      <if test="record.failReason != null" >
+        FAIL_REASON = #{record.failReason,jdbcType=DECIMAL},
+      </if>
+      <if test="record.failReasonText != null" >
+        FAIL_REASON_TEXT = #{record.failReasonText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.invalidTime != null" >
+        INVALID_TIME = #{record.invalidTime,jdbcType=DATE},
+      </if>
+      <if test="record.tokenUseTime != null" >
+        TOKEN_USE_TIME = #{record.tokenUseTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYSTEM_AUTHORIZATION_HISTORY
+    set SYS_AUTH_ID = #{record.sysAuthId,jdbcType=DECIMAL},
+      TOKEN = #{record.token,jdbcType=VARCHAR},
+      PHONE_NUM = #{record.phoneNum,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      REQ_IP = #{record.reqIp,jdbcType=VARCHAR},
+      AUTH_RESULT = #{record.authResult,jdbcType=DECIMAL},
+      FAIL_REASON = #{record.failReason,jdbcType=DECIMAL},
+      FAIL_REASON_TEXT = #{record.failReasonText,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      INVALID_TIME = #{record.invalidTime,jdbcType=DATE},
+      TOKEN_USE_TIME = #{record.tokenUseTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistory" >
+    update SYSTEM_AUTHORIZATION_HISTORY
+    <set >
+      <if test="token != null" >
+        TOKEN = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="reqIp != null" >
+        REQ_IP = #{reqIp,jdbcType=VARCHAR},
+      </if>
+      <if test="authResult != null" >
+        AUTH_RESULT = #{authResult,jdbcType=DECIMAL},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=DECIMAL},
+      </if>
+      <if test="failReasonText != null" >
+        FAIL_REASON_TEXT = #{failReasonText,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME = #{invalidTime,jdbcType=DATE},
+      </if>
+      <if test="tokenUseTime != null" >
+        TOKEN_USE_TIME = #{tokenUseTime,jdbcType=DATE},
+      </if>
+    </set>
+    where SYS_AUTH_ID = #{sysAuthId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.auth.SystemAuthorizationHistory" >
+    update SYSTEM_AUTHORIZATION_HISTORY
+    set TOKEN = #{token,jdbcType=VARCHAR},
+      PHONE_NUM = #{phoneNum,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      REQ_IP = #{reqIp,jdbcType=VARCHAR},
+      AUTH_RESULT = #{authResult,jdbcType=DECIMAL},
+      FAIL_REASON = #{failReason,jdbcType=DECIMAL},
+      FAIL_REASON_TEXT = #{failReasonText,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      INVALID_TIME = #{invalidTime,jdbcType=DATE},
+      TOKEN_USE_TIME = #{tokenUseTime,jdbcType=DATE}
+    where SYS_AUTH_ID = #{sysAuthId,jdbcType=DECIMAL}
+  </update>
+</mapper>

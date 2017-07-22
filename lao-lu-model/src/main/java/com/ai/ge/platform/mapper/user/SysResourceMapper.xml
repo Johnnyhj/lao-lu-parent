@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysResourceMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysResource">
+        <id column="ID" property="id" jdbcType="DECIMAL" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="URL" property="url" jdbcType="VARCHAR" />
+        <result column="PARENT_ID" property="parentId" jdbcType="DECIMAL" />
+        <result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+        <result column="PERMISSION" property="permission" jdbcType="VARCHAR" />
+        <result column="AVAILABLE" property="available" jdbcType="DECIMAL" />
+        <result column="ROOT_ID" property="rootId" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        ID, NAME, TYPE, URL, PARENT_ID, PARENT_IDS, PERMISSION, AVAILABLE, ROOT_ID, CREATE_TIME,
+        UPDATE_TIME
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysResourceExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYS_RESOURCE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="listForTree" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_RESOURCE
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_RESOURCE
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_RESOURCE
+        where ID = #{id,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysResourceExample">
+        delete from SYS_RESOURCE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysResource">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+        insert into SYS_RESOURCE (NAME, TYPE,
+        URL, PARENT_ID, PARENT_IDS,
+        PERMISSION, AVAILABLE, ROOT_ID,
+        CREATE_TIME, UPDATE_TIME)
+        values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{url,jdbcType=VARCHAR}, #{parentId,jdbcType=DECIMAL}, #{parentIds,jdbcType=VARCHAR},
+        #{permission,jdbcType=VARCHAR}, #{available,jdbcType=DECIMAL}, #{rootId,jdbcType=DECIMAL},
+        #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysResource">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+        insert into SYS_RESOURCE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="url != null">
+                URL,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="parentIds != null">
+                PARENT_IDS,
+            </if>
+            <if test="permission != null">
+                PERMISSION,
+            </if>
+            <if test="available != null">
+                AVAILABLE,
+            </if>
+            <if test="rootId != null">
+                ROOT_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="parentIds != null">
+                #{parentIds,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null">
+                #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                #{available,jdbcType=DECIMAL},
+            </if>
+            <if test="rootId != null">
+                #{rootId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysResourceExample" resultType="java.lang.Integer">
+        select count(*) from SYS_RESOURCE
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_RESOURCE
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=DECIMAL},
+            </if>
+            <if test="record.name != null">
+                NAME = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                TYPE = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.url != null">
+                URL = #{record.url,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null">
+                PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.parentIds != null">
+                PARENT_IDS = #{record.parentIds,jdbcType=VARCHAR},
+            </if>
+            <if test="record.permission != null">
+                PERMISSION = #{record.permission,jdbcType=VARCHAR},
+            </if>
+            <if test="record.available != null">
+                AVAILABLE = #{record.available,jdbcType=DECIMAL},
+            </if>
+            <if test="record.rootId != null">
+                ROOT_ID = #{record.rootId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=DATE},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYS_RESOURCE
+        set ID = #{record.id,jdbcType=DECIMAL},
+        NAME = #{record.name,jdbcType=VARCHAR},
+        TYPE = #{record.type,jdbcType=VARCHAR},
+        URL = #{record.url,jdbcType=VARCHAR},
+        PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+        PARENT_IDS = #{record.parentIds,jdbcType=VARCHAR},
+        PERMISSION = #{record.permission,jdbcType=VARCHAR},
+        AVAILABLE = #{record.available,jdbcType=DECIMAL},
+        ROOT_ID = #{record.rootId,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.SysResource">
+        update SYS_RESOURCE
+        <set>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                TYPE = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                URL = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="parentIds != null">
+                PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+            </if>
+            <if test="permission != null">
+                PERMISSION = #{permission,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                AVAILABLE = #{available,jdbcType=DECIMAL},
+            </if>
+            <if test="rootId != null">
+                ROOT_ID = #{rootId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=DATE},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.SysResource">
+        update SYS_RESOURCE
+        set NAME = #{name,jdbcType=VARCHAR},
+        TYPE = #{type,jdbcType=VARCHAR},
+        URL = #{url,jdbcType=VARCHAR},
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+        PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+        PERMISSION = #{permission,jdbcType=VARCHAR},
+        AVAILABLE = #{available,jdbcType=DECIMAL},
+        ROOT_ID = #{rootId,jdbcType=DECIMAL},
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+        UPDATE_TIME = #{updateTime,jdbcType=DATE}
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <select id="listObjectByUsername" resultMap="BaseResultMap">
+        select *
+        from sys_resource r
+        left join sys_role_resource_releation rr
+        on r.id = rr.sys_resource_id
+        left join sys_role ro
+        on rr.sys_role_id = ro.id
+        left join (<include refid="com.ai.ge.platform.mapper.user.SysUserRoleReleationMapper.select_valid_table" />) ur
+        on ro.id = ur.sys_role_id
+        left join sys_user su
+        on ur.sys_user_id = su.id
+        where su.username = #{userName}
+        <if test="null != resourceType and '' != resourceType">
+            and r.type = #{resourceType}
+        </if>
+    </select>
+
+    <select id="listObjectByUsernameOrga" resultMap="BaseResultMap">
+        select res.* from (<include refid="com.ai.ge.platform.mapper.user.SysOrganizationMapper.select_orga_permission_by_username" />) res where 1=1
+        <if test="null != resourceType and '' != resourceType">
+            and res.type = #{resourceType}
+        </if>
+    </select>
+</mapper>

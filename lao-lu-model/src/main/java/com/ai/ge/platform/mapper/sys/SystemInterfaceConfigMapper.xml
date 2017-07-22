@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.SystemInterfaceConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.SystemInterfaceConfig" >
+    <id column="INTERFACE_CONFIG_ID" property="interfaceConfigId" jdbcType="DECIMAL" />
+    <result column="INTERFACE_CHANNEL" property="interfaceChannel" jdbcType="VARCHAR" />
+    <result column="INTERFACE_CONFIG_CODE" property="interfaceConfigCode" jdbcType="VARCHAR" />
+    <result column="INTERFACE_CONFIG_NAME" property="interfaceConfigName" jdbcType="VARCHAR" />
+    <result column="INTERFACE_CONFIG_URL" property="interfaceConfigUrl" jdbcType="VARCHAR" />
+    <result column="REQUEST_TEMPLATE_URL" property="requestTemplateUrl" jdbcType="VARCHAR" />
+    <result column="INTERFACE_CONFIG_VERSION" property="interfaceConfigVersion" jdbcType="DECIMAL" />
+    <result column="INTERFACE_INSTANCE" property="interfaceInstance" jdbcType="VARCHAR" />
+    <result column="INTERFACE_USERNAME" property="interfaceUsername" jdbcType="VARCHAR" />
+    <result column="INTERFACE_PASSWORD" property="interfacePassword" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INTERFACE_CONFIG_ID, INTERFACE_CHANNEL, INTERFACE_CONFIG_CODE, INTERFACE_CONFIG_NAME, 
+    INTERFACE_CONFIG_URL, REQUEST_TEMPLATE_URL, INTERFACE_CONFIG_VERSION, INTERFACE_INSTANCE, 
+    INTERFACE_USERNAME, INTERFACE_PASSWORD
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYSTEM_INTERFACE_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYSTEM_INTERFACE_CONFIG
+    where INTERFACE_CONFIG_ID = #{interfaceConfigId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYSTEM_INTERFACE_CONFIG
+    where INTERFACE_CONFIG_ID = #{interfaceConfigId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfigExample" >
+    delete from SYSTEM_INTERFACE_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfig" >
+    insert into SYSTEM_INTERFACE_CONFIG (INTERFACE_CONFIG_ID, INTERFACE_CHANNEL, 
+      INTERFACE_CONFIG_CODE, INTERFACE_CONFIG_NAME, 
+      INTERFACE_CONFIG_URL, REQUEST_TEMPLATE_URL, 
+      INTERFACE_CONFIG_VERSION, INTERFACE_INSTANCE, 
+      INTERFACE_USERNAME, INTERFACE_PASSWORD)
+    values (#{interfaceConfigId,jdbcType=DECIMAL}, #{interfaceChannel,jdbcType=VARCHAR}, 
+      #{interfaceConfigCode,jdbcType=VARCHAR}, #{interfaceConfigName,jdbcType=VARCHAR}, 
+      #{interfaceConfigUrl,jdbcType=VARCHAR}, #{requestTemplateUrl,jdbcType=VARCHAR}, 
+      #{interfaceConfigVersion,jdbcType=DECIMAL}, #{interfaceInstance,jdbcType=VARCHAR}, 
+      #{interfaceUsername,jdbcType=VARCHAR}, #{interfacePassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfig" >
+    insert into SYSTEM_INTERFACE_CONFIG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="interfaceConfigId != null" >
+        INTERFACE_CONFIG_ID,
+      </if>
+      <if test="interfaceChannel != null" >
+        INTERFACE_CHANNEL,
+      </if>
+      <if test="interfaceConfigCode != null" >
+        INTERFACE_CONFIG_CODE,
+      </if>
+      <if test="interfaceConfigName != null" >
+        INTERFACE_CONFIG_NAME,
+      </if>
+      <if test="interfaceConfigUrl != null" >
+        INTERFACE_CONFIG_URL,
+      </if>
+      <if test="requestTemplateUrl != null" >
+        REQUEST_TEMPLATE_URL,
+      </if>
+      <if test="interfaceConfigVersion != null" >
+        INTERFACE_CONFIG_VERSION,
+      </if>
+      <if test="interfaceInstance != null" >
+        INTERFACE_INSTANCE,
+      </if>
+      <if test="interfaceUsername != null" >
+        INTERFACE_USERNAME,
+      </if>
+      <if test="interfacePassword != null" >
+        INTERFACE_PASSWORD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="interfaceConfigId != null" >
+        #{interfaceConfigId,jdbcType=DECIMAL},
+      </if>
+      <if test="interfaceChannel != null" >
+        #{interfaceChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigCode != null" >
+        #{interfaceConfigCode,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigName != null" >
+        #{interfaceConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigUrl != null" >
+        #{interfaceConfigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTemplateUrl != null" >
+        #{requestTemplateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigVersion != null" >
+        #{interfaceConfigVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="interfaceInstance != null" >
+        #{interfaceInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceUsername != null" >
+        #{interfaceUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="interfacePassword != null" >
+        #{interfacePassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfigExample" resultType="java.lang.Integer" >
+    select count(*) from SYSTEM_INTERFACE_CONFIG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYSTEM_INTERFACE_CONFIG
+    <set >
+      <if test="record.interfaceConfigId != null" >
+        INTERFACE_CONFIG_ID = #{record.interfaceConfigId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.interfaceChannel != null" >
+        INTERFACE_CHANNEL = #{record.interfaceChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceConfigCode != null" >
+        INTERFACE_CONFIG_CODE = #{record.interfaceConfigCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceConfigName != null" >
+        INTERFACE_CONFIG_NAME = #{record.interfaceConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceConfigUrl != null" >
+        INTERFACE_CONFIG_URL = #{record.interfaceConfigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestTemplateUrl != null" >
+        REQUEST_TEMPLATE_URL = #{record.requestTemplateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceConfigVersion != null" >
+        INTERFACE_CONFIG_VERSION = #{record.interfaceConfigVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="record.interfaceInstance != null" >
+        INTERFACE_INSTANCE = #{record.interfaceInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfaceUsername != null" >
+        INTERFACE_USERNAME = #{record.interfaceUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interfacePassword != null" >
+        INTERFACE_PASSWORD = #{record.interfacePassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYSTEM_INTERFACE_CONFIG
+    set INTERFACE_CONFIG_ID = #{record.interfaceConfigId,jdbcType=DECIMAL},
+      INTERFACE_CHANNEL = #{record.interfaceChannel,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_CODE = #{record.interfaceConfigCode,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_NAME = #{record.interfaceConfigName,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_URL = #{record.interfaceConfigUrl,jdbcType=VARCHAR},
+      REQUEST_TEMPLATE_URL = #{record.requestTemplateUrl,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_VERSION = #{record.interfaceConfigVersion,jdbcType=DECIMAL},
+      INTERFACE_INSTANCE = #{record.interfaceInstance,jdbcType=VARCHAR},
+      INTERFACE_USERNAME = #{record.interfaceUsername,jdbcType=VARCHAR},
+      INTERFACE_PASSWORD = #{record.interfacePassword,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfig" >
+    update SYSTEM_INTERFACE_CONFIG
+    <set >
+      <if test="interfaceChannel != null" >
+        INTERFACE_CHANNEL = #{interfaceChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigCode != null" >
+        INTERFACE_CONFIG_CODE = #{interfaceConfigCode,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigName != null" >
+        INTERFACE_CONFIG_NAME = #{interfaceConfigName,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigUrl != null" >
+        INTERFACE_CONFIG_URL = #{interfaceConfigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="requestTemplateUrl != null" >
+        REQUEST_TEMPLATE_URL = #{requestTemplateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceConfigVersion != null" >
+        INTERFACE_CONFIG_VERSION = #{interfaceConfigVersion,jdbcType=DECIMAL},
+      </if>
+      <if test="interfaceInstance != null" >
+        INTERFACE_INSTANCE = #{interfaceInstance,jdbcType=VARCHAR},
+      </if>
+      <if test="interfaceUsername != null" >
+        INTERFACE_USERNAME = #{interfaceUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="interfacePassword != null" >
+        INTERFACE_PASSWORD = #{interfacePassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INTERFACE_CONFIG_ID = #{interfaceConfigId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.SystemInterfaceConfig" >
+    update SYSTEM_INTERFACE_CONFIG
+    set INTERFACE_CHANNEL = #{interfaceChannel,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_CODE = #{interfaceConfigCode,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_NAME = #{interfaceConfigName,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_URL = #{interfaceConfigUrl,jdbcType=VARCHAR},
+      REQUEST_TEMPLATE_URL = #{requestTemplateUrl,jdbcType=VARCHAR},
+      INTERFACE_CONFIG_VERSION = #{interfaceConfigVersion,jdbcType=DECIMAL},
+      INTERFACE_INSTANCE = #{interfaceInstance,jdbcType=VARCHAR},
+      INTERFACE_USERNAME = #{interfaceUsername,jdbcType=VARCHAR},
+      INTERFACE_PASSWORD = #{interfacePassword,jdbcType=VARCHAR}
+    where INTERFACE_CONFIG_ID = #{interfaceConfigId,jdbcType=DECIMAL}
+  </update>
+</mapper>

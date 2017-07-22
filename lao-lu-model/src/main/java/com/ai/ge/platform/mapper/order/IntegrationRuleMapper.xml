@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.IntegrationRuleMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.IntegrationRule" >
+    <id column="INTEGRATION_RULE_ID" property="integrationRuleId" jdbcType="BIGINT" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="SMALLINT" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="INTEGRATION" property="integration" jdbcType="VARCHAR" />
+    <result column="EXTEND" property="extend" jdbcType="VARCHAR" />
+    <result column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_TIMES" property="performanceTimes" jdbcType="INTEGER" />
+    <result column="RULE_TYPE" property="ruleType" jdbcType="SMALLINT" />
+  </resultMap>
+
+  <resultMap id="IntegrationRuleDtoMap" type="com.ai.ge.platform.dto.order.IntegrationRuleDto" extends="BaseResultMap">
+    <result column="PROVINCE_AEAR_NAME" property="provinceAearName" jdbcType="VARCHAR" />
+    <result column="CITY_AEAR_NAME" property="cityAearName" jdbcType="VARCHAR" />
+    <result column="OFFER_SPEC_NAME" property="offerSpecName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    INTEGRATION_RULE_ID, PROVINCE_AEAR_ID, CITY_AEAR_ID, IS_DEFAULT, STATUS, INTEGRATION, 
+    EXTEND, OFFER_SPEC_ID, PERFORMANCE_TIMES, RULE_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.IntegrationRuleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from integration_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from integration_rule
+    where INTEGRATION_RULE_ID = #{integrationRuleId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from integration_rule
+    where INTEGRATION_RULE_ID = #{integrationRuleId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.IntegrationRuleExample" >
+    delete from integration_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.IntegrationRule" >
+    insert into integration_rule (INTEGRATION_RULE_ID, PROVINCE_AEAR_ID, 
+      CITY_AEAR_ID, IS_DEFAULT, STATUS, 
+      INTEGRATION, EXTEND, OFFER_SPEC_ID, 
+      PERFORMANCE_TIMES, RULE_TYPE)
+    values (#{integrationRuleId,jdbcType=BIGINT}, #{provinceAearId,jdbcType=BIGINT}, 
+      #{cityAearId,jdbcType=BIGINT}, #{isDefault,jdbcType=SMALLINT}, #{status,jdbcType=SMALLINT}, 
+      #{integration,jdbcType=VARCHAR}, #{extend,jdbcType=VARCHAR}, #{offerSpecId,jdbcType=BIGINT}, 
+      #{performanceTimes,jdbcType=INTEGER}, #{ruleType,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.IntegrationRule" >
+
+      <selectKey resultType="long" keyProperty="integrationRuleId" order="AFTER">
+          select last_insert_id() as integrationRuleId
+      </selectKey>
+
+    insert into integration_rule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID,
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="integration != null" >
+        INTEGRATION,
+      </if>
+      <if test="extend != null" >
+        EXTEND,
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="performanceTimes != null" >
+        PERFORMANCE_TIMES,
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="integration != null" >
+        #{integration,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null" >
+        #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceTimes != null" >
+        #{performanceTimes,jdbcType=INTEGER},
+      </if>
+      <if test="ruleType != null" >
+        #{ruleType,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.IntegrationRuleExample" resultType="java.lang.Integer" >
+    select count(*) from integration_rule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update integration_rule
+    <set >
+      <if test="record.integrationRuleId != null" >
+        INTEGRATION_RULE_ID = #{record.integrationRuleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityAearId != null" >
+        CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDefault != null" >
+        IS_DEFAULT = #{record.isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.integration != null" >
+        INTEGRATION = #{record.integration,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extend != null" >
+        EXTEND = #{record.extend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceTimes != null" >
+        PERFORMANCE_TIMES = #{record.performanceTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.ruleType != null" >
+        RULE_TYPE = #{record.ruleType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update integration_rule
+    set INTEGRATION_RULE_ID = #{record.integrationRuleId,jdbcType=BIGINT},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      IS_DEFAULT = #{record.isDefault,jdbcType=SMALLINT},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      INTEGRATION = #{record.integration,jdbcType=VARCHAR},
+      EXTEND = #{record.extend,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      PERFORMANCE_TIMES = #{record.performanceTimes,jdbcType=INTEGER},
+      RULE_TYPE = #{record.ruleType,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.IntegrationRule" >
+    update integration_rule
+    <set >
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT = #{isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="integration != null" >
+        INTEGRATION = #{integration,jdbcType=VARCHAR},
+      </if>
+      <if test="extend != null" >
+        EXTEND = #{extend,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceTimes != null" >
+        PERFORMANCE_TIMES = #{performanceTimes,jdbcType=INTEGER},
+      </if>
+      <if test="ruleType != null" >
+        RULE_TYPE = #{ruleType,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where INTEGRATION_RULE_ID = #{integrationRuleId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.IntegrationRule" >
+    update integration_rule
+    set PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      IS_DEFAULT = #{isDefault,jdbcType=SMALLINT},
+      STATUS = #{status,jdbcType=SMALLINT},
+      INTEGRATION = #{integration,jdbcType=VARCHAR},
+      EXTEND = #{extend,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      PERFORMANCE_TIMES = #{performanceTimes,jdbcType=INTEGER},
+      RULE_TYPE = #{ruleType,jdbcType=SMALLINT}
+    where INTEGRATION_RULE_ID = #{integrationRuleId,jdbcType=BIGINT}
+  </update>
+
+  <select id="listBySelective" resultMap="IntegrationRuleDtoMap" parameterType="com.ai.ge.platform.model.order.IntegrationRule" >
+      SELECT i.*,
+        os.name as OFFER_SPEC_NAME,
+        sa1.area_name as PROVINCE_AEAR_NAME,
+        sa2.area_name as CITY_AEAR_NAME
+      from
+      (
+          SELECT
+          <include refid="Base_Column_List"/> FROM integration_rule where 1=1
+          <if test="provinceAearId != null" >
+              and PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT}
+          </if>
+          <if test="cityAearId != null" >
+              and CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+          </if>
+          <if test="isDefault != null">and IS_DEFAULT = #{isDefault,jdbcType=SMALLINT}
+          </if>
+          <if test="status != null" >
+              and STATUS = #{status,jdbcType=SMALLINT}
+          </if>
+          <if test="integration != null" >
+            and INTEGRATION = #{integration,jdbcType=VARCHAR}
+          </if>
+          <if test="extend != null" >
+            and EXTEND = #{extend,jdbcType=VARCHAR}
+          </if>
+          <if test="offerSpecId != null" >
+            and OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT}
+          </if>
+          <if test="performanceTimes != null" >
+            and PERFORMANCE_TIMES = #{performanceTimes,jdbcType=INTEGER}
+          </if>
+          <if test="ruleType != null" >
+            and RULE_TYPE = #{ruleType,jdbcType=SMALLINT}
+          </if>
+          <if test="integrationRuleId != null" >
+            and INTEGRATION_RULE_ID = #{integrationRuleId,jdbcType=BIGINT}
+          </if>
+      ) i
+      left join offer_spec os on os.OFFER_SPEC_ID = i.OFFER_SPEC_ID
+      LEFT JOIN system_area sa1 ON i.PROVINCE_AEAR_ID = sa1.AREA_ID
+      LEFT JOIN system_area sa2 ON i.CITY_AEAR_ID = sa2.AREA_ID
+
+  </select>
+
+</mapper>

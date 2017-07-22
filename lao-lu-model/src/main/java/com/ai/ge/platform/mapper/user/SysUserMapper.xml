@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysUserMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysUser">
+        <id column="ID" property="id" jdbcType="DECIMAL" />
+        <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+        <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+        <result column="SALT" property="salt" jdbcType="VARCHAR" />
+        <result column="ROLE_IDS" property="roleIds" jdbcType="VARCHAR" />
+        <result column="LOCKED" property="locked" jdbcType="DECIMAL" />
+        <result column="USER_TYPE" property="userType" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="TEL_PHONE" property="telPhone" jdbcType="VARCHAR" />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    	<result column="JOB_UNIT" property="jobUnit" jdbcType="VARCHAR" />
+        <result column="USER_LEVEL" property="userLevel" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="SysUserRoleMap" type="com.ai.ge.platform.dto.user.SysUserDto" extends="BaseResultMap">
+        <collection property="sysUserRoleReleations" ofType="com.ai.ge.platform.model.user.SysUserRoleReleation"
+                    select="com.al.ec.platform.mapper.user.SysUserRoleReleationMapper.selectSysUserRoleByUserId"
+                    column="userId=ID"
+                >
+        </collection>
+    </resultMap>
+
+    <resultMap id="SysUserRoleOrgaMap" type="com.ai.ge.platform.dto.user.SysUserDto" extends="BaseResultMap">
+        <association property="primaryUserOrgaRel" javaType="com.ai.ge.platform.dto.user.SysUserOrganizationDto">
+            <result column="ORGA_NAME" property="orgaName" jdbcType="VARCHAR" />
+            <result column="ORGA_ID" property="orgaId" jdbcType="VARCHAR" />
+        </association>
+
+        <collection property="sysUserRoleReleations" ofType="com.ai.ge.platform.model.user.SysUserRoleReleation"
+                    select="com.ai.ge.platform.mapper.user.SysUserRoleReleationMapper.selectSysUserRoleByUserId"
+                    column="userId=ID">
+        </collection>
+    </resultMap>
+
+    <resultMap id="SysUserAreaMap" type="com.ai.ge.platform.dto.user.SysUserDto" extends="BaseResultMap">
+        <association property="systemArea" javaType="com.ai.ge.platform.model.sys.SystemArea">
+            <result column="area_id" property="areaId" jdbcType="DECIMAL" />
+            <result column="area_Name" property="areaName" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ID, USERNAME, PASSWORD, SALT, LOCKED, USER_TYPE, TEL_PHONE, EMAIL, JOB_UNIT, USER_LEVEL, 
+    CREATE_TIME, UPDATE_TIME
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysUserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYS_USER
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_USER
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_USER
+        where ID = #{id,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysUserExample">
+        delete from SYS_USER
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysUser">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+    insert into sys_user (ID, USERNAME, PASSWORD, 
+      SALT, LOCKED, USER_TYPE, 
+      TEL_PHONE, EMAIL, JOB_UNIT, 
+      USER_LEVEL, CREATE_TIME, UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{salt,jdbcType=VARCHAR}, #{locked,jdbcType=SMALLINT}, #{userType,jdbcType=SMALLINT}, 
+      #{telPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{jobUnit,jdbcType=VARCHAR}, 
+      #{userLevel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysUser">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+        insert into SYS_USER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                USERNAME,
+            </if>
+            <if test="password != null">
+                PASSWORD,
+            </if>
+            <if test="salt != null">
+                SALT,
+            </if>
+            <if test="roleIds != null">
+                ROLE_IDS,
+            </if>
+            <if test="locked != null">
+                LOCKED,
+            </if>
+            <if test="userType != null">
+                USER_TYPE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+            <if test="telPhone != null">
+                TEL_PHONE,
+            </if>
+            <if test="email != null">
+                EMAIL,
+            </if>
+            <if test="jobUnit != null" >
+                JOB_UNIT,
+              </if>
+              <if test="userLevel != null" >
+                USER_LEVEL,
+              </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="roleIds != null">
+                #{roleIds,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=DECIMAL},
+            </if>
+            <if test="userType != null">
+                #{userType,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=DATE},
+            </if>
+            <if test="telPhone != null">
+                #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+              <if test="jobUnit != null" >
+                #{jobUnit,jdbcType=VARCHAR},
+              </if>
+              <if test="userLevel != null" >
+                #{userLevel,jdbcType=VARCHAR},
+              </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysUserExample" resultType="java.lang.Integer">
+        select count(*) from SYS_USER
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <select id="listByExample" resultMap="SysUserRoleMap" parameterType="com.ai.ge.platform.model.user.SysUserExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        ID, ORGANIZATION_ID, USERNAME, PASSWORD, SALT, ROLE_IDS, LOCKED, USER_TYPE,ur.SURR_ID, ur.SYS_USER_ID, ur.SYS_ROLE_ID
+        from SYS_USER
+        left join SYS_USER_ROLE_RELEATION ur
+        on SYS_USER.ID = ur.SYS_USER_ID
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_USER
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=DECIMAL},
+            </if>
+            <if test="record.username != null">
+                USERNAME = #{record.username,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                PASSWORD = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.salt != null">
+                SALT = #{record.salt,jdbcType=VARCHAR},
+            </if>
+            <if test="record.roleIds != null">
+                ROLE_IDS = #{record.roleIds,jdbcType=VARCHAR},
+            </if>
+            <if test="record.locked != null">
+                LOCKED = #{record.locked,jdbcType=DECIMAL},
+            </if>
+            <if test="record.userType != null">
+                USER_TYPE = #{record.userType,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=DATE},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+            </if>
+            <if test="record.telPhone != null">
+                TEL_PHONE = #{record.telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.email != null">
+                EMAIL = #{record.email,jdbcType=VARCHAR},
+            </if>
+              <if test="record.jobUnit != null" >
+                JOB_UNIT = #{record.jobUnit,jdbcType=VARCHAR},
+              </if>
+              <if test="record.userLevel != null" >
+                USER_LEVEL = #{record.userLevel,jdbcType=VARCHAR},
+              </if>
+        </set>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update sys_user
+    set ID = #{record.id,jdbcType=BIGINT},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      SALT = #{record.salt,jdbcType=VARCHAR},
+      LOCKED = #{record.locked,jdbcType=SMALLINT},
+      USER_TYPE = #{record.userType,jdbcType=SMALLINT},
+      TEL_PHONE = #{record.telPhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      JOB_UNIT = #{record.jobUnit,jdbcType=VARCHAR},
+      USER_LEVEL = #{record.userLevel,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.SysUser">
+        update SYS_USER
+        <set>
+            
+      <if test="username != null" >
+        USERNAME = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="salt != null">
+                SALT = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="roleIds != null">
+                ROLE_IDS = #{roleIds,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                LOCKED = #{locked,jdbcType=DECIMAL},
+            </if>
+            <if test="userType != null">
+                USER_TYPE = #{userType,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=DATE},
+            </if>
+            UPDATE_TIME = #{updateTime,jdbcType=DATE},
+            <if test="telPhone != null">
+                TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email,jdbcType=VARCHAR},
+            </if>
+              <if test="jobUnit != null" >
+                JOB_UNIT = #{jobUnit,jdbcType=VARCHAR},
+              </if>
+              <if test="userLevel != null" >
+                USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+              </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.SysUser">
+        update sys_user
+    set USERNAME = #{username,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
+      LOCKED = #{locked,jdbcType=SMALLINT},
+      USER_TYPE = #{userType,jdbcType=SMALLINT},
+      TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      JOB_UNIT = #{jobUnit,jdbcType=VARCHAR},
+      USER_LEVEL = #{userLevel,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}}
+    where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <select id="searchSysUser" resultMap="SysUserRoleOrgaMap" parameterType="map">
+        select
+            u.*,
+            uo.orga_id ORGA_ID,
+            o.name ORGA_NAME
+
+        from SYS_USER u left join SYS_USER_ORGANIZATION uo on u.id = uo.user_id
+        left join SYS_ORGANIZATION o on uo.orga_id = o.id
+        where 1=1
+        <if test="null != username and '' != username">
+            and u.USERNAME like '%' || #{username} || '%'
+        </if>
+
+        <if test="null != locked and '' != locked">
+            and u.locked = #{locked}
+        </if>
+
+        <choose>
+            <when test="null != userType and '' != userType">
+                and USER_TYPE = #{userType}
+            </when>
+            <otherwise>
+                and USER_TYPE in ('0', '1', '2', '3')
+            </otherwise>
+        </choose>
+
+        order by u.USERNAME
+
+    </select>
+    
+    <select id="selectSysUserRoleOrga" resultMap="SysUserRoleOrgaMap" parameterType="map">
+        select
+            u.*,
+            uo.orga_id ORGA_ID,
+            o.name ORGA_NAME
+
+        from SYS_USER u left join SYS_USER_ORGANIZATION uo on u.id = uo.user_id
+        left join SYS_ORGANIZATION o on uo.orga_id = o.id
+        where 1=1
+        <if test="null != userName and '' != userName">
+            and u.username = #{userName}
+        </if>
+        <if test="null != userId">
+            and u.id = #{userId}
+        </if>
+    </select>
+
+    <select id="searchSysUserArea" resultMap="SysUserAreaMap" parameterType="map">
+        select u.*, sa.*
+        from SYS_USER u left join system_area sa on u.id = uo.user_id
+        where 1=1
+
+        <if test="null != userId">
+            and u.id = #{userId}
+        </if>
+    </select>
+
+    <!-- 查询区域下的用户 -->
+    <select id="selectUserByArea" resultMap="BaseResultMap" parameterType="map">
+        select su.id, su.username from sys_user su where 1=1
+        <if test="null != userKey and '' != userKey">
+          and su.username like '%' || #{userKey} || '%'
+        </if>
+        and su.id in
+        (
+            select distinct suar.user_id from sys_user_area_rel suar where suar.area_id in
+            (
+                select sa.area_id from sys_area sa where 1=1
+                <if test="null != areaKey and '' != areaKey">
+                    and sa.name like '%' || #{areaKey} || '%'
+                </if>
+            )
+        )
+    </select>
+
+    <select id="selectBySelective" resultMap="SysUserAreaMap" parameterType="com.ai.ge.platform.model.user.SysUser">
+        SELECT <include refid="Base_Column_List"/> from SYS_USER WHERE  1=1
+            <if test="organizationId != null">
+                and ORGANIZATION_ID = #{organizationId,jdbcType=DECIMAL}
+            </if>
+            <if test="username != null" >
+                and USERNAME = #{username,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and PASSWORD = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="salt != null">
+                and SALT = #{salt,jdbcType=VARCHAR}
+            </if>
+            <if test="roleIds != null">
+                and ROLE_IDS = #{roleIds,jdbcType=VARCHAR}
+            </if>
+            <if test="locked != null">
+                and LOCKED = #{locked,jdbcType=DECIMAL}
+            </if>
+            <if test="userType != null">
+                and USER_TYPE = #{userType,jdbcType=DECIMAL}
+            </if>
+            <if test="telPhone != null">
+                and TEL_PHONE = #{telPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and EMAIL = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="jobUnit != null">
+                and JOB_UNIT = #{jobUnit,jdbcType=VARCHAR}
+            </if>
+            <if test="userLevel != null" >
+                and USER_LEVEL = #{userLevel,jdbcType=VARCHAR}
+            </if>
+            <if test="staffId != null" >
+                and STAFF_ID = #{staffId,jdbcType=DECIMAL}
+            </if>
+    </select>
+
+</mapper>

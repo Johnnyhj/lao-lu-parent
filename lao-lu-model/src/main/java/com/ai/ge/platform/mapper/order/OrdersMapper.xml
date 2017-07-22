@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.Orders" >
+    <id column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="PROD_ID" property="prodId" jdbcType="BIGINT" />
+    <result column="PROD_SALE_ATTR_ID" property="prodSaleAttrId" jdbcType="BIGINT" />
+    <result column="ORDERS_OUT_ID" property="ordersOutId" jdbcType="BIGINT" />
+    <result column="PROVID_ID" property="providId" jdbcType="BIGINT" />
+    <result column="ORDER_SEQ" property="orderSeq" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="INTEGER" />
+    <result column="ORDERS_MONEY" property="ordersMoney" jdbcType="REAL" />
+    <result column="EXPRESS_MONEY" property="expressMoney" jdbcType="REAL" />
+    <result column="TOTAL_MONEY" property="totalMoney" jdbcType="REAL" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="ORDER_DESCRIBE" property="orderDescribe" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_PHONE" property="customerPhone" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ADDRESS" property="customerAddress" jdbcType="VARCHAR" />
+    <result column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="TEL_PHONE" property="telPhone" jdbcType="VARCHAR" />
+    <result column="LOAN_MONEY" property="loanMoney" jdbcType="REAL" />
+    <result column="PAY_MONEY" property="payMoney" jdbcType="REAL" />
+    <result column="LENDER_ID" property="lenderId" jdbcType="BIGINT" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+    <result column="CERT_NO" property="certNo" jdbcType="VARCHAR" />
+    <result column="CERT_TYPE_VALUE" property="certTypeValue" jdbcType="VARCHAR" />
+    <result column="OL_NBR" property="olNbr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="OrdersDtoResultMap" type="com.ai.ge.platform.dto.order.OrdersDto" extends="BaseResultMap" >
+      <association property="offerSpec" javaType="com.ai.ge.platform.model.order.OfferSpec"
+                   resultMap="com.ai.ge.platform.mapper.order.OfferSpecMapper.AliasBaseResultMap" column="offer_Spec_Id"
+                   select="com.ai.ge.platform.mapper.order.OfferSpecMapper.selectByPrimaryKey"></association>
+
+      <association property="productDto" javaType="com.ai.ge.platform.dto.product.ProductDto"
+                   resultMap="com.ai.ge.platform.mapper.product.ProductMapper.ProductDtoResultMap" column="PROD_ID"
+                   select="com.ai.ge.platform.mapper.product.ProductMapper.selectProductDetail"></association>
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PROD_ID, PROD_SALE_ATTR_ID, ORDERS_OUT_ID, PROVID_ID, ORDER_SEQ, QUANTITY, 
+    ORDERS_MONEY, EXPRESS_MONEY, TOTAL_MONEY, CUST_ID, CREATE_TIME, UPDATE_TIME, STATUS, 
+    ORDER_DESCRIBE, CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS, OFFER_SPEC_ID, TEL_PHONE, 
+    LOAN_MONEY, PAY_MONEY, LENDER_ID, PROVINCE_AEAR_ID, CITY_AEAR_ID, CERT_NO, CERT_TYPE_VALUE, 
+    OL_NBR
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from orders
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.Orders" >
+    insert into orders (ORDER_ID, PROD_ID, PROD_SALE_ATTR_ID, 
+      ORDERS_OUT_ID, PROVID_ID, ORDER_SEQ, 
+      QUANTITY, ORDERS_MONEY, EXPRESS_MONEY, 
+      TOTAL_MONEY, CUST_ID, CREATE_TIME, 
+      UPDATE_TIME, STATUS, ORDER_DESCRIBE, 
+      CUSTOMER_NAME, CUSTOMER_PHONE, CUSTOMER_ADDRESS, 
+      OFFER_SPEC_ID, TEL_PHONE, LOAN_MONEY, 
+      PAY_MONEY, LENDER_ID, PROVINCE_AEAR_ID, 
+      CITY_AEAR_ID, CERT_NO, CERT_TYPE_VALUE, 
+      OL_NBR)
+    values (#{orderId,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, #{prodSaleAttrId,jdbcType=BIGINT}, 
+      #{ordersOutId,jdbcType=BIGINT}, #{providId,jdbcType=BIGINT}, #{orderSeq,jdbcType=VARCHAR}, 
+      #{quantity,jdbcType=INTEGER}, #{ordersMoney,jdbcType=REAL}, #{expressMoney,jdbcType=REAL}, 
+      #{totalMoney,jdbcType=REAL}, #{custId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=SMALLINT}, #{orderDescribe,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{customerPhone,jdbcType=VARCHAR}, #{customerAddress,jdbcType=VARCHAR}, 
+      #{offerSpecId,jdbcType=BIGINT}, #{telPhone,jdbcType=VARCHAR}, #{loanMoney,jdbcType=REAL}, 
+      #{payMoney,jdbcType=REAL}, #{lenderId,jdbcType=BIGINT}, #{provinceAearId,jdbcType=BIGINT}, 
+      #{cityAearId,jdbcType=BIGINT}, #{certNo,jdbcType=VARCHAR}, #{certTypeValue,jdbcType=VARCHAR}, 
+      #{olNbr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.Orders" >
+
+    <selectKey resultType="long" keyProperty="orderId" order="AFTER">
+      select last_insert_id() as orderId
+    </selectKey>
+
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodId != null" >
+        PROD_ID,
+      </if>
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID,
+      </if>
+      <if test="ordersOutId != null" >
+        ORDERS_OUT_ID,
+      </if>
+      <if test="providId != null" >
+        PROVID_ID,
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ,
+      </if>
+      <if test="quantity != null" >
+        QUANTITY,
+      </if>
+      <if test="ordersMoney != null" >
+        ORDERS_MONEY,
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY,
+      </if>
+      <if test="totalMoney != null" >
+        TOTAL_MONEY,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="orderDescribe != null" >
+        ORDER_DESCRIBE,
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME,
+      </if>
+      <if test="customerPhone != null" >
+        CUSTOMER_PHONE,
+      </if>
+      <if test="customerAddress != null" >
+        CUSTOMER_ADDRESS,
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="telPhone != null" >
+        TEL_PHONE,
+      </if>
+      <if test="loanMoney != null" >
+        LOAN_MONEY,
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY,
+      </if>
+      <if test="lenderId != null" >
+        LENDER_ID,
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID,
+      </if>
+      <if test="certNo != null" >
+        CERT_NO,
+      </if>
+      <if test="certTypeValue != null" >
+        CERT_TYPE_VALUE,
+      </if>
+      <if test="olNbr != null" >
+        OL_NBR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="prodSaleAttrId != null" >
+        #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="ordersOutId != null" >
+        #{ordersOutId,jdbcType=BIGINT},
+      </if>
+      <if test="providId != null" >
+        #{providId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSeq != null" >
+        #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="ordersMoney != null" >
+        #{ordersMoney,jdbcType=REAL},
+      </if>
+      <if test="expressMoney != null" >
+        #{expressMoney,jdbcType=REAL},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=REAL},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDescribe != null" >
+        #{orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="telPhone != null" >
+        #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanMoney != null" >
+        #{loanMoney,jdbcType=REAL},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=REAL},
+      </if>
+      <if test="lenderId != null" >
+        #{lenderId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="certNo != null" >
+        #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certTypeValue != null" >
+        #{certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="olNbr != null" >
+        #{olNbr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodId != null" >
+        PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordersOutId != null" >
+        ORDERS_OUT_ID = #{record.ordersOutId,jdbcType=BIGINT},
+      </if>
+      <if test="record.providId != null" >
+        PROVID_ID = #{record.providId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderSeq != null" >
+        ORDER_SEQ = #{record.orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantity != null" >
+        QUANTITY = #{record.quantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.ordersMoney != null" >
+        ORDERS_MONEY = #{record.ordersMoney,jdbcType=REAL},
+      </if>
+      <if test="record.expressMoney != null" >
+        EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL},
+      </if>
+      <if test="record.totalMoney != null" >
+        TOTAL_MONEY = #{record.totalMoney,jdbcType=REAL},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.orderDescribe != null" >
+        ORDER_DESCRIBE = #{record.orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        CUSTOMER_NAME = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerPhone != null" >
+        CUSTOMER_PHONE = #{record.customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerAddress != null" >
+        CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.telPhone != null" >
+        TEL_PHONE = #{record.telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanMoney != null" >
+        LOAN_MONEY = #{record.loanMoney,jdbcType=REAL},
+      </if>
+      <if test="record.payMoney != null" >
+        PAY_MONEY = #{record.payMoney,jdbcType=REAL},
+      </if>
+      <if test="record.lenderId != null" >
+        LENDER_ID = #{record.lenderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityAearId != null" >
+        CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.certNo != null" >
+        CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certTypeValue != null" >
+        CERT_TYPE_VALUE = #{record.certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.olNbr != null" >
+        OL_NBR = #{record.olNbr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      ORDERS_OUT_ID = #{record.ordersOutId,jdbcType=BIGINT},
+      PROVID_ID = #{record.providId,jdbcType=BIGINT},
+      ORDER_SEQ = #{record.orderSeq,jdbcType=VARCHAR},
+      QUANTITY = #{record.quantity,jdbcType=INTEGER},
+      ORDERS_MONEY = #{record.ordersMoney,jdbcType=REAL},
+      EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL},
+      TOTAL_MONEY = #{record.totalMoney,jdbcType=REAL},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      ORDER_DESCRIBE = #{record.orderDescribe,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{record.customerName,jdbcType=VARCHAR},
+      CUSTOMER_PHONE = #{record.customerPhone,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{record.customerAddress,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      TEL_PHONE = #{record.telPhone,jdbcType=VARCHAR},
+      LOAN_MONEY = #{record.loanMoney,jdbcType=REAL},
+      PAY_MONEY = #{record.payMoney,jdbcType=REAL},
+      LENDER_ID = #{record.lenderId,jdbcType=BIGINT},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      CERT_NO = #{record.certNo,jdbcType=VARCHAR},
+      CERT_TYPE_VALUE = #{record.certTypeValue,jdbcType=VARCHAR},
+      OL_NBR = #{record.olNbr,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.Orders" >
+    update orders
+    <set >
+      <if test="prodId != null" >
+        PROD_ID = #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="ordersOutId != null" >
+        ORDERS_OUT_ID = #{ordersOutId,jdbcType=BIGINT},
+      </if>
+      <if test="providId != null" >
+        PROVID_ID = #{providId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        QUANTITY = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="ordersMoney != null" >
+        ORDERS_MONEY = #{ordersMoney,jdbcType=REAL},
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY = #{expressMoney,jdbcType=REAL},
+      </if>
+      <if test="totalMoney != null" >
+        TOTAL_MONEY = #{totalMoney,jdbcType=REAL},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDescribe != null" >
+        ORDER_DESCRIBE = #{orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerPhone != null" >
+        CUSTOMER_PHONE = #{customerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="customerAddress != null" >
+        CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="telPhone != null" >
+        TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanMoney != null" >
+        LOAN_MONEY = #{loanMoney,jdbcType=REAL},
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY = #{payMoney,jdbcType=REAL},
+      </if>
+      <if test="lenderId != null" >
+        LENDER_ID = #{lenderId,jdbcType=BIGINT},
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="certNo != null" >
+        CERT_NO = #{certNo,jdbcType=VARCHAR},
+      </if>
+      <if test="certTypeValue != null" >
+        CERT_TYPE_VALUE = #{certTypeValue,jdbcType=VARCHAR},
+      </if>
+      <if test="olNbr != null" >
+        OL_NBR = #{olNbr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.Orders" >
+    update orders
+    set PROD_ID = #{prodId,jdbcType=BIGINT},
+      PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT},
+      ORDERS_OUT_ID = #{ordersOutId,jdbcType=BIGINT},
+      PROVID_ID = #{providId,jdbcType=BIGINT},
+      ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      QUANTITY = #{quantity,jdbcType=INTEGER},
+      ORDERS_MONEY = #{ordersMoney,jdbcType=REAL},
+      EXPRESS_MONEY = #{expressMoney,jdbcType=REAL},
+      TOTAL_MONEY = #{totalMoney,jdbcType=REAL},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=SMALLINT},
+      ORDER_DESCRIBE = #{orderDescribe,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      CUSTOMER_PHONE = #{customerPhone,jdbcType=VARCHAR},
+      CUSTOMER_ADDRESS = #{customerAddress,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      TEL_PHONE = #{telPhone,jdbcType=VARCHAR},
+      LOAN_MONEY = #{loanMoney,jdbcType=REAL},
+      PAY_MONEY = #{payMoney,jdbcType=REAL},
+      LENDER_ID = #{lenderId,jdbcType=BIGINT},
+      PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      CERT_NO = #{certNo,jdbcType=VARCHAR},
+      CERT_TYPE_VALUE = #{certTypeValue,jdbcType=VARCHAR},
+      OL_NBR = #{olNbr,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="listBySelective" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.Orders">
+    SELECT <include refid="Base_Column_List"/> from orders WHERE 1=1
+      <if test="orderId != null and '' != orderId" >
+          and ORDER_ID = #{orderId,jdbcType=BIGINT}
+      </if>
+
+      <if test="prodId != null and '' != prodId" >
+          and PROD_ID = #{prodId,jdbcType=BIGINT}
+      </if>
+
+      <if test="orderSeq != null and '' != orderSeq" >
+          and ORDER_SEQ like concat('%', #{orderSeq,jdbcType=VARCHAR}, '%')
+      </if>
+
+      <if test="beginMoney != null and '' != beginMoney" >
+          <![CDATA[
+              and TOTAL_MONEY >= #{beginMoney,jdbcType=REAL}
+          ]]>
+      </if>
+
+      <if test="endMoney != null and '' != endMoney" >
+          <![CDATA[
+              and TOTAL_MONEY <= #{endMoney,jdbcType=REAL}
+          ]]>
+      </if>
+
+      <if test="ordersOutId != null and '' != ordersOutId" >
+          and ORDERS_OUT_ID like concat('%', #{ordersOutId,jdbcType=BIGINT}, '%')
+      </if>
+
+      <if test="beginTime != null and '' != beginTime" >
+          <![CDATA[
+              and CREATE_TIME >= #{beginTime,jdbcType=TIMESTAMP}
+          ]]>
+      </if>
+      <if test="endTime != null and '' != endTime" >
+          <![CDATA[
+              and CREATE_TIME <= #{endTime,jdbcType=TIMESTAMP}
+          ]]>
+      </if>
+
+      <if test="status != null and -1 != status" >
+          and STATUS = #{status,jdbcType=SMALLINT}
+      </if>
+
+      <if test="customerName != null and '' != customerName" >
+          and CUSTOMER_NAME like concat('%', #{customerName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="customerPhone != null and '' != customerPhone" >
+          and CUSTOMER_PHONE like concat('%', #{customerPhone,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="customerAddress != null and '' != customerAddress" >
+          and CUSTOMER_ADDRESS like concat('%', #{customerAddress,jdbcType=VARCHAR}, '%')
+      </if>
+
+      <choose>
+        <when test="userType == 1">
+          and PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT}
+        </when>
+        <when test="userType == 2">
+          and CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT}
+        </when>
+      </choose>
+      ORDER BY CREATE_TIME desc
+  </select>
+  <select id="selectOrderDetail" resultMap="OrdersDtoResultMap" parameterType="java.lang.Long">
+      SELECT <include refid="Base_Column_List"/> from orders WHERE 1=1
+          and ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </select>
+
+  <select id="listRefund" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> from orders WHERE 1=1
+
+      <if test="order.orderId != null and '' != order.orderId" >
+          and ORDER_ID = #{order.orderId,jdbcType=BIGINT}
+      </if>
+
+      <if test="order.prodId != null and '' != order.prodId" >
+          and PROD_ID = #{order.prodId,jdbcType=BIGINT}
+      </if>
+
+      <if test="order.orderSeq != null and '' != order.orderSeq" >
+          and ORDER_SEQ like concat('%', #{order.orderSeq,jdbcType=VARCHAR}, '%')
+      </if>
+
+      <if test="order.beginMoney != null and '' != order.beginMoney" >
+          <![CDATA[
+              and TOTAL_MONEY >= #{order.beginMoney,jdbcType=REAL}
+          ]]>
+      </if>
+
+      <if test="order.endMoney != null and '' != order.endMoney" >
+          <![CDATA[
+              and TOTAL_MONEY <= #{order.endMoney,jdbcType=REAL}
+          ]]>
+      </if>
+
+      <if test="order.ordersOutId != null and '' != order.ordersOutId" >
+          and ORDERS_OUT_ID like concat('%', #{order.ordersOutId,jdbcType=BIGINT}, '%')
+      </if>
+
+      <if test="order.beginTime != null and '' != order.beginTime" >
+          <![CDATA[
+              and CREATE_TIME >= #{order.beginTime,jdbcType=TIMESTAMP}
+          ]]>
+      </if>
+      <if test="order.endTime != null and '' != order.endTime" >
+          <![CDATA[
+              and CREATE_TIME <= #{order.endTime,jdbcType=TIMESTAMP}
+          ]]>
+      </if>
+
+      <if test="order.status != null and -1 != order.status" >
+          and STATUS = #{order.status,jdbcType=SMALLINT}
+      </if>
+
+      <if test="order.customerName != null and '' != order.customerName" >
+          and CUSTOMER_NAME like concat('%', #{order.customerName,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="order.customerPhone != null and '' != order.customerPhone" >
+          and CUSTOMER_PHONE like concat('%', #{customerPhone,jdbcType=VARCHAR}, '%')
+      </if>
+      <if test="order.customerAddress != null and '' != order.customerAddress" >
+          and CUSTOMER_ADDRESS like concat('%', #{order.customerAddress,jdbcType=VARCHAR}, '%')
+      </if>
+
+
+    <if test="statusList != null" >
+        
+      and STATUS in
+        <foreach collection="statusList" item="status" open="(" close=")" separator=",">
+          #{status}
+        </foreach>
+    </if>
+
+    <choose>
+      <when test="order.userType == 1">
+        and PROVINCE_AEAR_ID = #{order.provinceAearId,jdbcType=BIGINT}
+      </when>
+      <when test="order.userType == 2">
+        and CITY_AEAR_ID = #{order.cityAearId,jdbcType=BIGINT}
+      </when>
+    </choose>
+    ORDER BY CREATE_TIME desc
+  </select>
+</mapper>

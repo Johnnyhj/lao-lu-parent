@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.PerformanceLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.PerformanceLog" >
+    <id column="OL_ID" property="olId" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_ID" property="performanceId" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_TIME" property="performanceTime" jdbcType="TIMESTAMP" />
+    <result column="PERFORMANCE_MONEY" property="performanceMoney" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_NUM" property="performanceNum" jdbcType="INTEGER" />
+    <result column="PAY_TYPE" property="payType" jdbcType="VARCHAR" />
+    <result column="PERFORMANCE_STATUS" property="performanceStatus" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_MONTH" property="performanceMonth" jdbcType="VARCHAR" />
+    <result column="CRATE_TIME" property="crateTime" jdbcType="TIMESTAMP" />
+    <result column="IS_SEND" property="isSend" jdbcType="BIGINT" />
+    <result column="BIZ_DATE" property="bizDate" jdbcType="TIMESTAMP" />
+    <result column="USER_CREDENTIALS_TYPE" property="userCredentialsType" jdbcType="SMALLINT" />
+    <result column="CUST_ID" property="custId" jdbcType="VARCHAR" />
+    <result column="ORDER_SEQ" property="orderSeq" jdbcType="VARCHAR" />
+    <result column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="SMALLINT" />
+    <result column="BILL_DESC" property="billDesc" jdbcType="VARCHAR" />
+    <result column="BILL_TYPE" property="billType" jdbcType="VARCHAR" />
+    <result column="BILL_LAST_DATE" property="billLastDate" jdbcType="TIMESTAMP" />
+    <result column="BILL_PAYOFF_DATE" property="billPayoffDate" jdbcType="TIMESTAMP" />
+    <result column="BILL_TYPE_OVD_AMT" property="billTypeOvdAmt" jdbcType="BIGINT" />
+    <result column="BILL_TYPE_OVD_DATE" property="billTypeOvdDate" jdbcType="TIMESTAMP" />
+    <result column="BILL_MEMO" property="billMemo" jdbcType="VARCHAR" />
+    <result column="BILL_TRANSACTIONID" property="billTransactionid" jdbcType="VARCHAR" />
+    <result column="BILL_PAYOFF_STATUS" property="billPayoffStatus" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OL_ID, PERFORMANCE_ID, ORDER_ID, PERFORMANCE_TIME, PERFORMANCE_MONEY, PERFORMANCE_NUM, 
+    PAY_TYPE, PERFORMANCE_STATUS, PERFORMANCE_MONTH, CRATE_TIME, IS_SEND, BIZ_DATE, USER_CREDENTIALS_TYPE, 
+    CUST_ID, ORDER_SEQ, OFFER_SPEC_ID, ORDER_STATUS, BILL_DESC, BILL_TYPE, BILL_LAST_DATE, 
+    BILL_PAYOFF_DATE, BILL_TYPE_OVD_AMT, BILL_TYPE_OVD_DATE, BILL_MEMO, BILL_TRANSACTIONID, 
+    BILL_PAYOFF_STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.PerformanceLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from performance_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from performance_log
+    where OL_ID = #{olId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from performance_log
+    where OL_ID = #{olId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.PerformanceLogExample" >
+    delete from performance_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.PerformanceLog" >
+    insert into performance_log (OL_ID, PERFORMANCE_ID, ORDER_ID, 
+      PERFORMANCE_TIME, PERFORMANCE_MONEY, PERFORMANCE_NUM, 
+      PAY_TYPE, PERFORMANCE_STATUS, PERFORMANCE_MONTH, 
+      CRATE_TIME, IS_SEND, BIZ_DATE, 
+      USER_CREDENTIALS_TYPE, CUST_ID, ORDER_SEQ, 
+      OFFER_SPEC_ID, ORDER_STATUS, BILL_DESC, 
+      BILL_TYPE, BILL_LAST_DATE, BILL_PAYOFF_DATE, 
+      BILL_TYPE_OVD_AMT, BILL_TYPE_OVD_DATE, BILL_MEMO, 
+      BILL_TRANSACTIONID, BILL_PAYOFF_STATUS)
+    values (#{olId,jdbcType=BIGINT}, #{performanceId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, 
+      #{performanceTime,jdbcType=TIMESTAMP}, #{performanceMoney,jdbcType=BIGINT}, #{performanceNum,jdbcType=INTEGER}, 
+      #{payType,jdbcType=VARCHAR}, #{performanceStatus,jdbcType=BIGINT}, #{performanceMonth,jdbcType=VARCHAR}, 
+      #{crateTime,jdbcType=TIMESTAMP}, #{isSend,jdbcType=BIGINT}, #{bizDate,jdbcType=TIMESTAMP}, 
+      #{userCredentialsType,jdbcType=SMALLINT}, #{custId,jdbcType=VARCHAR}, #{orderSeq,jdbcType=VARCHAR}, 
+      #{offerSpecId,jdbcType=BIGINT}, #{orderStatus,jdbcType=SMALLINT}, #{billDesc,jdbcType=VARCHAR}, 
+      #{billType,jdbcType=VARCHAR}, #{billLastDate,jdbcType=TIMESTAMP}, #{billPayoffDate,jdbcType=TIMESTAMP}, 
+      #{billTypeOvdAmt,jdbcType=BIGINT}, #{billTypeOvdDate,jdbcType=TIMESTAMP}, #{billMemo,jdbcType=VARCHAR}, 
+      #{billTransactionid,jdbcType=VARCHAR}, #{billPayoffStatus,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.PerformanceLog" >
+    <selectKey resultType="long" keyProperty="olId" order="AFTER">
+      select last_insert_id() as olId
+    </selectKey>
+
+    insert into performance_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+
+      <if test="performanceId != null" >
+        PERFORMANCE_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="performanceTime != null" >
+        PERFORMANCE_TIME,
+      </if>
+      <if test="performanceMoney != null" >
+        PERFORMANCE_MONEY,
+      </if>
+      <if test="performanceNum != null" >
+        PERFORMANCE_NUM,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="performanceStatus != null" >
+        PERFORMANCE_STATUS,
+      </if>
+      <if test="performanceMonth != null" >
+        PERFORMANCE_MONTH,
+      </if>
+      <if test="crateTime != null" >
+        CRATE_TIME,
+      </if>
+      <if test="isSend != null" >
+        IS_SEND,
+      </if>
+      <if test="bizDate != null" >
+        BIZ_DATE,
+      </if>
+      <if test="userCredentialsType != null" >
+        USER_CREDENTIALS_TYPE,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ,
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="billDesc != null" >
+        BILL_DESC,
+      </if>
+      <if test="billType != null" >
+        BILL_TYPE,
+      </if>
+      <if test="billLastDate != null" >
+        BILL_LAST_DATE,
+      </if>
+      <if test="billPayoffDate != null" >
+        BILL_PAYOFF_DATE,
+      </if>
+      <if test="billTypeOvdAmt != null" >
+        BILL_TYPE_OVD_AMT,
+      </if>
+      <if test="billTypeOvdDate != null" >
+        BILL_TYPE_OVD_DATE,
+      </if>
+      <if test="billMemo != null" >
+        BILL_MEMO,
+      </if>
+      <if test="billTransactionid != null" >
+        BILL_TRANSACTIONID,
+      </if>
+      <if test="billPayoffStatus != null" >
+        BILL_PAYOFF_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+      <if test="performanceId != null" >
+        #{performanceId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceTime != null" >
+        #{performanceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performanceMoney != null" >
+        #{performanceMoney,jdbcType=BIGINT},
+      </if>
+      <if test="performanceNum != null" >
+        #{performanceNum,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceStatus != null" >
+        #{performanceStatus,jdbcType=BIGINT},
+      </if>
+      <if test="performanceMonth != null" >
+        #{performanceMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null" >
+        #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSend != null" >
+        #{isSend,jdbcType=BIGINT},
+      </if>
+      <if test="bizDate != null" >
+        #{bizDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCredentialsType != null" >
+        #{userCredentialsType,jdbcType=SMALLINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSeq != null" >
+        #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="billDesc != null" >
+        #{billDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null" >
+        #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="billLastDate != null" >
+        #{billLastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billPayoffDate != null" >
+        #{billPayoffDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billTypeOvdAmt != null" >
+        #{billTypeOvdAmt,jdbcType=BIGINT},
+      </if>
+      <if test="billTypeOvdDate != null" >
+        #{billTypeOvdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billMemo != null" >
+        #{billMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="billTransactionid != null" >
+        #{billTransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="billPayoffStatus != null" >
+        #{billPayoffStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.PerformanceLogExample" resultType="java.lang.Integer" >
+    select count(*) from performance_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update performance_log
+    <set >
+      <if test="record.olId != null" >
+        OL_ID = #{record.olId,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceId != null" >
+        PERFORMANCE_ID = #{record.performanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceTime != null" >
+        PERFORMANCE_TIME = #{record.performanceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.performanceMoney != null" >
+        PERFORMANCE_MONEY = #{record.performanceMoney,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceNum != null" >
+        PERFORMANCE_NUM = #{record.performanceNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performanceStatus != null" >
+        PERFORMANCE_STATUS = #{record.performanceStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceMonth != null" >
+        PERFORMANCE_MONTH = #{record.performanceMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.crateTime != null" >
+        CRATE_TIME = #{record.crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isSend != null" >
+        IS_SEND = #{record.isSend,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizDate != null" >
+        BIZ_DATE = #{record.bizDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userCredentialsType != null" >
+        USER_CREDENTIALS_TYPE = #{record.userCredentialsType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderSeq != null" >
+        ORDER_SEQ = #{record.orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderStatus != null" >
+        ORDER_STATUS = #{record.orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.billDesc != null" >
+        BILL_DESC = #{record.billDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billType != null" >
+        BILL_TYPE = #{record.billType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billLastDate != null" >
+        BILL_LAST_DATE = #{record.billLastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billPayoffDate != null" >
+        BILL_PAYOFF_DATE = #{record.billPayoffDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billTypeOvdAmt != null" >
+        BILL_TYPE_OVD_AMT = #{record.billTypeOvdAmt,jdbcType=BIGINT},
+      </if>
+      <if test="record.billTypeOvdDate != null" >
+        BILL_TYPE_OVD_DATE = #{record.billTypeOvdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.billMemo != null" >
+        BILL_MEMO = #{record.billMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billTransactionid != null" >
+        BILL_TRANSACTIONID = #{record.billTransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billPayoffStatus != null" >
+        BILL_PAYOFF_STATUS = #{record.billPayoffStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update performance_log
+    set OL_ID = #{record.olId,jdbcType=BIGINT},
+      PERFORMANCE_ID = #{record.performanceId,jdbcType=BIGINT},
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      PERFORMANCE_TIME = #{record.performanceTime,jdbcType=TIMESTAMP},
+      PERFORMANCE_MONEY = #{record.performanceMoney,jdbcType=BIGINT},
+      PERFORMANCE_NUM = #{record.performanceNum,jdbcType=INTEGER},
+      PAY_TYPE = #{record.payType,jdbcType=VARCHAR},
+      PERFORMANCE_STATUS = #{record.performanceStatus,jdbcType=BIGINT},
+      PERFORMANCE_MONTH = #{record.performanceMonth,jdbcType=VARCHAR},
+      CRATE_TIME = #{record.crateTime,jdbcType=TIMESTAMP},
+      IS_SEND = #{record.isSend,jdbcType=BIGINT},
+      BIZ_DATE = #{record.bizDate,jdbcType=TIMESTAMP},
+      USER_CREDENTIALS_TYPE = #{record.userCredentialsType,jdbcType=SMALLINT},
+      CUST_ID = #{record.custId,jdbcType=VARCHAR},
+      ORDER_SEQ = #{record.orderSeq,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      ORDER_STATUS = #{record.orderStatus,jdbcType=SMALLINT},
+      BILL_DESC = #{record.billDesc,jdbcType=VARCHAR},
+      BILL_TYPE = #{record.billType,jdbcType=VARCHAR},
+      BILL_LAST_DATE = #{record.billLastDate,jdbcType=TIMESTAMP},
+      BILL_PAYOFF_DATE = #{record.billPayoffDate,jdbcType=TIMESTAMP},
+      BILL_TYPE_OVD_AMT = #{record.billTypeOvdAmt,jdbcType=BIGINT},
+      BILL_TYPE_OVD_DATE = #{record.billTypeOvdDate,jdbcType=TIMESTAMP},
+      BILL_MEMO = #{record.billMemo,jdbcType=VARCHAR},
+      BILL_TRANSACTIONID = #{record.billTransactionid,jdbcType=VARCHAR},
+      BILL_PAYOFF_STATUS = #{record.billPayoffStatus,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.PerformanceLog" >
+    update performance_log
+    <set >
+      <if test="performanceId != null" >
+        PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceTime != null" >
+        PERFORMANCE_TIME = #{performanceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="performanceMoney != null" >
+        PERFORMANCE_MONEY = #{performanceMoney,jdbcType=BIGINT},
+      </if>
+      <if test="performanceNum != null" >
+        PERFORMANCE_NUM = #{performanceNum,jdbcType=INTEGER},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceStatus != null" >
+        PERFORMANCE_STATUS = #{performanceStatus,jdbcType=BIGINT},
+      </if>
+      <if test="performanceMonth != null" >
+        PERFORMANCE_MONTH = #{performanceMonth,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null" >
+        CRATE_TIME = #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isSend != null" >
+        IS_SEND = #{isSend,jdbcType=BIGINT},
+      </if>
+      <if test="bizDate != null" >
+        BIZ_DATE = #{bizDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userCredentialsType != null" >
+        USER_CREDENTIALS_TYPE = #{userCredentialsType,jdbcType=SMALLINT},
+      </if>
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderSeq != null" >
+        ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="billDesc != null" >
+        BILL_DESC = #{billDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="billType != null" >
+        BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      </if>
+      <if test="billLastDate != null" >
+        BILL_LAST_DATE = #{billLastDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billPayoffDate != null" >
+        BILL_PAYOFF_DATE = #{billPayoffDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billTypeOvdAmt != null" >
+        BILL_TYPE_OVD_AMT = #{billTypeOvdAmt,jdbcType=BIGINT},
+      </if>
+      <if test="billTypeOvdDate != null" >
+        BILL_TYPE_OVD_DATE = #{billTypeOvdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billMemo != null" >
+        BILL_MEMO = #{billMemo,jdbcType=VARCHAR},
+      </if>
+      <if test="billTransactionid != null" >
+        BILL_TRANSACTIONID = #{billTransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="billPayoffStatus != null" >
+        BILL_PAYOFF_STATUS = #{billPayoffStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where OL_ID = #{olId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.PerformanceLog" >
+    update performance_log
+    set PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT},
+      ORDER_ID = #{orderId,jdbcType=BIGINT},
+      PERFORMANCE_TIME = #{performanceTime,jdbcType=TIMESTAMP},
+      PERFORMANCE_MONEY = #{performanceMoney,jdbcType=BIGINT},
+      PERFORMANCE_NUM = #{performanceNum,jdbcType=INTEGER},
+      PAY_TYPE = #{payType,jdbcType=VARCHAR},
+      PERFORMANCE_STATUS = #{performanceStatus,jdbcType=BIGINT},
+      PERFORMANCE_MONTH = #{performanceMonth,jdbcType=VARCHAR},
+      CRATE_TIME = #{crateTime,jdbcType=TIMESTAMP},
+      IS_SEND = #{isSend,jdbcType=BIGINT},
+      BIZ_DATE = #{bizDate,jdbcType=TIMESTAMP},
+      USER_CREDENTIALS_TYPE = #{userCredentialsType,jdbcType=SMALLINT},
+      CUST_ID = #{custId,jdbcType=VARCHAR},
+      ORDER_SEQ = #{orderSeq,jdbcType=VARCHAR},
+      OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      ORDER_STATUS = #{orderStatus,jdbcType=SMALLINT},
+      BILL_DESC = #{billDesc,jdbcType=VARCHAR},
+      BILL_TYPE = #{billType,jdbcType=VARCHAR},
+      BILL_LAST_DATE = #{billLastDate,jdbcType=TIMESTAMP},
+      BILL_PAYOFF_DATE = #{billPayoffDate,jdbcType=TIMESTAMP},
+      BILL_TYPE_OVD_AMT = #{billTypeOvdAmt,jdbcType=BIGINT},
+      BILL_TYPE_OVD_DATE = #{billTypeOvdDate,jdbcType=TIMESTAMP},
+      BILL_MEMO = #{billMemo,jdbcType=VARCHAR},
+      BILL_TRANSACTIONID = #{billTransactionid,jdbcType=VARCHAR},
+      BILL_PAYOFF_STATUS = #{billPayoffStatus,jdbcType=SMALLINT}
+    where OL_ID = #{olId,jdbcType=BIGINT}
+  </update>
+
+  <select id="queryPerformaceLogByOrderId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select plog.* from performance_log plog,
+    (
+    select max(OL_ID) OL_ID from performance_log
+    where ORDER_ID=131 and PERFORMANCE_STATUS <![CDATA[<>]]> 0 and PERFORMANCE_STATUS is not null
+    group by PERFORMANCE_MONTH
+    ) plog2
+    where plog.ORDER_ID=131
+    and plog.OL_ID = plog2.OL_ID
+    ORDER BY plog.PERFORMANCE_MONTH
+  </select>
+</mapper>

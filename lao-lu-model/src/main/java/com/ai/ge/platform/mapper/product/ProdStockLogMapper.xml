@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProdStockLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProdStockLog" >
+    <id column="STOCK_ID" property="stockId" jdbcType="BIGINT" />
+    <result column="PROD_SALE_ATTR_ID" property="prodSaleAttrId" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="PRO_TYPE_ID" property="proTypeId" jdbcType="BIGINT" />
+    <result column="IN_OUT_NUMBER" property="inOutNumber" jdbcType="INTEGER" />
+    <result column="ACTION_TYPE" property="actionType" jdbcType="INTEGER" />
+    <result column="MARK" property="mark" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STOCK_ID, PROD_SALE_ATTR_ID, ORDER_ID, PRO_TYPE_ID, IN_OUT_NUMBER, ACTION_TYPE, MARK, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProdStockLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prod_stock_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from prod_stock_log
+    where STOCK_ID = #{stockId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from prod_stock_log
+    where STOCK_ID = #{stockId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProdStockLogExample" >
+    delete from prod_stock_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProdStockLog" >
+    insert into prod_stock_log (STOCK_ID, PROD_SALE_ATTR_ID, ORDER_ID, 
+      PRO_TYPE_ID, IN_OUT_NUMBER, ACTION_TYPE, 
+      MARK, CREATE_TIME)
+    values (#{stockId,jdbcType=BIGINT}, #{prodSaleAttrId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, 
+      #{proTypeId,jdbcType=BIGINT}, #{inOutNumber,jdbcType=INTEGER}, #{actionType,jdbcType=INTEGER}, 
+      #{mark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProdStockLog" >
+    insert into prod_stock_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        STOCK_ID,
+      </if>
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="proTypeId != null" >
+        PRO_TYPE_ID,
+      </if>
+      <if test="inOutNumber != null" >
+        IN_OUT_NUMBER,
+      </if>
+      <if test="actionType != null" >
+        ACTION_TYPE,
+      </if>
+      <if test="mark != null" >
+        MARK,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        #{stockId,jdbcType=BIGINT},
+      </if>
+      <if test="prodSaleAttrId != null" >
+        #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="proTypeId != null" >
+        #{proTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="inOutNumber != null" >
+        #{inOutNumber,jdbcType=INTEGER},
+      </if>
+      <if test="actionType != null" >
+        #{actionType,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProdStockLogExample" resultType="java.lang.Integer" >
+    select count(*) from prod_stock_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prod_stock_log
+    <set >
+      <if test="record.stockId != null" >
+        STOCK_ID = #{record.stockId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.proTypeId != null" >
+        PRO_TYPE_ID = #{record.proTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.inOutNumber != null" >
+        IN_OUT_NUMBER = #{record.inOutNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.actionType != null" >
+        ACTION_TYPE = #{record.actionType,jdbcType=INTEGER},
+      </if>
+      <if test="record.mark != null" >
+        MARK = #{record.mark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prod_stock_log
+    set STOCK_ID = #{record.stockId,jdbcType=BIGINT},
+      PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      PRO_TYPE_ID = #{record.proTypeId,jdbcType=BIGINT},
+      IN_OUT_NUMBER = #{record.inOutNumber,jdbcType=INTEGER},
+      ACTION_TYPE = #{record.actionType,jdbcType=INTEGER},
+      MARK = #{record.mark,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ProdStockLog" >
+    update prod_stock_log
+    <set >
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="proTypeId != null" >
+        PRO_TYPE_ID = #{proTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="inOutNumber != null" >
+        IN_OUT_NUMBER = #{inOutNumber,jdbcType=INTEGER},
+      </if>
+      <if test="actionType != null" >
+        ACTION_TYPE = #{actionType,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        MARK = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where STOCK_ID = #{stockId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ProdStockLog" >
+    update prod_stock_log
+    set PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT},
+      ORDER_ID = #{orderId,jdbcType=BIGINT},
+      PRO_TYPE_ID = #{proTypeId,jdbcType=BIGINT},
+      IN_OUT_NUMBER = #{inOutNumber,jdbcType=INTEGER},
+      ACTION_TYPE = #{actionType,jdbcType=INTEGER},
+      MARK = #{mark,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where STOCK_ID = #{stockId,jdbcType=BIGINT}
+  </update>
+</mapper>

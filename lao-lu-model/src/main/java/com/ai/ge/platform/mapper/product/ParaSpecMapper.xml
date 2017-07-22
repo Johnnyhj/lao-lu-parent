@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ParaSpecMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ParaSpec" >
+    <id column="PARA_SPEC_ID" property="paraSpecId" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="DSC_TYPE_CD" property="dscTypeCd" jdbcType="INTEGER" />
+    <result column="DSC_DATA_CD" property="dscDataCd" jdbcType="INTEGER" />
+    <result column="DISCRIPTION" property="discription" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PARA_SPEC_ID, NAME, DSC_TYPE_CD, DSC_DATA_CD, DISCRIPTION, SORT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ParaSpecExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from para_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from para_spec
+    where PARA_SPEC_ID = #{paraSpecId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from para_spec
+    where PARA_SPEC_ID = #{paraSpecId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ParaSpecExample" >
+    delete from para_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ParaSpec" >
+    insert into para_spec (PARA_SPEC_ID, NAME, DSC_TYPE_CD, 
+      DSC_DATA_CD, DISCRIPTION, SORT
+      )
+    values (#{paraSpecId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{dscTypeCd,jdbcType=INTEGER}, 
+      #{dscDataCd,jdbcType=INTEGER}, #{discription,jdbcType=VARCHAR}, #{sort,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ParaSpec" >
+    insert into para_spec
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="paraSpecId != null" >
+        PARA_SPEC_ID,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="dscTypeCd != null" >
+        DSC_TYPE_CD,
+      </if>
+      <if test="dscDataCd != null" >
+        DSC_DATA_CD,
+      </if>
+      <if test="discription != null" >
+        DISCRIPTION,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="paraSpecId != null" >
+        #{paraSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dscTypeCd != null" >
+        #{dscTypeCd,jdbcType=INTEGER},
+      </if>
+      <if test="dscDataCd != null" >
+        #{dscDataCd,jdbcType=INTEGER},
+      </if>
+      <if test="discription != null" >
+        #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ParaSpecExample" resultType="java.lang.Integer" >
+    select count(*) from para_spec
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update para_spec
+    <set >
+      <if test="record.paraSpecId != null" >
+        PARA_SPEC_ID = #{record.paraSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dscTypeCd != null" >
+        DSC_TYPE_CD = #{record.dscTypeCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.dscDataCd != null" >
+        DSC_DATA_CD = #{record.dscDataCd,jdbcType=INTEGER},
+      </if>
+      <if test="record.discription != null" >
+        DISCRIPTION = #{record.discription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        SORT = #{record.sort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update para_spec
+    set PARA_SPEC_ID = #{record.paraSpecId,jdbcType=BIGINT},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      DSC_TYPE_CD = #{record.dscTypeCd,jdbcType=INTEGER},
+      DSC_DATA_CD = #{record.dscDataCd,jdbcType=INTEGER},
+      DISCRIPTION = #{record.discription,jdbcType=VARCHAR},
+      SORT = #{record.sort,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ParaSpec" >
+    update para_spec
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="dscTypeCd != null" >
+        DSC_TYPE_CD = #{dscTypeCd,jdbcType=INTEGER},
+      </if>
+      <if test="dscDataCd != null" >
+        DSC_DATA_CD = #{dscDataCd,jdbcType=INTEGER},
+      </if>
+      <if test="discription != null" >
+        DISCRIPTION = #{discription,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where PARA_SPEC_ID = #{paraSpecId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ParaSpec" >
+    update para_spec
+    set NAME = #{name,jdbcType=VARCHAR},
+      DSC_TYPE_CD = #{dscTypeCd,jdbcType=INTEGER},
+      DSC_DATA_CD = #{dscDataCd,jdbcType=INTEGER},
+      DISCRIPTION = #{discription,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=SMALLINT}
+    where PARA_SPEC_ID = #{paraSpecId,jdbcType=BIGINT}
+  </update>
+</mapper>

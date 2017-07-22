@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProdSaleConfAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProdSaleConfAttribute" >
+    <id column="PROD_SALE_ATTR_ID" property="prodSaleAttrId" jdbcType="BIGINT" />
+    <result column="CONFIG_ID" property="configId" jdbcType="BIGINT" />
+    <result column="ATTR_SORT" property="attrSort" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROD_SALE_ATTR_ID, CONFIG_ID, ATTR_SORT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttributeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prod_sale_conf_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from prod_sale_conf_attribute
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from prod_sale_conf_attribute
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttributeExample" >
+    delete from prod_sale_conf_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttribute" >
+    insert into prod_sale_conf_attribute (PROD_SALE_ATTR_ID, CONFIG_ID, ATTR_SORT
+      )
+    values (#{prodSaleAttrId,jdbcType=BIGINT}, #{configId,jdbcType=BIGINT}, #{attrSort,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttribute" >
+    insert into prod_sale_conf_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID,
+      </if>
+      <if test="configId != null" >
+        CONFIG_ID,
+      </if>
+      <if test="attrSort != null" >
+        ATTR_SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodSaleAttrId != null" >
+        #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="configId != null" >
+        #{configId,jdbcType=BIGINT},
+      </if>
+      <if test="attrSort != null" >
+        #{attrSort,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttributeExample" resultType="java.lang.Integer" >
+    select count(*) from prod_sale_conf_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prod_sale_conf_attribute
+    <set >
+      <if test="record.prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.configId != null" >
+        CONFIG_ID = #{record.configId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attrSort != null" >
+        ATTR_SORT = #{record.attrSort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prod_sale_conf_attribute
+    set PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      CONFIG_ID = #{record.configId,jdbcType=BIGINT},
+      ATTR_SORT = #{record.attrSort,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttribute" >
+    update prod_sale_conf_attribute
+    <set >
+      <if test="configId != null" >
+        CONFIG_ID = #{configId,jdbcType=BIGINT},
+      </if>
+      <if test="attrSort != null" >
+        ATTR_SORT = #{attrSort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ProdSaleConfAttribute" >
+    update prod_sale_conf_attribute
+    set CONFIG_ID = #{configId,jdbcType=BIGINT},
+      ATTR_SORT = #{attrSort,jdbcType=SMALLINT}
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </update>
+</mapper>

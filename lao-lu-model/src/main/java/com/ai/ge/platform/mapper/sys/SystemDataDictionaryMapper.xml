@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.SystemDataDictionaryMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.SystemDataDictionary">
+        <id column="DD_ID" property="ddId" jdbcType="DECIMAL" />
+        <result column="KEY" property="key" jdbcType="VARCHAR" />
+        <result column="VALUE" property="value" jdbcType="VARCHAR" />
+        <result column="TYPE" property="type" jdbcType="VARCHAR" />
+        <result column="DESCRIBE" property="describe" jdbcType="VARCHAR" />
+        <result column="EXPAND1" property="expand1" jdbcType="VARCHAR" />
+        <result column="EXPAND2" property="expand2" jdbcType="VARCHAR" />
+        <result column="EXPAND3" property="expand3" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        DD_ID, `KEY`, `VALUE`, `TYPE`, `DESCRIBE`, EXPAND1, EXPAND2, EXPAND3
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionaryExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYSTEM_DATA_DICTIONARY
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from SYSTEM_DATA_DICTIONARY
+        where DD_ID = #{ddId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYSTEM_DATA_DICTIONARY
+        where DD_ID = #{ddId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionaryExample">
+        delete from SYSTEM_DATA_DICTIONARY
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionary">
+        <selectKey resultType="long" keyProperty="ddId" order="AFTER">
+            select last_insert_id() as ddId
+        </selectKey>
+        insert into SYSTEM_DATA_DICTIONARY (KEY, VALUE,
+        TYPE, DESCRIBE, EXPAND1,
+        EXPAND2, EXPAND3)
+        values (#{key,jdbcType=VARCHAR}, #{value,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{describe,jdbcType=VARCHAR}, #{expand1,jdbcType=VARCHAR},
+        #{expand2,jdbcType=VARCHAR}, #{expand3,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionary">
+        <selectKey resultType="long" keyProperty="ddId" order="AFTER">
+            select last_insert_id() as ddId
+        </selectKey>
+        insert into SYSTEM_DATA_DICTIONARY
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                `KEY`,
+            </if>
+            <if test="value != null">
+                VALUE,
+            </if>
+            <if test="type != null">
+                TYPE,
+            </if>
+            <if test="describe != null">
+                `DESCRIBE`,
+            </if>
+            <if test="expand1 != null">
+                EXPAND1,
+            </if>
+            <if test="expand2 != null">
+                EXPAND2,
+            </if>
+            <if test="expand3 != null">
+                EXPAND3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="key != null">
+                #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="expand1 != null">
+                #{expand1,jdbcType=VARCHAR},
+            </if>
+            <if test="expand2 != null">
+                #{expand2,jdbcType=VARCHAR},
+            </if>
+            <if test="expand3 != null">
+                #{expand3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionaryExample" resultType="java.lang.Integer">
+        select count(*) from SYSTEM_DATA_DICTIONARY
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYSTEM_DATA_DICTIONARY
+        <set>
+            <if test="record.ddId != null">
+                DD_ID = #{record.ddId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.key != null">
+                KEY = #{record.key,jdbcType=VARCHAR},
+            </if>
+            <if test="record.value != null">
+                VALUE = #{record.value,jdbcType=VARCHAR},
+            </if>
+            <if test="record.type != null">
+                TYPE = #{record.type,jdbcType=VARCHAR},
+            </if>
+            <if test="record.describe != null">
+                DESCRIBE = #{record.describe,jdbcType=VARCHAR},
+            </if>
+            <if test="record.expand1 != null">
+                EXPAND1 = #{record.expand1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.expand2 != null">
+                EXPAND2 = #{record.expand2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.expand3 != null">
+                EXPAND3 = #{record.expand3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYSTEM_DATA_DICTIONARY
+        set DD_ID = #{record.ddId,jdbcType=DECIMAL},
+        KEY = #{record.key,jdbcType=VARCHAR},
+        VALUE = #{record.value,jdbcType=VARCHAR},
+        TYPE = #{record.type,jdbcType=VARCHAR},
+        DESCRIBE = #{record.describe,jdbcType=VARCHAR},
+        EXPAND1 = #{record.expand1,jdbcType=VARCHAR},
+        EXPAND2 = #{record.expand2,jdbcType=VARCHAR},
+        EXPAND3 = #{record.expand3,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionary">
+        update SYSTEM_DATA_DICTIONARY
+        <set>
+            <if test="key != null">
+                `KEY` = #{key,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                `VALUE` = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                `TYPE` = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="describe != null">
+                `DESCRIBE` = #{describe,jdbcType=VARCHAR},
+            </if>
+            <if test="expand1 != null">
+                EXPAND1 = #{expand1,jdbcType=VARCHAR},
+            </if>
+            <if test="expand2 != null">
+                EXPAND2 = #{expand2,jdbcType=VARCHAR},
+            </if>
+            <if test="expand3 != null">
+                EXPAND3 = #{expand3,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where DD_ID = #{ddId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.SystemDataDictionary">
+        update SYSTEM_DATA_DICTIONARY
+        set KEY = #{key,jdbcType=VARCHAR},
+        VALUE = #{value,jdbcType=VARCHAR},
+        TYPE = #{type,jdbcType=VARCHAR},
+        DESCRIBE = #{describe,jdbcType=VARCHAR},
+        EXPAND1 = #{expand1,jdbcType=VARCHAR},
+        EXPAND2 = #{expand2,jdbcType=VARCHAR},
+        EXPAND3 = #{expand3,jdbcType=VARCHAR}
+        where DD_ID = #{ddId,jdbcType=DECIMAL}
+    </update>
+
+
+    <select id="listAll" resultMap="BaseResultMap">
+        select * from SYSTEM_DATA_DICTIONARY t where 1=1
+        <if test="null != record.key and '' != record.key">
+            and t.key like '%' || #{record.key} || '%'
+        </if>
+
+        <if test="null != record.type and '' != record.type">
+            and t.type = #{record.type}
+        </if>
+
+        order by dd_id asc
+    </select>
+
+    <select id="getByKeyType" resultMap="BaseResultMap">
+        select * from SYSTEM_DATA_DICTIONARY t where 1=1
+        <if test="null != record.key and '' != record.key">
+            and t.key = #{record.key}
+        </if>
+
+        <if test="null != record.type and '' != record.type">
+            and t.type = #{record.type}
+        </if>
+
+        order by dd_id asc
+    </select>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.PackageOrdersRelationsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.PackageOrdersRelations" >
+    <id column="RELATION_ID" property="relationId" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="ORDERS_GROUP_ID" property="ordersGroupId" jdbcType="BIGINT" />
+    <result column="ORDER_GROUP_ID" property="orderGroupId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RELATION_ID, ORDER_ID, ORDERS_GROUP_ID, ORDER_GROUP_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelationsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from package_orders_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from package_orders_relations
+    where RELATION_ID = #{relationId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from package_orders_relations
+    where RELATION_ID = #{relationId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelationsExample" >
+    delete from package_orders_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelations" >
+    insert into package_orders_relations (RELATION_ID, ORDER_ID, ORDERS_GROUP_ID, 
+      ORDER_GROUP_ID)
+    values (#{relationId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{ordersGroupId,jdbcType=BIGINT}, 
+      #{orderGroupId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelations" >
+    insert into package_orders_relations
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="relationId != null" >
+        RELATION_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="ordersGroupId != null" >
+        ORDERS_GROUP_ID,
+      </if>
+      <if test="orderGroupId != null" >
+        ORDER_GROUP_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="relationId != null" >
+        #{relationId,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="ordersGroupId != null" >
+        #{ordersGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="orderGroupId != null" >
+        #{orderGroupId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelationsExample" resultType="java.lang.Integer" >
+    select count(*) from package_orders_relations
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update package_orders_relations
+    <set >
+      <if test="record.relationId != null" >
+        RELATION_ID = #{record.relationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordersGroupId != null" >
+        ORDERS_GROUP_ID = #{record.ordersGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderGroupId != null" >
+        ORDER_GROUP_ID = #{record.orderGroupId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update package_orders_relations
+    set RELATION_ID = #{record.relationId,jdbcType=BIGINT},
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      ORDERS_GROUP_ID = #{record.ordersGroupId,jdbcType=BIGINT},
+      ORDER_GROUP_ID = #{record.orderGroupId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelations" >
+    update package_orders_relations
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="ordersGroupId != null" >
+        ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="orderGroupId != null" >
+        ORDER_GROUP_ID = #{orderGroupId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where RELATION_ID = #{relationId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.PackageOrdersRelations" >
+    update package_orders_relations
+    set ORDER_ID = #{orderId,jdbcType=BIGINT},
+      ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT},
+      ORDER_GROUP_ID = #{orderGroupId,jdbcType=BIGINT}
+    where RELATION_ID = #{relationId,jdbcType=BIGINT}
+  </update>
+</mapper>

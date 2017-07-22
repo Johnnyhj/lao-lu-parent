@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysRoleResourceReleationMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysRoleResourceReleation" >
+    <result column="SRR_ID" property="srrId" jdbcType="DECIMAL" />
+    <result column="SYS_ROLE_ID" property="sysRoleId" jdbcType="DECIMAL" />
+    <result column="SYS_RESOURCE_ID" property="sysResourceId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SRR_ID, SYS_ROLE_ID, SYS_RESOURCE_ID, CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysRoleResourceReleationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_ROLE_RESOURCE_RELEATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysRoleResourceReleationExample" >
+    delete from SYS_ROLE_RESOURCE_RELEATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysRoleResourceReleation" >
+    <selectKey resultType="long" keyProperty="srrId" order="AFTER">
+      select last_insert_id() as srrId
+    </selectKey>
+    insert into SYS_ROLE_RESOURCE_RELEATION (SYS_ROLE_ID, SYS_RESOURCE_ID,
+      CREATE_TIME)
+    values (#{sysRoleId,jdbcType=DECIMAL}, #{sysResourceId,jdbcType=DECIMAL},
+      #{createTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysRoleResourceReleation" >
+    <selectKey resultType="long" keyProperty="srrId" order="AFTER">
+      select last_insert_id() as srrId
+    </selectKey>
+    insert into SYS_ROLE_RESOURCE_RELEATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sysRoleId != null" >
+        SYS_ROLE_ID,
+      </if>
+      <if test="sysResourceId != null" >
+        SYS_RESOURCE_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sysRoleId != null" >
+        #{sysRoleId,jdbcType=DECIMAL},
+      </if>
+      <if test="sysResourceId != null" >
+        #{sysResourceId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysRoleResourceReleationExample" resultType="java.lang.Integer" >
+    select count(*) from SYS_ROLE_RESOURCE_RELEATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_ROLE_RESOURCE_RELEATION
+    <set >
+      <if test="record.srrId != null" >
+        SRR_ID = #{record.srrId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sysRoleId != null" >
+        SYS_ROLE_ID = #{record.sysRoleId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sysResourceId != null" >
+        SYS_RESOURCE_ID = #{record.sysResourceId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_ROLE_RESOURCE_RELEATION
+    set SRR_ID = #{record.srrId,jdbcType=DECIMAL},
+      SYS_ROLE_ID = #{record.sysRoleId,jdbcType=DECIMAL},
+      SYS_RESOURCE_ID = #{record.sysResourceId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.SystemAreaMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.SystemArea" >
+    <id column="AREA_ID" property="areaId" jdbcType="BIGINT" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="AREA_LEVEL" property="areaLevel" jdbcType="SMALLINT" />
+    <result column="PAR_AREA_ID" property="parAreaId" jdbcType="BIGINT" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_STATUS" property="areaStatus" jdbcType="SMALLINT" />
+    <result column="PAY_APPID" property="payAppid" jdbcType="VARCHAR" />
+    <result column="PAY_SECRET" property="paySecret" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="SystemAreaDtoMap" type="com.ai.ge.platform.dto.sys.SystemAreaDto" extends="BaseResultMap">
+      <result column="PARENT_AREA_ID" property="parentAreaId" jdbcType="BIGINT" />
+      <result column="PARENT_AREA_NAME" property="parentAreaName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AREA_ID, AREA_NAME, AREA_LEVEL, PAR_AREA_ID, AREA_CODE, AREA_STATUS, PAY_APPID, PAY_SECRET
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.SystemAreaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from system_area
+    where AREA_ID = #{areaId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from system_area
+    where AREA_ID = #{areaId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.SystemAreaExample" >
+    delete from system_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.sys.SystemArea" >
+    insert into system_area (AREA_ID, AREA_NAME, AREA_LEVEL, 
+      PAR_AREA_ID, AREA_CODE, AREA_STATUS, 
+      PAY_APPID, PAY_SECRET)
+    values (#{areaId,jdbcType=BIGINT}, #{areaName,jdbcType=VARCHAR}, #{areaLevel,jdbcType=SMALLINT}, 
+      #{parAreaId,jdbcType=BIGINT}, #{areaCode,jdbcType=VARCHAR}, #{areaStatus,jdbcType=SMALLINT}, 
+      #{payAppid,jdbcType=VARCHAR}, #{paySecret,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.SystemArea" >
+    insert into system_area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME,
+      </if>
+      <if test="areaLevel != null" >
+        AREA_LEVEL,
+      </if>
+      <if test="parAreaId != null" >
+        PAR_AREA_ID,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="areaStatus != null" >
+        AREA_STATUS,
+      </if>
+      <if test="payAppid != null" >
+        PAY_APPID,
+      </if>
+      <if test="paySecret != null" >
+        PAY_SECRET,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null" >
+        #{areaLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="parAreaId != null" >
+        #{parAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaStatus != null" >
+        #{areaStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payAppid != null" >
+        #{payAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="paySecret != null" >
+        #{paySecret,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.SystemAreaExample" resultType="java.lang.Integer" >
+    select count(*) from system_area
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update system_area
+    <set >
+      <if test="record.areaId != null" >
+        AREA_ID = #{record.areaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.areaName != null" >
+        AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaLevel != null" >
+        AREA_LEVEL = #{record.areaLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="record.parAreaId != null" >
+        PAR_AREA_ID = #{record.parAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaStatus != null" >
+        AREA_STATUS = #{record.areaStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.payAppid != null" >
+        PAY_APPID = #{record.payAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paySecret != null" >
+        PAY_SECRET = #{record.paySecret,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update system_area
+    set AREA_ID = #{record.areaId,jdbcType=BIGINT},
+      AREA_NAME = #{record.areaName,jdbcType=VARCHAR},
+      AREA_LEVEL = #{record.areaLevel,jdbcType=SMALLINT},
+      PAR_AREA_ID = #{record.parAreaId,jdbcType=BIGINT},
+      AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      AREA_STATUS = #{record.areaStatus,jdbcType=SMALLINT},
+      PAY_APPID = #{record.payAppid,jdbcType=VARCHAR},
+      PAY_SECRET = #{record.paySecret,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.SystemArea" >
+    update system_area
+    <set >
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaLevel != null" >
+        AREA_LEVEL = #{areaLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="parAreaId != null" >
+        PAR_AREA_ID = #{parAreaId,jdbcType=BIGINT},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaStatus != null" >
+        AREA_STATUS = #{areaStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="payAppid != null" >
+        PAY_APPID = #{payAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="paySecret != null" >
+        PAY_SECRET = #{paySecret,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where AREA_ID = #{areaId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.SystemArea" >
+    update system_area
+    set AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      AREA_LEVEL = #{areaLevel,jdbcType=SMALLINT},
+      PAR_AREA_ID = #{parAreaId,jdbcType=BIGINT},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_STATUS = #{areaStatus,jdbcType=SMALLINT},
+      PAY_APPID = #{payAppid,jdbcType=VARCHAR},
+      PAY_SECRET = #{paySecret,jdbcType=VARCHAR}
+    where AREA_ID = #{areaId,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectParentSystemArea" resultMap="SystemAreaDtoMap" parameterType="java.lang.Long">
+        SELECT a.*, p.AREA_ID as parent_area_id, p.AREA_NAME as parent_area_name from
+          (SELECT * from system_area a WHERE a.AREA_ID = #{areaId,jdbcType=BIGINT}) a
+        LEFT JOIN system_area p ON p.AREA_ID = a.PAR_AREA_ID
+    </select>
+
+  <select id="selectByareaName" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from system_area
+    WHERE  AREA_NAME = #{areaName,jdbcType=VARCHAR}
+  </select>
+
+  <select id="getParentArea" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from system_area
+    WHERE AREA_ID=#{parAreaId,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="listAreaIdName" resultType="map">
+    select AREA_ID, AREA_NAME
+    from system_area where AREA_NAME IN
+    <foreach collection="areaName" item="n" index="index" open="(" close=")" separator=",">
+      #{n}
+    </foreach>
+  </select>
+
+
+    <select id="listChildrenAndParentArea" resultMap="BaseResultMap">
+        SELECT *
+        FROM system_area a WHERE 1=1
+
+        <if test="userType == 2">
+          and a.AREA_ID = #{areaId,jdbcType=VARCHAR}
+        </if>
+        <if test="userType == 1">
+          and a.AREA_ID = #{areaId,jdbcType=VARCHAR}
+        </if>
+
+        <if test="userType == 1">
+            UNION
+            SELECT *
+            FROM system_area b where b.PAR_AREA_ID = #{areaId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+</mapper>

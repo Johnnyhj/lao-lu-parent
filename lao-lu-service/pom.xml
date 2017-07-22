@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>lao-lu-parent</artifactId>
+        <groupId>com.ai.ge</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>lao-lu-service</artifactId>
+    <name>lao-lu-service Maven Webapp</name>
+    <description>老卢下单服务类</description>
+
+    <dependencies>
+        <!-- platform jar begin -->
+        <dependency>
+            <groupId>com.ai.ge</groupId>
+            <artifactId>lao-lu-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ai.ge</groupId>
+            <artifactId>lao-lu-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- platform jar end -->
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-quartz</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>releases</name>
+            <url>http://svn.ailk.org:8000/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>snapshots</name>
+            <url>http://svn.ailk.org:8000/nexus/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.DeliveryInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.DeliveryInfo" >
+    <id column="DELIVERY_ID" property="deliveryId" jdbcType="BIGINT" />
+    <result column="DELIVERY_TYPE" property="deliveryType" jdbcType="SMALLINT" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="EXPRESS_NAME" property="expressName" jdbcType="VARCHAR" />
+    <result column="EXPRESS_SEQ" property="expressSeq" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="EXPRESS_MONEY" property="expressMoney" jdbcType="REAL" />
+  </resultMap>
+
+  <resultMap id="DeliveryDtoMap" type="com.ai.ge.platform.dto.delivery.DeliveryInfoDto" extends="BaseResultMap">
+    <association property="deliverOrderRelation" javaType="com.ai.ge.platform.model.order.DeliverOrderRelation"
+                 resultMap="com.ai.ge.platform.mapper.order.DeliverOrderRelationMapper.BaseResultMap">
+    </association>
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DELIVERY_ID, DELIVERY_TYPE, STATUS, EXPRESS_NAME, EXPRESS_SEQ, CREATE_TIME, UPDATE_TIME, 
+    EXPRESS_MONEY
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.DeliveryInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from delivery_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from delivery_info
+    where DELIVERY_ID = #{deliveryId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from delivery_info
+    where DELIVERY_ID = #{deliveryId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.DeliveryInfoExample" >
+    delete from delivery_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.DeliveryInfo" >
+    insert into delivery_info (DELIVERY_ID, DELIVERY_TYPE, STATUS, 
+      EXPRESS_NAME, EXPRESS_SEQ, CREATE_TIME, 
+      UPDATE_TIME, EXPRESS_MONEY)
+    values (#{deliveryId,jdbcType=BIGINT}, #{deliveryType,jdbcType=SMALLINT}, #{status,jdbcType=SMALLINT}, 
+      #{expressName,jdbcType=VARCHAR}, #{expressSeq,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{expressMoney,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.DeliveryInfo" >
+
+      <selectKey resultType="long" keyProperty="deliveryId" order="AFTER">
+          select last_insert_id() as deliveryId
+      </selectKey>
+
+    insert into delivery_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="deliveryType != null" >
+        DELIVERY_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="expressName != null" >
+        EXPRESS_NAME,
+      </if>
+      <if test="expressSeq != null" >
+        EXPRESS_SEQ,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="deliveryType != null" >
+        #{deliveryType,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="expressName != null" >
+        #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="expressSeq != null" >
+        #{expressSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressMoney != null" >
+        #{expressMoney,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.DeliveryInfoExample" resultType="java.lang.Integer" >
+    select count(*) from delivery_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update delivery_info
+    <set >
+      <if test="record.deliveryId != null" >
+        DELIVERY_ID = #{record.deliveryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.deliveryType != null" >
+        DELIVERY_TYPE = #{record.deliveryType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.expressName != null" >
+        EXPRESS_NAME = #{record.expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressSeq != null" >
+        EXPRESS_SEQ = #{record.expressSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expressMoney != null" >
+        EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update delivery_info
+    set DELIVERY_ID = #{record.deliveryId,jdbcType=BIGINT},
+      DELIVERY_TYPE = #{record.deliveryType,jdbcType=SMALLINT},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      EXPRESS_NAME = #{record.expressName,jdbcType=VARCHAR},
+      EXPRESS_SEQ = #{record.expressSeq,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.DeliveryInfo" >
+    update delivery_info
+    <set >
+      <if test="deliveryType != null" >
+        DELIVERY_TYPE = #{deliveryType,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="expressName != null" >
+        EXPRESS_NAME = #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="expressSeq != null" >
+        EXPRESS_SEQ = #{expressSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY = #{expressMoney,jdbcType=REAL},
+      </if>
+    </set>
+    where DELIVERY_ID = #{deliveryId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.DeliveryInfo" >
+    update delivery_info
+    set DELIVERY_TYPE = #{deliveryType,jdbcType=SMALLINT},
+      STATUS = #{status,jdbcType=SMALLINT},
+      EXPRESS_NAME = #{expressName,jdbcType=VARCHAR},
+      EXPRESS_SEQ = #{expressSeq,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      EXPRESS_MONEY = #{expressMoney,jdbcType=REAL}
+    where DELIVERY_ID = #{deliveryId,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectDeliveryDto" resultMap="DeliveryDtoMap" parameterType="java.lang.Long">
+    SELECT t.*, di.* FROM
+      (SELECT DELIVERY_ID FROM deliver_order_relation WHERE ORDER_ID = #{orderId,jdbcType=BIGINT}) t
+    LEFT JOIN delivery_info di ON t.DELIVERY_ID = di.DELIVERY_ID
+  </select>
+</mapper>

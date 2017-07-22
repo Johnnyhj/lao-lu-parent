@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProductTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProductType" >
+    <id column="PROD_TYPE_CD" property="prodTypeCd" jdbcType="BIGINT" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="PARENT_TYPE_CD" property="parentTypeCd" jdbcType="BIGINT" />
+    <result column="STATUS_CD" property="statusCd" jdbcType="SMALLINT" />
+    <result column="LEVEL" property="level" jdbcType="SMALLINT" />
+    <result column="TYPE_ICON_URL" property="typeIconUrl" jdbcType="VARCHAR" />
+    <result column="SORT" property="sort" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROD_TYPE_CD, NAME, PARENT_TYPE_CD, STATUS_CD, LEVEL, TYPE_ICON_URL, SORT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProductTypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_type
+    where PROD_TYPE_CD = #{prodTypeCd,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product_type
+    where PROD_TYPE_CD = #{prodTypeCd,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProductTypeExample" >
+    delete from product_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProductType" >
+    insert into product_type (PROD_TYPE_CD, NAME, PARENT_TYPE_CD, 
+      STATUS_CD, LEVEL, TYPE_ICON_URL, 
+      SORT)
+    values (#{prodTypeCd,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{parentTypeCd,jdbcType=BIGINT}, 
+      #{statusCd,jdbcType=SMALLINT}, #{level,jdbcType=SMALLINT}, #{typeIconUrl,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProductType" >
+    insert into product_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodTypeCd != null" >
+        PROD_TYPE_CD,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="parentTypeCd != null" >
+        PARENT_TYPE_CD,
+      </if>
+      <if test="statusCd != null" >
+        STATUS_CD,
+      </if>
+      <if test="level != null" >
+        LEVEL,
+      </if>
+      <if test="typeIconUrl != null" >
+        TYPE_ICON_URL,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodTypeCd != null" >
+        #{prodTypeCd,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTypeCd != null" >
+        #{parentTypeCd,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null" >
+        #{statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="typeIconUrl != null" >
+        #{typeIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProductTypeExample" resultType="java.lang.Integer" >
+    select count(*) from product_type
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product_type
+    <set >
+      <if test="record.prodTypeCd != null" >
+        PROD_TYPE_CD = #{record.prodTypeCd,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentTypeCd != null" >
+        PARENT_TYPE_CD = #{record.parentTypeCd,jdbcType=BIGINT},
+      </if>
+      <if test="record.statusCd != null" >
+        STATUS_CD = #{record.statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="record.level != null" >
+        LEVEL = #{record.level,jdbcType=SMALLINT},
+      </if>
+      <if test="record.typeIconUrl != null" >
+        TYPE_ICON_URL = #{record.typeIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sort != null" >
+        SORT = #{record.sort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product_type
+    set PROD_TYPE_CD = #{record.prodTypeCd,jdbcType=BIGINT},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      PARENT_TYPE_CD = #{record.parentTypeCd,jdbcType=BIGINT},
+      STATUS_CD = #{record.statusCd,jdbcType=SMALLINT},
+      LEVEL = #{record.level,jdbcType=SMALLINT},
+      TYPE_ICON_URL = #{record.typeIconUrl,jdbcType=VARCHAR},
+      SORT = #{record.sort,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ProductType" >
+    update product_type
+    <set >
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentTypeCd != null" >
+        PARENT_TYPE_CD = #{parentTypeCd,jdbcType=BIGINT},
+      </if>
+      <if test="statusCd != null" >
+        STATUS_CD = #{statusCd,jdbcType=SMALLINT},
+      </if>
+      <if test="level != null" >
+        LEVEL = #{level,jdbcType=SMALLINT},
+      </if>
+      <if test="typeIconUrl != null" >
+        TYPE_ICON_URL = #{typeIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where PROD_TYPE_CD = #{prodTypeCd,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ProductType" >
+    update product_type
+    set NAME = #{name,jdbcType=VARCHAR},
+      PARENT_TYPE_CD = #{parentTypeCd,jdbcType=BIGINT},
+      STATUS_CD = #{statusCd,jdbcType=SMALLINT},
+      LEVEL = #{level,jdbcType=SMALLINT},
+      TYPE_ICON_URL = #{typeIconUrl,jdbcType=VARCHAR},
+      SORT = #{sort,jdbcType=SMALLINT}
+    where PROD_TYPE_CD = #{prodTypeCd,jdbcType=BIGINT}
+  </update>
+</mapper>

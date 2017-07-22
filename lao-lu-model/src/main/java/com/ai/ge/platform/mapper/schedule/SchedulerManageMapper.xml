@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.schedule.SchedulerManageMapper">
+	<!-- 列出Quartz实例中所有的触发器 -->
+	<select id="queryQuartzTriggersList" parameterType="hashmap" resultType="hashmap">
+		select T.SCHED_NAME,
+		       T.TRIGGER_NAME,
+		       T.TRIGGER_GROUP,
+		       T1.CRON_EXPRESSION,
+		       JOB_NAME,
+		       JOB_GROUP,
+		       DESCRIPTION,
+				if(next_fire_time = 0, null, if(next_fire_time = -1, null, from_unixtime(ROUND(next_fire_time/1000)))) NEXT_FIRE_TIME,
+
+				if(prev_fire_time = 0, null, if(prev_fire_time = -1, null, from_unixtime(ROUND(PREV_FIRE_TIME/1000)))) PREV_FIRE_TIME,
+		       PRIORITY,
+		       TRIGGER_STATE,
+		       TRIGGER_TYPE,
+
+				if(start_time = 0, null, if(start_time = -1, null, from_unixtime(ROUND(START_TIME/1000)))) START_TIME,
+
+				if(end_time = 0, null, if(end_time = -1, null, from_unixtime(ROUND(END_TIME/1000)))) END_TIME,
+
+		       CALENDAR_NAME,
+		       MISFIRE_INSTR,
+		       JOB_DATA
+		  from schedule_triggers t, schedule_cron_triggers t1
+		 where t.sched_name = t1.sched_name
+		   and t.trigger_name = t1.trigger_name
+		   and t.trigger_group = t.trigger_group
+		   <if test="jobName != null and jobName != ''">
+		   		 and t.job_name = #{jobName}
+		   </if>
+		   <if test="jobGroup != null and jobGroup != ''">
+		   		and t.job_group = #{jobGroup}
+		   </if>
+		   <if test="triggerName != null and triggerName != ''">
+		   		 and t.trigger_name = #{triggerName}
+		   </if>
+		   <if test="triggerGroup != null and triggerGroup != ''">
+		   		and t.trigger_group = #{triggerGroup}
+		   </if>
+		   <!-- 开始时间 -->
+		   <if test="timeType != null and timeType != '' and timeType == 'start'">
+			 <if test="startTime != null and startTime !=''">
+			 	AND t.start_time <![CDATA[ >= ]]> (str_to_date(#{startTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+			 <if test="endTime != null and endTime !=''">
+			 	AND t.start_time <![CDATA[ <= ]]> (str_to_date(#{endTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+		   </if>
+		   <!-- 结束时间 -->
+		   <if test="timeType != null and timeType != '' and timeType == 'end'">
+			 <if test="startTime != null and startTime !=''">
+			 	AND t.end_time <![CDATA[ >= ]]> (str_to_date(#{startTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+			 <if test="endTime != null and endTime !=''">
+			 	AND t.end_time <![CDATA[ <= ]]> (str_to_date(#{endTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+		   </if>
+		   <!-- 上次执行时间 -->
+		   <if test="timeType != null and timeType != '' and timeType == 'previous'">
+			 <if test="startTime != null and startTime !=''">
+			 	AND t.prev_fire_time <![CDATA[ >= ]]> (str_to_date(#{startTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+			 <if test="endTime != null and endTime !=''">
+			 	AND t.prev_fire_time <![CDATA[ <= ]]> (str_to_date(#{endTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+		   </if>
+		   <!-- 下次执行时间 -->
+		   <if test="timeType != null and timeType != '' and timeType == 'next'">
+			 <if test="startTime != null and startTime !=''">
+			 	AND t.prev_fire_time <![CDATA[ >= ]]> (str_to_date(#{startTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+			 <if test="endTime != null and endTime !=''">
+			 	AND t.prev_fire_time <![CDATA[ <= ]]> (str_to_date(#{endTime},'YYYY-MM-DD HH24:MI:SS')-str_to_date('1970-01-01','YYYY-MM-DD'))*86400000
+			 </if>
+		   </if>
+		   ORDER BY <!--NLSSORT(T.trigger_name, 'NLS_SORT = SCHINESE_PINYIN_M'),--> t.start_time DESC
+	</select>
+	
+	<!-- 列出Quartz实例中所有的触发器 -->
+	<select id="queryJobDetailList" parameterType="hashmap" resultType="hashmap">
+		select SCHED_NAME,
+		       JOB_NAME,
+		       JOB_GROUP,
+		       DESCRIPTION,
+		       JOB_CLASS_NAME,
+		       IS_DURABLE,
+		       IS_NONCONCURRENT,
+		       IS_UPDATE_DATA,
+		       REQUESTS_RECOVERY
+		  from schedule_job_details t
+		<where>
+			<if test="jobName != null and jobName != ''">
+				and t.job_name = #{jobName}
+			</if>
+			<if test="jobGroup != null and jobGroup != ''">
+				and t.job_group = #{jobGroup}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询JobClass任务处理类明细列表 -->
+	<select id="queryJobClassList" parameterType="hashmap" resultType="hashmap">
+		SELECT JOB_ID,
+		       HANDLE_CLASS,
+		       JOB_CN,
+		       JOB_EN,
+		       JOB_DESC,
+		       JOB_PARAM,
+		       STATE,
+			   date_format(VERSION, 'date_format') VERSION,
+		       JOB_GROUP
+		  FROM schedule_job_class T
+		 WHERE T.STATE = 1
+		 <if test="jobCn != null and jobCn !=''">
+		 	AND T.JOB_CN LIKE CONCAT(CONCAT('%', #{jobCn}),'%')
+		 </if>
+		 <if test="handleClass != null and handleClass !=''">
+		 	AND T.HANDLE_CLASS LIKE CONCAT(CONCAT('%', #{handleClass}),'%')
+		 </if>
+		 <if test="startTime != null and startTime !=''">
+		 	AND T.VERSION <![CDATA[ >= ]]> str_to_date(#{startTime},'YYYY-MM-DD HH24:MI:SS')
+		 </if>
+		 <if test="endTime != null and endTime !=''">
+		 	AND T.VERSION <![CDATA[ <= ]]> str_to_date(#{endTime},'YYYY-MM-DD HH24:MI:SS')
+		 </if>
+		 ORDER BY T.VERSION DESC
+	</select>
+</mapper>

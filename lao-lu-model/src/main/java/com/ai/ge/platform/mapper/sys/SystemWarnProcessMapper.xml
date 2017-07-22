@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.SystemWarnProcessMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.SystemWarnProcess" >
+    <id column="SYSTEM_WARN_PROCESS_ID" property="systemWarnProcessId" jdbcType="DECIMAL" />
+    <result column="WARN_MESSAGE" property="warnMessage" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="VARCHAR" />
+    <result column="PRCESS_ID" property="prcessId" jdbcType="DECIMAL" />
+    <result column="PRCESS_NAME" property="prcessName" jdbcType="VARCHAR" />
+    <result column="PROCESS_RESULT" property="processResult" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PRCESS_TIME" property="prcessTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SYSTEM_WARN_PROCESS_ID, WARN_MESSAGE, CHANNEL, PRCESS_ID, PRCESS_NAME, PROCESS_RESULT, 
+    CREATE_TIME, UPDATE_TIME, PRCESS_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcessExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYSTEM_WARN_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYSTEM_WARN_PROCESS
+    where SYSTEM_WARN_PROCESS_ID = #{systemWarnProcessId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYSTEM_WARN_PROCESS
+    where SYSTEM_WARN_PROCESS_ID = #{systemWarnProcessId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcessExample" >
+    delete from SYSTEM_WARN_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcess" >
+    <selectKey resultType="long" keyProperty="systemWarnProcessId" order="AFTER">
+      select last_insert_id() as systemWarnProcessId
+    </selectKey>
+    insert into SYSTEM_WARN_PROCESS (WARN_MESSAGE,
+      CHANNEL, PRCESS_ID, PRCESS_NAME, 
+      PROCESS_RESULT, CREATE_TIME, UPDATE_TIME, 
+      PRCESS_TIME)
+    values (#{warnMessage,jdbcType=VARCHAR},
+      #{channel,jdbcType=VARCHAR}, #{prcessId,jdbcType=DECIMAL}, #{prcessName,jdbcType=VARCHAR}, 
+      #{processResult,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{prcessTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcess" >
+    <selectKey resultType="long" keyProperty="systemWarnProcessId" order="AFTER">
+      select last_insert_id() as systemWarnProcessId
+    </selectKey>
+    insert into SYSTEM_WARN_PROCESS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warnMessage != null" >
+        WARN_MESSAGE,
+      </if>
+      <if test="channel != null" >
+        CHANNEL,
+      </if>
+      <if test="prcessId != null" >
+        PRCESS_ID,
+      </if>
+      <if test="prcessName != null" >
+        PRCESS_NAME,
+      </if>
+      <if test="processResult != null" >
+        PROCESS_RESULT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="prcessTime != null" >
+        PRCESS_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warnMessage != null" >
+        #{warnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="prcessId != null" >
+        #{prcessId,jdbcType=DECIMAL},
+      </if>
+      <if test="prcessName != null" >
+        #{prcessName,jdbcType=VARCHAR},
+      </if>
+      <if test="processResult != null" >
+        #{processResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prcessTime != null" >
+        #{prcessTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcessExample" resultType="java.lang.Integer" >
+    select count(*) from SYSTEM_WARN_PROCESS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYSTEM_WARN_PROCESS
+    <set >
+      <if test="record.systemWarnProcessId != null" >
+        SYSTEM_WARN_PROCESS_ID = #{record.systemWarnProcessId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.warnMessage != null" >
+        WARN_MESSAGE = #{record.warnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prcessId != null" >
+        PRCESS_ID = #{record.prcessId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.prcessName != null" >
+        PRCESS_NAME = #{record.prcessName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.processResult != null" >
+        PROCESS_RESULT = #{record.processResult,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.prcessTime != null" >
+        PRCESS_TIME = #{record.prcessTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYSTEM_WARN_PROCESS
+    set SYSTEM_WARN_PROCESS_ID = #{record.systemWarnProcessId,jdbcType=DECIMAL},
+      WARN_MESSAGE = #{record.warnMessage,jdbcType=VARCHAR},
+      CHANNEL = #{record.channel,jdbcType=VARCHAR},
+      PRCESS_ID = #{record.prcessId,jdbcType=DECIMAL},
+      PRCESS_NAME = #{record.prcessName,jdbcType=VARCHAR},
+      PROCESS_RESULT = #{record.processResult,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PRCESS_TIME = #{record.prcessTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcess" >
+    update SYSTEM_WARN_PROCESS
+    <set >
+      <if test="warnMessage != null" >
+        WARN_MESSAGE = #{warnMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        CHANNEL = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="prcessId != null" >
+        PRCESS_ID = #{prcessId,jdbcType=DECIMAL},
+      </if>
+      <if test="prcessName != null" >
+        PRCESS_NAME = #{prcessName,jdbcType=VARCHAR},
+      </if>
+      <if test="processResult != null" >
+        PROCESS_RESULT = #{processResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="prcessTime != null" >
+        PRCESS_TIME = #{prcessTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SYSTEM_WARN_PROCESS_ID = #{systemWarnProcessId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.SystemWarnProcess" >
+    update SYSTEM_WARN_PROCESS
+    set WARN_MESSAGE = #{warnMessage,jdbcType=VARCHAR},
+      CHANNEL = #{channel,jdbcType=VARCHAR},
+      PRCESS_ID = #{prcessId,jdbcType=DECIMAL},
+      PRCESS_NAME = #{prcessName,jdbcType=VARCHAR},
+      PROCESS_RESULT = #{processResult,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PRCESS_TIME = #{prcessTime,jdbcType=TIMESTAMP}
+    where SYSTEM_WARN_PROCESS_ID = #{systemWarnProcessId,jdbcType=DECIMAL}
+  </update>
+</mapper>

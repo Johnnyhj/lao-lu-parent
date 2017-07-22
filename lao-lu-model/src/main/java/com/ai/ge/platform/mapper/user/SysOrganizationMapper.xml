@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysOrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysOrganization">
+        <id column="ID" property="id" jdbcType="DECIMAL" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="PARENT_ID" property="parentId" jdbcType="DECIMAL" />
+        <result column="PARENT_IDS" property="parentIds" jdbcType="VARCHAR" />
+    <result column="ROOT_ID" property="rootId" jdbcType="DECIMAL" />
+    <result column="AVAILABLE" property="available" jdbcType="DECIMAL" />
+    <result column="POST" property="post" jdbcType="VARCHAR" />
+    <result column="ORG_ADMIN" property="orgAdmin" jdbcType="DECIMAL" />
+    <result column="LEADER_ID" property="leaderId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ID, NAME, PARENT_ID, PARENT_IDS, ROOT_ID, AVAILABLE, POST, ORG_ADMIN, LEADER_ID, 
+    CREATE_TIME, UPDATE_TIME
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysOrganizationExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYS_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_ORGANIZATION
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_ORGANIZATION
+        where ID = #{id,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysOrganizationExample">
+        delete from SYS_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysOrganization">
+        <selectKey resultType="long" keyProperty="id" order="AFTER">
+            select last_insert_id() as id
+        </selectKey>
+
+        insert into SYS_ORGANIZATION (NAME, PARENT_ID,
+          PARENT_IDS, ROOT_ID, AVAILABLE,
+          POST, ORG_ADMIN, LEADER_ID,
+          CREATE_TIME, UPDATE_TIME)
+        values (#{name,jdbcType=VARCHAR}, #{parentId,jdbcType=DECIMAL},
+          #{parentIds,jdbcType=VARCHAR}, #{rootId,jdbcType=DECIMAL}, #{available,jdbcType=DECIMAL},
+          #{post,jdbcType=VARCHAR}, #{orgAdmin,jdbcType=DECIMAL}, #{leaderId,jdbcType=DECIMAL},
+          #{createTime,jdbcType=DATE}, #{updateTime,jdbcType=DATE})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysOrganization">
+        insert into SYS_ORGANIZATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            ID,
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="parentIds != null">
+                PARENT_IDS,
+            </if>
+      <if test="rootId != null" >
+        ROOT_ID,
+      </if>
+      <if test="available != null" >
+        AVAILABLE,
+      </if>
+      <if test="post != null" >
+        POST,
+      </if>
+      <if test="orgAdmin != null" >
+        ORG_ADMIN,
+      </if>
+      <if test="leaderId != null" >
+        LEADER_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            #{id,jdbcType=DECIMAL},
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="parentIds != null">
+                #{parentIds,jdbcType=VARCHAR},
+            </if>
+      <if test="rootId != null" >
+        #{rootId,jdbcType=DECIMAL},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=DECIMAL},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAdmin != null" >
+        #{orgAdmin,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderId != null" >
+        #{leaderId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysOrganizationExample" resultType="java.lang.Integer">
+        select count(*) from SYS_ORGANIZATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_ORGANIZATION
+        <set>
+            <if test="record.id != null">
+                ID = #{record.id,jdbcType=DECIMAL},
+            </if>
+            <if test="record.name != null">
+                NAME = #{record.name,jdbcType=VARCHAR},
+            </if>
+            <if test="record.parentId != null">
+                PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.parentIds != null">
+                PARENT_IDS = #{record.parentIds,jdbcType=VARCHAR},
+            </if>
+      <if test="record.rootId != null" >
+        ROOT_ID = #{record.rootId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.available != null" >
+        AVAILABLE = #{record.available,jdbcType=DECIMAL},
+      </if>
+      <if test="record.post != null" >
+        POST = #{record.post,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgAdmin != null" >
+        ORG_ADMIN = #{record.orgAdmin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.leaderId != null" >
+        LEADER_ID = #{record.leaderId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=DATE},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYS_ORGANIZATION
+        set ID = #{record.id,jdbcType=DECIMAL},
+        NAME = #{record.name,jdbcType=VARCHAR},
+        PARENT_ID = #{record.parentId,jdbcType=DECIMAL},
+        PARENT_IDS = #{record.parentIds,jdbcType=VARCHAR},
+      ROOT_ID = #{record.rootId,jdbcType=DECIMAL},
+      AVAILABLE = #{record.available,jdbcType=DECIMAL},
+      POST = #{record.post,jdbcType=VARCHAR},
+      ORG_ADMIN = #{record.orgAdmin,jdbcType=DECIMAL},
+      LEADER_ID = #{record.leaderId,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.SysOrganization">
+        update SYS_ORGANIZATION
+        <set>
+            <if test="name != null">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="parentIds != null">
+                PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+            </if>
+      <if test="rootId != null" >
+        ROOT_ID = #{rootId,jdbcType=DECIMAL},
+      </if>
+      <if test="available != null" >
+        AVAILABLE = #{available,jdbcType=DECIMAL},
+      </if>
+      <if test="post != null" >
+        POST = #{post,jdbcType=VARCHAR},
+      </if>
+      <if test="orgAdmin != null" >
+        ORG_ADMIN = #{orgAdmin,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderId != null" >
+        LEADER_ID = #{leaderId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=DATE},
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME = #{updateTime,jdbcType=DATE},
+            </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.SysOrganization">
+        update SYS_ORGANIZATION
+        set NAME = #{name,jdbcType=VARCHAR},
+        PARENT_ID = #{parentId,jdbcType=DECIMAL},
+        PARENT_IDS = #{parentIds,jdbcType=VARCHAR},
+      ROOT_ID = #{rootId,jdbcType=DECIMAL},
+      AVAILABLE = #{available,jdbcType=DECIMAL},
+      POST = #{post,jdbcType=VARCHAR},
+      ORG_ADMIN = #{orgAdmin,jdbcType=DECIMAL},
+      LEADER_ID = #{leaderId,jdbcType=DECIMAL},
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+        UPDATE_TIME = #{updateTime,jdbcType=DATE}
+        where ID = #{id,jdbcType=DECIMAL}
+    </update>
+
+    <select id="listForTree" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_ORGANIZATION
+        start with parent_id = 0
+        connect by prior id = parent_id
+    </select>
+
+    <select id="selectLowerOrgaBySysOrgaId" resultType="long">
+        select
+        id
+        from SYS_ORGANIZATION
+        start with parent_id = #{sysOrgaId}
+        connect by prior id = parent_id
+    </select>
+    
+    
+    <sql id="select_orga_role_by_username">
+        select distinct role.id role_id, role.role
+        from sys_role role
+        left join SYS_ORGA_ROLE_REL ORGA_ROLE_REL
+        on role.id = orga_role_rel.role_id
+        left join
+        (
+            select USER_ORGA_REL.ORGA_ID
+            from SYS_USER_ORGANIZATION USER_ORGA_REL
+            left join sys_user u
+            on USER_ORGA_REL.USER_ID = u.id
+            where u.username = #{username}
+
+        ) orga
+        on 1=1
+        <![CDATA[
+        where ((ORGA_ROLE_REL.effective_time is not null and
+           now() > ORGA_ROLE_REL.effective_time) or
+           ORGA_ROLE_REL.effective_time is null)
+       and ((ORGA_ROLE_REL.fail_time is not null and
+           ORGA_ROLE_REL.fail_time > now()) or
+           ORGA_ROLE_REL.fail_time is null)
+        ]]>
+    </sql>
+    <sql id="select_orga_permission_by_username">
+        select
+            role_id,
+            role,
+            SRR_ID,
+            SYS_ROLE_ID,
+            SYS_RESOURCE_ID,
+            ID,
+            NAME,
+            TYPE,
+            URL,
+            PARENT_ID,
+            PARENT_IDS,
+            ROOT_ID,
+            PERMISSION,
+            AVAILABLE
+
+        from (<include refid="com.ai.ge.platform.mapper.user.SysOrganizationMapper.select_orga_role_by_username" />) role
+        left join SYS_ROLE_RESOURCE_RELEATION ROLE_RES_REL
+        on role.role_id = ROLE_RES_REL.SYS_ROLE_ID
+        left join sys_resource res
+        on ROLE_RES_REL.SYS_RESOURCE_ID = res.id
+        where res.permission is not null
+    </sql>
+
+    <select id="findRoles" resultType="string">
+        select role.role from (<include refid="select_orga_role_by_username" />) role
+    </select>
+
+    <select id="findPermissions" resultType="string">
+        select distinct res.permission from (<include refid="select_orga_permission_by_username" />) res
+    </select>
+</mapper>

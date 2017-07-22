@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.OrdersOperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.OrdersOperateLog" >
+    <id column="OPERATE_ID" property="operateId" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="SYS_USER_ID" property="sysUserId" jdbcType="BIGINT" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+    <result column="CITY_AEAR_ID" property="cityAearId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="OrderOperateDtoMap" type="com.ai.ge.platform.dto.order.OrderOperateDto" extends="BaseResultMap" >
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="ool_CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPERATE_ID, ORDER_ID, SYS_USER_ID, REMARK, PROVINCE_AEAR_ID, CITY_AEAR_ID, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+
+  <sql id="Alias_Base_Column_List" >
+    OPERATE_ID, ORDER_ID, SYS_USER_ID, REMARK, PROVINCE_AEAR_ID, CITY_AEAR_ID, CREATE_TIME as OOL_CREATE_TIME,
+    UPDATE_TIME
+  </sql>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.OrdersOperateLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders_operate_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders_operate_log
+    where OPERATE_ID = #{operateId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from orders_operate_log
+    where OPERATE_ID = #{operateId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.OrdersOperateLogExample" >
+    delete from orders_operate_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.OrdersOperateLog" >
+    insert into orders_operate_log (OPERATE_ID, ORDER_ID, SYS_USER_ID, 
+      REMARK, PROVINCE_AEAR_ID, CITY_AEAR_ID, 
+      CREATE_TIME, UPDATE_TIME)
+    values (#{operateId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{sysUserId,jdbcType=BIGINT}, 
+      #{remark,jdbcType=VARCHAR}, #{provinceAearId,jdbcType=BIGINT}, #{cityAearId,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.OrdersOperateLog" >
+      <selectKey keyProperty="operateId" order="AFTER" resultType="long">
+          SELECT last_insert_id() as OPERATE_ID
+      </selectKey>
+    insert into orders_operate_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="sysUserId != null" >
+        SYS_USER_ID,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserId != null" >
+        #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.OrdersOperateLogExample" resultType="java.lang.Integer" >
+    select count(*) from orders_operate_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders_operate_log
+    <set >
+      <if test="record.operateId != null" >
+        OPERATE_ID = #{record.operateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysUserId != null" >
+        SYS_USER_ID = #{record.sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityAearId != null" >
+        CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders_operate_log
+    set OPERATE_ID = #{record.operateId,jdbcType=BIGINT},
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      SYS_USER_ID = #{record.sysUserId,jdbcType=BIGINT},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{record.cityAearId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.OrdersOperateLog" >
+    update orders_operate_log
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserId != null" >
+        SYS_USER_ID = #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="cityAearId != null" >
+        CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where OPERATE_ID = #{operateId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.OrdersOperateLog" >
+    update orders_operate_log
+    set ORDER_ID = #{orderId,jdbcType=BIGINT},
+      SYS_USER_ID = #{sysUserId,jdbcType=BIGINT},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      CITY_AEAR_ID = #{cityAearId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where OPERATE_ID = #{operateId,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectOrderOperateUser" resultMap="OrderOperateDtoMap" parameterType="java.lang.Long">
+        SELECT
+            OPERATE_ID,
+            ORDER_ID,
+            SYS_USER_ID,
+            REMARK,
+            o.CREATE_TIME AS OOL_CREATE_TIME,
+            o.UPDATE_TIME,
+            s.username
+        FROM orders_operate_log o LEFT JOIN sys_user s ON s.id = o.sys_user_id
+        WHERE o.order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+</mapper>

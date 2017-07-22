@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProductPicsMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProductPics" >
+    <id column="PROD_PICS_ID" property="prodPicsId" jdbcType="BIGINT" />
+    <result column="PROD_ID" property="prodId" jdbcType="BIGINT" />
+    <result column="PICS_URL" property="picsUrl" jdbcType="VARCHAR" />
+    <result column="PIC_TYPE" property="picType" jdbcType="SMALLINT" />
+    <result column="SORT" property="sort" jdbcType="SMALLINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="PIC_OWNER_URL" property="picOwnerUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROD_PICS_ID, PROD_ID, PICS_URL, PIC_TYPE, SORT, CREATE_TIME, PIC_OWNER_URL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProductPicsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_pics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_pics
+    where PROD_PICS_ID = #{prodPicsId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from product_pics
+    where PROD_PICS_ID = #{prodPicsId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProductPicsExample" >
+    delete from product_pics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProductPics" >
+    insert into product_pics (PROD_PICS_ID, PROD_ID, PICS_URL, 
+      PIC_TYPE, SORT, CREATE_TIME, 
+      PIC_OWNER_URL)
+    values (#{prodPicsId,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, #{picsUrl,jdbcType=VARCHAR}, 
+      #{picType,jdbcType=SMALLINT}, #{sort,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{picOwnerUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProductPics" >
+    insert into product_pics
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodPicsId != null" >
+        PROD_PICS_ID,
+      </if>
+      <if test="prodId != null" >
+        PROD_ID,
+      </if>
+      <if test="picsUrl != null" >
+        PICS_URL,
+      </if>
+      <if test="picType != null" >
+        PIC_TYPE,
+      </if>
+      <if test="sort != null" >
+        SORT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="picOwnerUrl != null" >
+        PIC_OWNER_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodPicsId != null" >
+        #{prodPicsId,jdbcType=BIGINT},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="picsUrl != null" >
+        #{picsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null" >
+        #{picType,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOwnerUrl != null" >
+        #{picOwnerUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProductPicsExample" resultType="java.lang.Integer" >
+    select count(*) from product_pics
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product_pics
+    <set >
+      <if test="record.prodPicsId != null" >
+        PROD_PICS_ID = #{record.prodPicsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodId != null" >
+        PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      </if>
+      <if test="record.picsUrl != null" >
+        PICS_URL = #{record.picsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picType != null" >
+        PIC_TYPE = #{record.picType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sort != null" >
+        SORT = #{record.sort,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.picOwnerUrl != null" >
+        PIC_OWNER_URL = #{record.picOwnerUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product_pics
+    set PROD_PICS_ID = #{record.prodPicsId,jdbcType=BIGINT},
+      PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      PICS_URL = #{record.picsUrl,jdbcType=VARCHAR},
+      PIC_TYPE = #{record.picType,jdbcType=SMALLINT},
+      SORT = #{record.sort,jdbcType=SMALLINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      PIC_OWNER_URL = #{record.picOwnerUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ProductPics" >
+    update product_pics
+    <set >
+      <if test="prodId != null" >
+        PROD_ID = #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="picsUrl != null" >
+        PICS_URL = #{picsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="picType != null" >
+        PIC_TYPE = #{picType,jdbcType=SMALLINT},
+      </if>
+      <if test="sort != null" >
+        SORT = #{sort,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picOwnerUrl != null" >
+        PIC_OWNER_URL = #{picOwnerUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PROD_PICS_ID = #{prodPicsId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ProductPics" >
+    update product_pics
+    set PROD_ID = #{prodId,jdbcType=BIGINT},
+      PICS_URL = #{picsUrl,jdbcType=VARCHAR},
+      PIC_TYPE = #{picType,jdbcType=SMALLINT},
+      SORT = #{sort,jdbcType=SMALLINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      PIC_OWNER_URL = #{picOwnerUrl,jdbcType=VARCHAR}
+    where PROD_PICS_ID = #{prodPicsId,jdbcType=BIGINT}
+  </update>
+</mapper>

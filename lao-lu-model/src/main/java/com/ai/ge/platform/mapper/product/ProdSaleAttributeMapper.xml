@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProdSaleAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProdSaleAttribute" >
+    <id column="PROD_SALE_ATTR_ID" property="prodSaleAttrId" jdbcType="BIGINT" />
+    <result column="PROD_ID" property="prodId" jdbcType="BIGINT" />
+    <result column="SALE_COMBI_ATTR" property="saleCombiAttr" jdbcType="VARCHAR" />
+    <result column="PROD_STOCK_NUM" property="prodStockNum" jdbcType="BIGINT" />
+    <result column="PROD_STOCK_WARN" property="prodStockWarn" jdbcType="BIGINT" />
+    <result column="PRICE" property="price" jdbcType="REAL" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROD_SALE_ATTR_ID, PROD_ID, SALE_COMBI_ATTR, PROD_STOCK_NUM, PROD_STOCK_WARN, PRICE, 
+    STATUS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProdSaleAttributeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from prod_sale_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from prod_sale_attribute
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from prod_sale_attribute
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProdSaleAttributeExample" >
+    delete from prod_sale_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProdSaleAttribute" >
+    insert into prod_sale_attribute (PROD_SALE_ATTR_ID, PROD_ID, SALE_COMBI_ATTR, 
+      PROD_STOCK_NUM, PROD_STOCK_WARN, PRICE, 
+      STATUS, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{prodSaleAttrId,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, #{saleCombiAttr,jdbcType=VARCHAR}, 
+      #{prodStockNum,jdbcType=BIGINT}, #{prodStockWarn,jdbcType=BIGINT}, #{price,jdbcType=REAL}, 
+      #{status,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProdSaleAttribute" >
+    insert into prod_sale_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID,
+      </if>
+      <if test="prodId != null" >
+        PROD_ID,
+      </if>
+      <if test="saleCombiAttr != null" >
+        SALE_COMBI_ATTR,
+      </if>
+      <if test="prodStockNum != null" >
+        PROD_STOCK_NUM,
+      </if>
+      <if test="prodStockWarn != null" >
+        PROD_STOCK_WARN,
+      </if>
+      <if test="price != null" >
+        PRICE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodSaleAttrId != null" >
+        #{prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="saleCombiAttr != null" >
+        #{saleCombiAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodStockNum != null" >
+        #{prodStockNum,jdbcType=BIGINT},
+      </if>
+      <if test="prodStockWarn != null" >
+        #{prodStockWarn,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProdSaleAttributeExample" resultType="java.lang.Integer" >
+    select count(*) from prod_sale_attribute
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update prod_sale_attribute
+    <set >
+      <if test="record.prodSaleAttrId != null" >
+        PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodId != null" >
+        PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleCombiAttr != null" >
+        SALE_COMBI_ATTR = #{record.saleCombiAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.prodStockNum != null" >
+        PROD_STOCK_NUM = #{record.prodStockNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.prodStockWarn != null" >
+        PROD_STOCK_WARN = #{record.prodStockWarn,jdbcType=BIGINT},
+      </if>
+      <if test="record.price != null" >
+        PRICE = #{record.price,jdbcType=REAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update prod_sale_attribute
+    set PROD_SALE_ATTR_ID = #{record.prodSaleAttrId,jdbcType=BIGINT},
+      PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      SALE_COMBI_ATTR = #{record.saleCombiAttr,jdbcType=VARCHAR},
+      PROD_STOCK_NUM = #{record.prodStockNum,jdbcType=BIGINT},
+      PROD_STOCK_WARN = #{record.prodStockWarn,jdbcType=BIGINT},
+      PRICE = #{record.price,jdbcType=REAL},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.product.ProdSaleAttribute" >
+    update prod_sale_attribute
+    <set >
+      <if test="prodId != null" >
+        PROD_ID = #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="saleCombiAttr != null" >
+        SALE_COMBI_ATTR = #{saleCombiAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="prodStockNum != null" >
+        PROD_STOCK_NUM = #{prodStockNum,jdbcType=BIGINT},
+      </if>
+      <if test="prodStockWarn != null" >
+        PROD_STOCK_WARN = #{prodStockWarn,jdbcType=BIGINT},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.product.ProdSaleAttribute" >
+    update prod_sale_attribute
+    set PROD_ID = #{prodId,jdbcType=BIGINT},
+      SALE_COMBI_ATTR = #{saleCombiAttr,jdbcType=VARCHAR},
+      PROD_STOCK_NUM = #{prodStockNum,jdbcType=BIGINT},
+      PROD_STOCK_WARN = #{prodStockWarn,jdbcType=BIGINT},
+      PRICE = #{price,jdbcType=REAL},
+      STATUS = #{status,jdbcType=SMALLINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where PROD_SALE_ATTR_ID = #{prodSaleAttrId,jdbcType=BIGINT}
+  </update>
+</mapper>

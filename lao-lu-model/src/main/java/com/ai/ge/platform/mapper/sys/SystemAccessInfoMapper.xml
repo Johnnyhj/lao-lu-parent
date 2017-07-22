@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.SystemAccessInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.SystemAccessInfo" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="ACC_IP" property="accIp" jdbcType="VARCHAR" />
+    <result column="ACC_TIME" property="accTime" jdbcType="TIMESTAMP" />
+    <result column="ACC_METHOD" property="accMethod" jdbcType="VARCHAR" />
+    <result column="REQ_URL" property="reqUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, ACC_IP, ACC_TIME, ACC_METHOD, REQ_URL
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYSTEM_ACCESS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SYSTEM_ACCESS_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SYSTEM_ACCESS_INFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfoExample" >
+    delete from SYSTEM_ACCESS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfo" >
+      <selectKey resultType="long" keyProperty="id" order="AFTER">
+        select last_insert_id() as id
+      </selectKey>
+    insert into SYSTEM_ACCESS_INFO (ACC_IP, ACC_TIME,
+      ACC_METHOD, REQ_URL)
+    values (#{accIp,jdbcType=VARCHAR}, #{accTime,jdbcType=TIMESTAMP},
+      #{accMethod,jdbcType=VARCHAR}, #{reqUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfo" >
+      <selectKey resultType="long" keyProperty="id" order="AFTER">
+        select last_insert_id() as id
+      </selectKey>
+    insert into SYSTEM_ACCESS_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accIp != null" >
+        ACC_IP,
+      </if>
+      <if test="accTime != null" >
+        ACC_TIME,
+      </if>
+      <if test="accMethod != null" >
+        ACC_METHOD,
+      </if>
+      <if test="reqUrl != null" >
+        REQ_URL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accIp != null" >
+        #{accIp,jdbcType=VARCHAR},
+      </if>
+      <if test="accTime != null" >
+        #{accTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accMethod != null" >
+        #{accMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUrl != null" >
+        #{reqUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfoExample" resultType="java.lang.Integer" >
+    select count(*) from SYSTEM_ACCESS_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYSTEM_ACCESS_INFO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.accIp != null" >
+        ACC_IP = #{record.accIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accTime != null" >
+        ACC_TIME = #{record.accTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accMethod != null" >
+        ACC_METHOD = #{record.accMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqUrl != null" >
+        REQ_URL = #{record.reqUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYSTEM_ACCESS_INFO
+    set ID = #{record.id,jdbcType=DECIMAL},
+      ACC_IP = #{record.accIp,jdbcType=VARCHAR},
+      ACC_TIME = #{record.accTime,jdbcType=TIMESTAMP},
+      ACC_METHOD = #{record.accMethod,jdbcType=VARCHAR},
+      REQ_URL = #{record.reqUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfo" >
+    update SYSTEM_ACCESS_INFO
+    <set >
+      <if test="accIp != null" >
+        ACC_IP = #{accIp,jdbcType=VARCHAR},
+      </if>
+      <if test="accTime != null" >
+        ACC_TIME = #{accTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accMethod != null" >
+        ACC_METHOD = #{accMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="reqUrl != null" >
+        REQ_URL = #{reqUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.SystemAccessInfo" >
+    update SYSTEM_ACCESS_INFO
+    set ACC_IP = #{accIp,jdbcType=VARCHAR},
+      ACC_TIME = #{accTime,jdbcType=TIMESTAMP},
+      ACC_METHOD = #{accMethod,jdbcType=VARCHAR},
+      REQ_URL = #{reqUrl,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+    <select id="statisticsAccIp" resultType="java.util.HashMap" parameterType="map" >
+        select
+        info.acc_ip ACC_IP,
+        count(1)    ACC_COUNT
+        from SYSTEM_ACCESS_INFO info
+        where <![CDATA[info.acc_time > now() - #{minute} / 1440]]>
+        group by info.acc_ip having <![CDATA[count(1) > #{lockThreshold}]]>
+    </select>
+</mapper>

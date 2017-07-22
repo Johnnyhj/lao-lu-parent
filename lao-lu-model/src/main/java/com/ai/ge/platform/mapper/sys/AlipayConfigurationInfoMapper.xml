@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.sys.AlipayConfigurationInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.sys.AlipayConfigurationInfo" >
+    <id column="ALIPAY_CONF_ID" property="alipayConfId" jdbcType="BIGINT" />
+    <result column="ALIPAY_PUBLIC_KEY" property="alipayPublicKey" jdbcType="VARCHAR" />
+    <result column="ALIPAY_PARTNER" property="alipayPartner" jdbcType="VARCHAR" />
+    <result column="ALIPAY_APP_APPID" property="alipayAppAppid" jdbcType="VARCHAR" />
+    <result column="ALIPAY_APP_PRIVATE_KEY" property="alipayAppPrivateKey" jdbcType="VARCHAR" />
+    <result column="ALIPAY_APP_PUBLIC_KEY" property="alipayAppPublicKey" jdbcType="VARCHAR" />
+    <result column="ALIPAY_APP_GATEWAY" property="alipayAppGateway" jdbcType="VARCHAR" />
+    <result column="ALIPAY_STATUS" property="alipayStatus" jdbcType="SMALLINT" />
+    <result column="AREA_ID" property="areaId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ALIPAY_CONF_ID, ALIPAY_PUBLIC_KEY, ALIPAY_PARTNER, ALIPAY_APP_APPID, ALIPAY_APP_PRIVATE_KEY, 
+    ALIPAY_APP_PUBLIC_KEY, ALIPAY_APP_GATEWAY, ALIPAY_STATUS, AREA_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alipay_configuration_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from alipay_configuration_info
+    where ALIPAY_CONF_ID = #{alipayConfId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from alipay_configuration_info
+    where ALIPAY_CONF_ID = #{alipayConfId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfoExample" >
+    delete from alipay_configuration_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfo" useGeneratedKeys="true" keyProperty="alipayConfId" >
+    insert into alipay_configuration_info (ALIPAY_PUBLIC_KEY, ALIPAY_PARTNER, ALIPAY_APP_APPID, 
+      ALIPAY_APP_PRIVATE_KEY, ALIPAY_APP_PUBLIC_KEY, 
+      ALIPAY_APP_GATEWAY, ALIPAY_STATUS, AREA_ID
+      )
+    values (#{alipayPublicKey,jdbcType=VARCHAR}, #{alipayPartner,jdbcType=VARCHAR}, #{alipayAppAppid,jdbcType=VARCHAR}, 
+      #{alipayAppPrivateKey,jdbcType=VARCHAR}, #{alipayAppPublicKey,jdbcType=VARCHAR}, 
+      #{alipayAppGateway,jdbcType=VARCHAR}, #{alipayStatus,jdbcType=SMALLINT}, #{areaId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfo" useGeneratedKeys="true" keyProperty="alipayConfId" >
+    insert into alipay_configuration_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alipayPublicKey != null" >
+        ALIPAY_PUBLIC_KEY,
+      </if>
+      <if test="alipayPartner != null" >
+        ALIPAY_PARTNER,
+      </if>
+      <if test="alipayAppAppid != null" >
+        ALIPAY_APP_APPID,
+      </if>
+      <if test="alipayAppPrivateKey != null" >
+        ALIPAY_APP_PRIVATE_KEY,
+      </if>
+      <if test="alipayAppPublicKey != null" >
+        ALIPAY_APP_PUBLIC_KEY,
+      </if>
+      <if test="alipayAppGateway != null" >
+        ALIPAY_APP_GATEWAY,
+      </if>
+      <if test="alipayStatus != null" >
+        ALIPAY_STATUS,
+      </if>
+      <if test="areaId != null" >
+        AREA_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alipayPublicKey != null" >
+        #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayPartner != null" >
+        #{alipayPartner,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppAppid != null" >
+        #{alipayAppAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppPrivateKey != null" >
+        #{alipayAppPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppPublicKey != null" >
+        #{alipayAppPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppGateway != null" >
+        #{alipayAppGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayStatus != null" >
+        #{alipayStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfoExample" resultType="java.lang.Integer" >
+    select count(*) from alipay_configuration_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update alipay_configuration_info
+    <set >
+      <if test="record.alipayConfId != null" >
+        ALIPAY_CONF_ID = #{record.alipayConfId,jdbcType=BIGINT},
+      </if>
+      <if test="record.alipayPublicKey != null" >
+        ALIPAY_PUBLIC_KEY = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayPartner != null" >
+        ALIPAY_PARTNER = #{record.alipayPartner,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayAppAppid != null" >
+        ALIPAY_APP_APPID = #{record.alipayAppAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayAppPrivateKey != null" >
+        ALIPAY_APP_PRIVATE_KEY = #{record.alipayAppPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayAppPublicKey != null" >
+        ALIPAY_APP_PUBLIC_KEY = #{record.alipayAppPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayAppGateway != null" >
+        ALIPAY_APP_GATEWAY = #{record.alipayAppGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alipayStatus != null" >
+        ALIPAY_STATUS = #{record.alipayStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.areaId != null" >
+        AREA_ID = #{record.areaId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update alipay_configuration_info
+    set ALIPAY_CONF_ID = #{record.alipayConfId,jdbcType=BIGINT},
+      ALIPAY_PUBLIC_KEY = #{record.alipayPublicKey,jdbcType=VARCHAR},
+      ALIPAY_PARTNER = #{record.alipayPartner,jdbcType=VARCHAR},
+      ALIPAY_APP_APPID = #{record.alipayAppAppid,jdbcType=VARCHAR},
+      ALIPAY_APP_PRIVATE_KEY = #{record.alipayAppPrivateKey,jdbcType=VARCHAR},
+      ALIPAY_APP_PUBLIC_KEY = #{record.alipayAppPublicKey,jdbcType=VARCHAR},
+      ALIPAY_APP_GATEWAY = #{record.alipayAppGateway,jdbcType=VARCHAR},
+      ALIPAY_STATUS = #{record.alipayStatus,jdbcType=SMALLINT},
+      AREA_ID = #{record.areaId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfo" >
+    update alipay_configuration_info
+    <set >
+      <if test="alipayPublicKey != null" >
+        ALIPAY_PUBLIC_KEY = #{alipayPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayPartner != null" >
+        ALIPAY_PARTNER = #{alipayPartner,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppAppid != null" >
+        ALIPAY_APP_APPID = #{alipayAppAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppPrivateKey != null" >
+        ALIPAY_APP_PRIVATE_KEY = #{alipayAppPrivateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppPublicKey != null" >
+        ALIPAY_APP_PUBLIC_KEY = #{alipayAppPublicKey,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayAppGateway != null" >
+        ALIPAY_APP_GATEWAY = #{alipayAppGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="alipayStatus != null" >
+        ALIPAY_STATUS = #{alipayStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="areaId != null" >
+        AREA_ID = #{areaId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where ALIPAY_CONF_ID = #{alipayConfId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.sys.AlipayConfigurationInfo" >
+    update alipay_configuration_info
+    set ALIPAY_PUBLIC_KEY = #{alipayPublicKey,jdbcType=VARCHAR},
+      ALIPAY_PARTNER = #{alipayPartner,jdbcType=VARCHAR},
+      ALIPAY_APP_APPID = #{alipayAppAppid,jdbcType=VARCHAR},
+      ALIPAY_APP_PRIVATE_KEY = #{alipayAppPrivateKey,jdbcType=VARCHAR},
+      ALIPAY_APP_PUBLIC_KEY = #{alipayAppPublicKey,jdbcType=VARCHAR},
+      ALIPAY_APP_GATEWAY = #{alipayAppGateway,jdbcType=VARCHAR},
+      ALIPAY_STATUS = #{alipayStatus,jdbcType=SMALLINT},
+      AREA_ID = #{areaId,jdbcType=BIGINT}
+    where ALIPAY_CONF_ID = #{alipayConfId,jdbcType=BIGINT}
+  </update>
+</mapper>

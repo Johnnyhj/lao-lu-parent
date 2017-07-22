@@ -1,0 +1,84 @@
+body, html {
+    font-family: "微软雅黑";
+}
+h3 {
+    border-bottom: 1px solid #d1d1d1;
+    padding-bottom: 12px;
+    padding-left: 8px;
+}
+h5 {
+    font-size: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 12px;
+    margin-bottom: 0;
+}
+h5 small {
+    font-size: 12px;
+    color: #999;
+    padding-left: 12px
+}
+.con-area {
+    background: #fafafa;
+    padding-top: 12px;
+}
+a.add-btn {
+    display: block;
+    float: left;
+    line-height: 24px;
+    padding: 6px 12px;
+    background: #31b0d5;
+    border: 1px solid #31b0d5;
+    position: relative;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 18px;
+    margin-bottom: 5px;
+}
+a.add-btn:hover {
+    text-decoration: none;
+    background: #16a7d1;
+    border: 1px solid #16a7d1;
+}
+.table-new-add {
+    background: #fff;
+    margin-bottom: 12px;
+}
+.table-new-add thead tr th {
+    background: #f9f9f9;
+    font-weight: normal;
+    border-bottom: none;
+}
+.table-new-add thead tr th.text-center {
+    text-align: center;
+}
+.table-new-add thead tr td.text-center {
+    text-align: center;
+}
+.btn-default {
+    background: #fff;
+}
+
+.btn-sub {
+    background: #31b0d5;
+    line-height: 42px;
+    padding: 0 24px;
+    font-size: 18px;
+    color: #fff;
+}
+
+.btn-sub:hover {
+    color: #fff;
+}
+.btn-sub:focus,
+.btn-sub:active:focus,
+.btn-sub.active:focus,
+.btn-sub.focus,
+.btn-sub:active.focus,
+.btn-sub.active.focus {
+    color:#fff;
+}
+
+label.error {
+    font-size: 12px;
+    color: #ff0000;
+}

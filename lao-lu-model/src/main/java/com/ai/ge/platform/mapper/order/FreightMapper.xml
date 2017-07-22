@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.FreightMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.Freight" >
+    <id column="FREIGHT_ID" property="freightId" jdbcType="BIGINT" />
+    <result column="ORIGINAL_PROVINCE_AEAR_ID" property="originalProvinceAearId" jdbcType="BIGINT" />
+    <result column="ORIGINAL_CITY_AEAR_ID" property="originalCityAearId" jdbcType="BIGINT" />
+    <result column="IS_DEFAULT" property="isDefault" jdbcType="SMALLINT" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="MONEY" property="money" jdbcType="REAL" />
+    <result column="DESTINATION_PROVINCE_AEAR_ID" property="destinationProvinceAearId" jdbcType="BIGINT" />
+    <result column="DESTINATION_CITY_AEAR_ID" property="destinationCityAearId" jdbcType="BIGINT" />
+    <result column="EXTEND" property="extend" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="FreightDtoMap" type="com.ai.ge.platform.dto.order.FreightDto" extends="BaseResultMap" >
+    <result column="ORIGINAL_PROVINCE_AEAR_NAME" property="originalProvinceAearName" jdbcType="VARCHAR" />
+    <result column="ORIGINAL_CITY_AEAR_NAME" property="originalCityAearName" jdbcType="VARCHAR" />
+    <result column="DESTINATION_PROVINCE_AEAR_NAME" property="destinationProvinceAearName" jdbcType="VARCHAR" />
+    <result column="DESTINATION_CITY_AEAR_NAME" property="destinationCityAearName" jdbcType="VARCHAR" />
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FREIGHT_ID, ORIGINAL_PROVINCE_AEAR_ID, ORIGINAL_CITY_AEAR_ID, IS_DEFAULT, STATUS, 
+    MONEY, DESTINATION_PROVINCE_AEAR_ID, DESTINATION_CITY_AEAR_ID, EXTEND
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.FreightExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from freight
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from freight
+    where FREIGHT_ID = #{freightId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from freight
+    where FREIGHT_ID = #{freightId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.FreightExample" >
+    delete from freight
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.Freight" >
+    insert into freight (FREIGHT_ID, ORIGINAL_PROVINCE_AEAR_ID, 
+      ORIGINAL_CITY_AEAR_ID, IS_DEFAULT, STATUS, 
+      MONEY, DESTINATION_PROVINCE_AEAR_ID, DESTINATION_CITY_AEAR_ID, 
+      EXTEND)
+    values (#{freightId,jdbcType=BIGINT}, #{originalProvinceAearId,jdbcType=BIGINT}, 
+      #{originalCityAearId,jdbcType=BIGINT}, #{isDefault,jdbcType=SMALLINT}, #{status,jdbcType=SMALLINT}, 
+      #{money,jdbcType=REAL}, #{destinationProvinceAearId,jdbcType=BIGINT}, #{destinationCityAearId,jdbcType=BIGINT}, 
+      #{extend,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.Freight" >
+      <selectKey resultType="long" keyProperty="freightId" order="AFTER">
+          select last_insert_id() as freightId
+      </selectKey>
+
+    insert into freight
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="originalProvinceAearId != null" >
+        ORIGINAL_PROVINCE_AEAR_ID,
+      </if>
+      <if test="originalCityAearId != null" >
+        ORIGINAL_CITY_AEAR_ID,
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="money != null" >
+        MONEY,
+      </if>
+      <if test="destinationProvinceAearId != null" >
+        DESTINATION_PROVINCE_AEAR_ID,
+      </if>
+      <if test="destinationCityAearId != null" >
+        DESTINATION_CITY_AEAR_ID,
+      </if>
+      <if test="extend != null" >
+        EXTEND,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="originalProvinceAearId != null" >
+        #{originalProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="originalCityAearId != null" >
+        #{originalCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=REAL},
+      </if>
+      <if test="destinationProvinceAearId != null" >
+        #{destinationProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="destinationCityAearId != null" >
+        #{destinationCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="extend != null" >
+        #{extend,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.FreightExample" resultType="java.lang.Integer" >
+    select count(*) from freight
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update freight
+    <set >
+      <if test="record.freightId != null" >
+        FREIGHT_ID = #{record.freightId,jdbcType=BIGINT},
+      </if>
+      <if test="record.originalProvinceAearId != null" >
+        ORIGINAL_PROVINCE_AEAR_ID = #{record.originalProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.originalCityAearId != null" >
+        ORIGINAL_CITY_AEAR_ID = #{record.originalCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isDefault != null" >
+        IS_DEFAULT = #{record.isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.money != null" >
+        MONEY = #{record.money,jdbcType=REAL},
+      </if>
+      <if test="record.destinationProvinceAearId != null" >
+        DESTINATION_PROVINCE_AEAR_ID = #{record.destinationProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.destinationCityAearId != null" >
+        DESTINATION_CITY_AEAR_ID = #{record.destinationCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="record.extend != null" >
+        EXTEND = #{record.extend,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update freight
+    set FREIGHT_ID = #{record.freightId,jdbcType=BIGINT},
+      ORIGINAL_PROVINCE_AEAR_ID = #{record.originalProvinceAearId,jdbcType=BIGINT},
+      ORIGINAL_CITY_AEAR_ID = #{record.originalCityAearId,jdbcType=BIGINT},
+      IS_DEFAULT = #{record.isDefault,jdbcType=SMALLINT},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      MONEY = #{record.money,jdbcType=REAL},
+      DESTINATION_PROVINCE_AEAR_ID = #{record.destinationProvinceAearId,jdbcType=BIGINT},
+      DESTINATION_CITY_AEAR_ID = #{record.destinationCityAearId,jdbcType=BIGINT},
+      EXTEND = #{record.extend,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.Freight" >
+    update freight
+    <set >
+      <if test="originalProvinceAearId != null" >
+        ORIGINAL_PROVINCE_AEAR_ID = #{originalProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="originalCityAearId != null" >
+        ORIGINAL_CITY_AEAR_ID = #{originalCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="isDefault != null" >
+        IS_DEFAULT = #{isDefault,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="money != null" >
+        MONEY = #{money,jdbcType=REAL},
+      </if>
+      <if test="destinationProvinceAearId != null" >
+        DESTINATION_PROVINCE_AEAR_ID = #{destinationProvinceAearId,jdbcType=BIGINT},
+      </if>
+      <if test="destinationCityAearId != null" >
+        DESTINATION_CITY_AEAR_ID = #{destinationCityAearId,jdbcType=BIGINT},
+      </if>
+      <if test="extend != null" >
+        EXTEND = #{extend,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where FREIGHT_ID = #{freightId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.Freight" >
+    update freight
+    set ORIGINAL_PROVINCE_AEAR_ID = #{originalProvinceAearId,jdbcType=BIGINT},
+      ORIGINAL_CITY_AEAR_ID = #{originalCityAearId,jdbcType=BIGINT},
+      IS_DEFAULT = #{isDefault,jdbcType=SMALLINT},
+      STATUS = #{status,jdbcType=SMALLINT},
+      MONEY = #{money,jdbcType=REAL},
+      DESTINATION_PROVINCE_AEAR_ID = #{destinationProvinceAearId,jdbcType=BIGINT},
+      DESTINATION_CITY_AEAR_ID = #{destinationCityAearId,jdbcType=BIGINT},
+      EXTEND = #{extend,jdbcType=VARCHAR}
+    where FREIGHT_ID = #{freightId,jdbcType=BIGINT}
+  </update>
+
+  <select id="listBySelective" resultMap="FreightDtoMap" parameterType="com.ai.ge.platform.model.order.Freight" >
+      SELECT f.*,
+      sa1.AREA_NAME AS ORIGINAL_PROVINCE_AEAR_NAME,
+      sa2.AREA_NAME AS ORIGINAL_CITY_AEAR_NAME,
+      sa3.AREA_NAME AS DESTINATION_PROVINCE_AEAR_NAME,
+      sa4.AREA_NAME AS DESTINATION_CITY_AEAR_NAME
+      FROM
+      (
+          SELECT <include refid="Base_Column_List"/> FROM freight WHERE 1=1
+          <if test="originalProvinceAearId != null" >
+              and ORIGINAL_PROVINCE_AEAR_ID = #{originalProvinceAearId,jdbcType=BIGINT}
+          </if>
+          <if test="originalCityAearId != null" >
+              or ORIGINAL_CITY_AEAR_ID = #{originalCityAearId,jdbcType=BIGINT}
+          </if>
+          <if test="isDefault != null" >
+              and IS_DEFAULT = #{isDefault,jdbcType=SMALLINT}
+          </if>
+          <if test="status != null" >
+              and STATUS = #{status,jdbcType=SMALLINT}
+          </if>
+          <if test="money != null" >
+              and MONEY = #{money,jdbcType=REAL}
+          </if>
+          <if test="destinationProvinceAearId != null" >
+              and DESTINATION_PROVINCE_AEAR_ID = #{destinationProvinceAearId,jdbcType=BIGINT}
+          </if>
+          <if test="destinationCityAearId != null" >
+              or DESTINATION_CITY_AEAR_ID = #{destinationCityAearId,jdbcType=BIGINT}
+          </if>
+          <if test="extend != null" >
+              and EXTEND = #{extend,jdbcType=VARCHAR}
+          </if>
+          <if test="freightId != null" >
+              and FREIGHT_ID = #{freightId,jdbcType=BIGINT}
+          </if>
+      ) f
+
+      LEFT JOIN system_area sa1 ON f.ORIGINAL_PROVINCE_AEAR_ID = sa1.AREA_ID
+      LEFT JOIN system_area sa2 ON f.ORIGINAL_CITY_AEAR_ID = sa2.AREA_ID
+      LEFT JOIN system_area sa3 ON f.DESTINATION_PROVINCE_AEAR_ID = sa3.AREA_ID
+      LEFT JOIN system_area sa4 ON f.DESTINATION_CITY_AEAR_ID = sa4.AREA_ID
+  </select>
+
+</mapper>

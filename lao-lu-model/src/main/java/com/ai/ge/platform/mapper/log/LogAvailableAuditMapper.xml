@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.log.LogAvailableAuditMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.log.LogAvailableAudit" >
+    <id column="AUDIT_ID" property="auditId" jdbcType="DECIMAL" />
+    <result column="AVAILABLE_ID" property="availableId" jdbcType="DECIMAL" />
+    <result column="ADMIN_ID" property="adminId" jdbcType="DECIMAL" />
+    <result column="AVAILABLE_MONEY" property="availableMoney" jdbcType="DECIMAL" />
+    <result column="MONEY" property="money" jdbcType="DECIMAL" />
+    <result column="BALANCE_MONEY" property="balanceMoney" jdbcType="DECIMAL" />
+    <result column="AUDIT_STATUS" property="auditStatus" jdbcType="DECIMAL" />
+    <result column="AUDIT_OPINION" property="auditOpinion" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AUDIT_ID, AVAILABLE_ID, ADMIN_ID, AVAILABLE_MONEY, MONEY, BALANCE_MONEY, AUDIT_STATUS, 
+    AUDIT_OPINION, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogAvailableAuditExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LOG_AVAILABLE_AUDIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from LOG_AVAILABLE_AUDIT
+    where AUDIT_ID = #{auditId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from LOG_AVAILABLE_AUDIT
+    where AUDIT_ID = #{auditId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.log.LogAvailableAuditExample" >
+    delete from LOG_AVAILABLE_AUDIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.log.LogAvailableAudit" >
+    insert into LOG_AVAILABLE_AUDIT (AUDIT_ID, AVAILABLE_ID, ADMIN_ID, 
+      AVAILABLE_MONEY, MONEY, BALANCE_MONEY, 
+      AUDIT_STATUS, AUDIT_OPINION, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{auditId,jdbcType=DECIMAL}, #{availableId,jdbcType=DECIMAL}, #{adminId,jdbcType=DECIMAL}, 
+      #{availableMoney,jdbcType=DECIMAL}, #{money,jdbcType=DECIMAL}, #{balanceMoney,jdbcType=DECIMAL}, 
+      #{auditStatus,jdbcType=DECIMAL}, #{auditOpinion,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.log.LogAvailableAudit" >
+    insert into LOG_AVAILABLE_AUDIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="auditId != null" >
+        AUDIT_ID,
+      </if>
+      <if test="availableId != null" >
+        AVAILABLE_ID,
+      </if>
+      <if test="adminId != null" >
+        ADMIN_ID,
+      </if>
+      <if test="availableMoney != null" >
+        AVAILABLE_MONEY,
+      </if>
+      <if test="money != null" >
+        MONEY,
+      </if>
+      <if test="balanceMoney != null" >
+        BALANCE_MONEY,
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS,
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="auditId != null" >
+        #{auditId,jdbcType=DECIMAL},
+      </if>
+      <if test="availableId != null" >
+        #{availableId,jdbcType=DECIMAL},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=DECIMAL},
+      </if>
+      <if test="availableMoney != null" >
+        #{availableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceMoney != null" >
+        #{balanceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="auditOpinion != null" >
+        #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.log.LogAvailableAuditExample" resultType="java.lang.Integer" >
+    select count(*) from LOG_AVAILABLE_AUDIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LOG_AVAILABLE_AUDIT
+    <set >
+      <if test="record.auditId != null" >
+        AUDIT_ID = #{record.auditId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableId != null" >
+        AVAILABLE_ID = #{record.availableId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.adminId != null" >
+        ADMIN_ID = #{record.adminId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableMoney != null" >
+        AVAILABLE_MONEY = #{record.availableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.money != null" >
+        MONEY = #{record.money,jdbcType=DECIMAL},
+      </if>
+      <if test="record.balanceMoney != null" >
+        BALANCE_MONEY = #{record.balanceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auditStatus != null" >
+        AUDIT_STATUS = #{record.auditStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auditOpinion != null" >
+        AUDIT_OPINION = #{record.auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LOG_AVAILABLE_AUDIT
+    set AUDIT_ID = #{record.auditId,jdbcType=DECIMAL},
+      AVAILABLE_ID = #{record.availableId,jdbcType=DECIMAL},
+      ADMIN_ID = #{record.adminId,jdbcType=DECIMAL},
+      AVAILABLE_MONEY = #{record.availableMoney,jdbcType=DECIMAL},
+      MONEY = #{record.money,jdbcType=DECIMAL},
+      BALANCE_MONEY = #{record.balanceMoney,jdbcType=DECIMAL},
+      AUDIT_STATUS = #{record.auditStatus,jdbcType=DECIMAL},
+      AUDIT_OPINION = #{record.auditOpinion,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      UPDATE_TIME = #{record.updateTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.log.LogAvailableAudit" >
+    update LOG_AVAILABLE_AUDIT
+    <set >
+      <if test="availableId != null" >
+        AVAILABLE_ID = #{availableId,jdbcType=DECIMAL},
+      </if>
+      <if test="adminId != null" >
+        ADMIN_ID = #{adminId,jdbcType=DECIMAL},
+      </if>
+      <if test="availableMoney != null" >
+        AVAILABLE_MONEY = #{availableMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="money != null" >
+        MONEY = #{money,jdbcType=DECIMAL},
+      </if>
+      <if test="balanceMoney != null" >
+        BALANCE_MONEY = #{balanceMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="auditStatus != null" >
+        AUDIT_STATUS = #{auditStatus,jdbcType=DECIMAL},
+      </if>
+      <if test="auditOpinion != null" >
+        AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=DATE},
+      </if>
+    </set>
+    where AUDIT_ID = #{auditId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.log.LogAvailableAudit" >
+    update LOG_AVAILABLE_AUDIT
+    set AVAILABLE_ID = #{availableId,jdbcType=DECIMAL},
+      ADMIN_ID = #{adminId,jdbcType=DECIMAL},
+      AVAILABLE_MONEY = #{availableMoney,jdbcType=DECIMAL},
+      MONEY = #{money,jdbcType=DECIMAL},
+      BALANCE_MONEY = #{balanceMoney,jdbcType=DECIMAL},
+      AUDIT_STATUS = #{auditStatus,jdbcType=DECIMAL},
+      AUDIT_OPINION = #{auditOpinion,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      UPDATE_TIME = #{updateTime,jdbcType=DATE}
+    where AUDIT_ID = #{auditId,jdbcType=DECIMAL}
+  </update>
+</mapper>

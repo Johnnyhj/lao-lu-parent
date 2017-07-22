@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.PerformanceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.PerformanceInfo" >
+    <id column="PERFORMANCE_ID" property="performanceId" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="ORDER_DESCRIBE" property="orderDescribe" jdbcType="VARCHAR" />
+    <result column="PERFORM_TIMES" property="performTimes" jdbcType="SMALLINT" />
+    <result column="COMPLETE_TIMES" property="completeTimes" jdbcType="SMALLINT" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="OFFER_SPEC_ID" property="offerSpecId" jdbcType="BIGINT" />
+    <result column="PERFORMANCE_CODE" property="performanceCode" jdbcType="VARCHAR" />
+    <result column="PERFORMANCE_MONEY" property="performanceMoney" jdbcType="REAL" />
+    <result column="PROVINCE_AEAR_ID" property="provinceAearId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PERFORMANCE_ID, ORDER_ID, STATUS, ORDER_DESCRIBE, PERFORM_TIMES, COMPLETE_TIMES, 
+    BEGIN_TIME, END_TIME, OFFER_SPEC_ID, PERFORMANCE_CODE, PERFORMANCE_MONEY, PROVINCE_AEAR_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.PerformanceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from performance_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from performance_info
+    where PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from performance_info
+    where PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.PerformanceInfoExample" >
+    delete from performance_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.PerformanceInfo" >
+    insert into performance_info (PERFORMANCE_ID, ORDER_ID, STATUS, 
+      ORDER_DESCRIBE, PERFORM_TIMES, COMPLETE_TIMES, 
+      BEGIN_TIME, END_TIME, OFFER_SPEC_ID, 
+      PERFORMANCE_CODE, PERFORMANCE_MONEY, PROVINCE_AEAR_ID
+      )
+    values (#{performanceId,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}, 
+      #{orderDescribe,jdbcType=VARCHAR}, #{performTimes,jdbcType=SMALLINT}, #{completeTimes,jdbcType=SMALLINT}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{offerSpecId,jdbcType=BIGINT}, 
+      #{performanceCode,jdbcType=VARCHAR}, #{performanceMoney,jdbcType=REAL}, #{provinceAearId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.PerformanceInfo" >
+
+    <selectKey resultType="long" keyProperty="performanceId" order="AFTER">
+      select last_insert_id() as performanceId
+    </selectKey>
+
+    insert into performance_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="orderDescribe != null" >
+        ORDER_DESCRIBE,
+      </if>
+      <if test="performTimes != null" >
+        PERFORM_TIMES,
+      </if>
+      <if test="completeTimes != null" >
+        COMPLETE_TIMES,
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID,
+      </if>
+      <if test="performanceCode != null" >
+        PERFORMANCE_CODE,
+      </if>
+      <if test="performanceMoney != null" >
+        PERFORMANCE_MONEY,
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDescribe != null" >
+        #{orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="performTimes != null" >
+        #{performTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="completeTimes != null" >
+        #{completeTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offerSpecId != null" >
+        #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceCode != null" >
+        #{performanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceMoney != null" >
+        #{performanceMoney,jdbcType=REAL},
+      </if>
+      <if test="provinceAearId != null" >
+        #{provinceAearId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.PerformanceInfoExample" resultType="java.lang.Integer" >
+    select count(*) from performance_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update performance_info
+    <set >
+      <if test="record.performanceId != null" >
+        PERFORMANCE_ID = #{record.performanceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.orderDescribe != null" >
+        ORDER_DESCRIBE = #{record.orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performTimes != null" >
+        PERFORM_TIMES = #{record.performTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="record.completeTimes != null" >
+        COMPLETE_TIMES = #{record.completeTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="record.beginTime != null" >
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.offerSpecId != null" >
+        OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.performanceCode != null" >
+        PERFORMANCE_CODE = #{record.performanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.performanceMoney != null" >
+        PERFORMANCE_MONEY = #{record.performanceMoney,jdbcType=REAL},
+      </if>
+      <if test="record.provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update performance_info
+    set PERFORMANCE_ID = #{record.performanceId,jdbcType=BIGINT},
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      ORDER_DESCRIBE = #{record.orderDescribe,jdbcType=VARCHAR},
+      PERFORM_TIMES = #{record.performTimes,jdbcType=SMALLINT},
+      COMPLETE_TIMES = #{record.completeTimes,jdbcType=SMALLINT},
+      BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      OFFER_SPEC_ID = #{record.offerSpecId,jdbcType=BIGINT},
+      PERFORMANCE_CODE = #{record.performanceCode,jdbcType=VARCHAR},
+      PERFORMANCE_MONEY = #{record.performanceMoney,jdbcType=REAL},
+      PROVINCE_AEAR_ID = #{record.provinceAearId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.PerformanceInfo" >
+    update performance_info
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="orderDescribe != null" >
+        ORDER_DESCRIBE = #{orderDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="performTimes != null" >
+        PERFORM_TIMES = #{performTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="completeTimes != null" >
+        COMPLETE_TIMES = #{completeTimes,jdbcType=SMALLINT},
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offerSpecId != null" >
+        OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="performanceCode != null" >
+        PERFORMANCE_CODE = #{performanceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="performanceMoney != null" >
+        PERFORMANCE_MONEY = #{performanceMoney,jdbcType=REAL},
+      </if>
+      <if test="provinceAearId != null" >
+        PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.PerformanceInfo" >
+    update performance_info
+    set ORDER_ID = #{orderId,jdbcType=BIGINT},
+      STATUS = #{status,jdbcType=SMALLINT},
+      ORDER_DESCRIBE = #{orderDescribe,jdbcType=VARCHAR},
+      PERFORM_TIMES = #{performTimes,jdbcType=SMALLINT},
+      COMPLETE_TIMES = #{completeTimes,jdbcType=SMALLINT},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      OFFER_SPEC_ID = #{offerSpecId,jdbcType=BIGINT},
+      PERFORMANCE_CODE = #{performanceCode,jdbcType=VARCHAR},
+      PERFORMANCE_MONEY = #{performanceMoney,jdbcType=REAL},
+      PROVINCE_AEAR_ID = #{provinceAearId,jdbcType=BIGINT}
+    where PERFORMANCE_ID = #{performanceId,jdbcType=BIGINT}
+  </update>
+</mapper>

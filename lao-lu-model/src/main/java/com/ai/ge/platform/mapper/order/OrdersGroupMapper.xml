@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.order.OrdersGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.order.OrdersGroup" >
+    <id column="ORDERS_GROUP_ID" property="ordersGroupId" jdbcType="BIGINT" />
+    <result column="CUST_ID" property="custId" jdbcType="BIGINT" />
+    <result column="ORDER_SEQ_GROUP" property="orderSeqGroup" jdbcType="VARCHAR" />
+    <result column="EXPRESS_MONEY" property="expressMoney" jdbcType="REAL" />
+    <result column="ORDER_MONEY" property="orderMoney" jdbcType="REAL" />
+    <result column="TOTAL_MONEY" property="totalMoney" jdbcType="REAL" />
+    <result column="STATUS" property="status" jdbcType="SMALLINT" />
+    <result column="CUSTM_NAME" property="custmName" jdbcType="VARCHAR" />
+    <result column="CUSTM_PHONE" property="custmPhone" jdbcType="VARCHAR" />
+    <result column="CUSTM_ADDRESS" property="custmAddress" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDERS_GROUP_ID, CUST_ID, ORDER_SEQ_GROUP, EXPRESS_MONEY, ORDER_MONEY, TOTAL_MONEY, 
+    STATUS, CUSTM_NAME, CUSTM_PHONE, CUSTM_ADDRESS, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.order.OrdersGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders_group
+    where ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from orders_group
+    where ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.order.OrdersGroupExample" >
+    delete from orders_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.order.OrdersGroup" >
+    insert into orders_group (ORDERS_GROUP_ID, CUST_ID, ORDER_SEQ_GROUP, 
+      EXPRESS_MONEY, ORDER_MONEY, TOTAL_MONEY, 
+      STATUS, CUSTM_NAME, CUSTM_PHONE, 
+      CUSTM_ADDRESS, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{ordersGroupId,jdbcType=BIGINT}, #{custId,jdbcType=BIGINT}, #{orderSeqGroup,jdbcType=VARCHAR}, 
+      #{expressMoney,jdbcType=REAL}, #{orderMoney,jdbcType=REAL}, #{totalMoney,jdbcType=REAL}, 
+      #{status,jdbcType=SMALLINT}, #{custmName,jdbcType=VARCHAR}, #{custmPhone,jdbcType=VARCHAR}, 
+      #{custmAddress,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.order.OrdersGroup" >
+    insert into orders_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ordersGroupId != null" >
+        ORDERS_GROUP_ID,
+      </if>
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="orderSeqGroup != null" >
+        ORDER_SEQ_GROUP,
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY,
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY,
+      </if>
+      <if test="totalMoney != null" >
+        TOTAL_MONEY,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="custmName != null" >
+        CUSTM_NAME,
+      </if>
+      <if test="custmPhone != null" >
+        CUSTM_PHONE,
+      </if>
+      <if test="custmAddress != null" >
+        CUSTM_ADDRESS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ordersGroupId != null" >
+        #{ordersGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSeqGroup != null" >
+        #{orderSeqGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressMoney != null" >
+        #{expressMoney,jdbcType=REAL},
+      </if>
+      <if test="orderMoney != null" >
+        #{orderMoney,jdbcType=REAL},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="custmName != null" >
+        #{custmName,jdbcType=VARCHAR},
+      </if>
+      <if test="custmPhone != null" >
+        #{custmPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="custmAddress != null" >
+        #{custmAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.order.OrdersGroupExample" resultType="java.lang.Integer" >
+    select count(*) from orders_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders_group
+    <set >
+      <if test="record.ordersGroupId != null" >
+        ORDERS_GROUP_ID = #{record.ordersGroupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.custId != null" >
+        CUST_ID = #{record.custId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderSeqGroup != null" >
+        ORDER_SEQ_GROUP = #{record.orderSeqGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressMoney != null" >
+        EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL},
+      </if>
+      <if test="record.orderMoney != null" >
+        ORDER_MONEY = #{record.orderMoney,jdbcType=REAL},
+      </if>
+      <if test="record.totalMoney != null" >
+        TOTAL_MONEY = #{record.totalMoney,jdbcType=REAL},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=SMALLINT},
+      </if>
+      <if test="record.custmName != null" >
+        CUSTM_NAME = #{record.custmName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custmPhone != null" >
+        CUSTM_PHONE = #{record.custmPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custmAddress != null" >
+        CUSTM_ADDRESS = #{record.custmAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders_group
+    set ORDERS_GROUP_ID = #{record.ordersGroupId,jdbcType=BIGINT},
+      CUST_ID = #{record.custId,jdbcType=BIGINT},
+      ORDER_SEQ_GROUP = #{record.orderSeqGroup,jdbcType=VARCHAR},
+      EXPRESS_MONEY = #{record.expressMoney,jdbcType=REAL},
+      ORDER_MONEY = #{record.orderMoney,jdbcType=REAL},
+      TOTAL_MONEY = #{record.totalMoney,jdbcType=REAL},
+      STATUS = #{record.status,jdbcType=SMALLINT},
+      CUSTM_NAME = #{record.custmName,jdbcType=VARCHAR},
+      CUSTM_PHONE = #{record.custmPhone,jdbcType=VARCHAR},
+      CUSTM_ADDRESS = #{record.custmAddress,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.order.OrdersGroup" >
+    update orders_group
+    <set >
+      <if test="custId != null" >
+        CUST_ID = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="orderSeqGroup != null" >
+        ORDER_SEQ_GROUP = #{orderSeqGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="expressMoney != null" >
+        EXPRESS_MONEY = #{expressMoney,jdbcType=REAL},
+      </if>
+      <if test="orderMoney != null" >
+        ORDER_MONEY = #{orderMoney,jdbcType=REAL},
+      </if>
+      <if test="totalMoney != null" >
+        TOTAL_MONEY = #{totalMoney,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="custmName != null" >
+        CUSTM_NAME = #{custmName,jdbcType=VARCHAR},
+      </if>
+      <if test="custmPhone != null" >
+        CUSTM_PHONE = #{custmPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="custmAddress != null" >
+        CUSTM_ADDRESS = #{custmAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.order.OrdersGroup" >
+    update orders_group
+    set CUST_ID = #{custId,jdbcType=BIGINT},
+      ORDER_SEQ_GROUP = #{orderSeqGroup,jdbcType=VARCHAR},
+      EXPRESS_MONEY = #{expressMoney,jdbcType=REAL},
+      ORDER_MONEY = #{orderMoney,jdbcType=REAL},
+      TOTAL_MONEY = #{totalMoney,jdbcType=REAL},
+      STATUS = #{status,jdbcType=SMALLINT},
+      CUSTM_NAME = #{custmName,jdbcType=VARCHAR},
+      CUSTM_PHONE = #{custmPhone,jdbcType=VARCHAR},
+      CUSTM_ADDRESS = #{custmAddress,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ORDERS_GROUP_ID = #{ordersGroupId,jdbcType=BIGINT}
+  </update>
+</mapper>

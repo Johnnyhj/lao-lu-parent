@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysOrgaRoleRelMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysOrgaRoleRel">
+        <id column="ORGA_ROLE_ID" property="orgaRoleId" jdbcType="DECIMAL" />
+        <result column="ROLE_ID" property="roleId" jdbcType="DECIMAL" />
+        <result column="ORGA_ID" property="orgaId" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="EFFECTIVE_TIME" property="effectiveTime" jdbcType="TIMESTAMP" />
+        <result column="FAIL_TIME" property="failTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+
+    <resultMap id="DtoResultMap" type="com.ai.ge.platform.dto.user.SysOrgaRoleRelDto" extends="BaseResultMap">
+        <result column="SYS_ROLE_NAME" property="sysRoleName" jdbcType="VARCHAR" />
+        <result column="SYS_ROLE_DESC" property="sysRoleDesc" jdbcType="VARCHAR" />
+    </resultMap>
+
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        ORGA_ROLE_ID, ROLE_ID, ORGA_ID, CREATE_TIME, EFFECTIVE_TIME, FAIL_TIME
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRelExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYS_ORGA_ROLE_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from SYS_ORGA_ROLE_REL
+        where ORGA_ROLE_ID = #{orgaRoleId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from SYS_ORGA_ROLE_REL
+        where ORGA_ROLE_ID = #{orgaRoleId,jdbcType=DECIMAL}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRelExample">
+        delete from SYS_ORGA_ROLE_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRel">
+        <selectKey resultType="long" keyProperty="orgaRoleId" order="AFTER">
+            select last_insert_id() as orgaRoleId
+        </selectKey>
+
+        insert into SYS_ORGA_ROLE_REL (ROLE_ID, ORGA_ID,
+        CREATE_TIME, EFFECTIVE_TIME, FAIL_TIME
+        )
+        values (#{roleId,jdbcType=DECIMAL}, #{orgaId,jdbcType=DECIMAL},
+        now(), #{effectiveTime,jdbcType=TIMESTAMP}, #{failTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRel">
+        insert into SYS_ORGA_ROLE_REL
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orgaRoleId != null">
+                ORGA_ROLE_ID,
+            </if>
+            <if test="roleId != null">
+                ROLE_ID,
+            </if>
+            <if test="orgaId != null">
+                ORGA_ID,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="effectiveTime != null">
+                EFFECTIVE_TIME,
+            </if>
+            <if test="failTime != null">
+                FAIL_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orgaRoleId != null">
+                #{orgaRoleId,jdbcType=DECIMAL},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="orgaId != null">
+                #{orgaId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effectiveTime != null">
+                #{effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failTime != null">
+                #{failTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRelExample" resultType="java.lang.Integer">
+        select count(*) from SYS_ORGA_ROLE_REL
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_ORGA_ROLE_REL
+        <set>
+            <if test="record.orgaRoleId != null">
+                ORGA_ROLE_ID = #{record.orgaRoleId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.roleId != null">
+                ROLE_ID = #{record.roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.orgaId != null">
+                ORGA_ID = #{record.orgaId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.effectiveTime != null">
+                EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.failTime != null">
+                FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYS_ORGA_ROLE_REL
+        set ORGA_ROLE_ID = #{record.orgaRoleId,jdbcType=DECIMAL},
+        ROLE_ID = #{record.roleId,jdbcType=DECIMAL},
+        ORGA_ID = #{record.orgaId,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRel">
+        update SYS_ORGA_ROLE_REL
+        <set>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=DECIMAL},
+            </if>
+            <if test="orgaId != null">
+                ORGA_ID = #{orgaId,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="effectiveTime != null">
+                EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failTime != null">
+                FAIL_TIME = #{failTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where ORGA_ROLE_ID = #{orgaRoleId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.user.SysOrgaRoleRel">
+        update SYS_ORGA_ROLE_REL
+        set ROLE_ID = #{roleId,jdbcType=DECIMAL},
+        ORGA_ID = #{orgaId,jdbcType=DECIMAL},
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+        EFFECTIVE_TIME = #{effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{failTime,jdbcType=TIMESTAMP}
+        where ORGA_ROLE_ID = #{orgaRoleId,jdbcType=DECIMAL}
+    </update>
+
+    <select id="selectOrgaRoleByOrgaId" resultMap="DtoResultMap" parameterType="map">
+        select t.*, r.ROLE SYS_ROLE_NAME, r.DESCRIPTION SYS_ROLE_DESC
+        from SYS_ORGA_ROLE_REL t
+        left join SYS_ROLE r
+        on t.role_id = r.id
+        where t.orga_id = #{orgaId}
+    </select>
+</mapper>

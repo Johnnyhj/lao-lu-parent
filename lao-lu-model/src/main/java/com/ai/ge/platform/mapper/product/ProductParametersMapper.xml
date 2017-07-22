@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.product.ProductParametersMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.product.ProductParameters" >
+    <result column="PROD_ID" property="prodId" jdbcType="BIGINT" />
+    <result column="PARA_SPEC_ID" property="paraSpecId" jdbcType="BIGINT" />
+    <result column="P_NAME" property="pName" jdbcType="VARCHAR" />
+    <result column="P_VALUES" property="pValues" jdbcType="VARCHAR" />
+    <result column="IS_IMPORT" property="isImport" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PROD_ID, PARA_SPEC_ID, P_NAME, P_VALUES, IS_IMPORT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.product.ProductParametersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from product_parameters
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.product.ProductParametersExample" >
+    delete from product_parameters
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.product.ProductParameters" >
+    insert into product_parameters (PROD_ID, PARA_SPEC_ID, P_NAME, 
+      P_VALUES, IS_IMPORT)
+    values (#{prodId,jdbcType=BIGINT}, #{paraSpecId,jdbcType=BIGINT}, #{pName,jdbcType=VARCHAR}, 
+      #{pValues,jdbcType=VARCHAR}, #{isImport,jdbcType=SMALLINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.product.ProductParameters" >
+    insert into product_parameters
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="prodId != null" >
+        PROD_ID,
+      </if>
+      <if test="paraSpecId != null" >
+        PARA_SPEC_ID,
+      </if>
+      <if test="pName != null" >
+        P_NAME,
+      </if>
+      <if test="pValues != null" >
+        P_VALUES,
+      </if>
+      <if test="isImport != null" >
+        IS_IMPORT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
+      </if>
+      <if test="paraSpecId != null" >
+        #{paraSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="pName != null" >
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="pValues != null" >
+        #{pValues,jdbcType=VARCHAR},
+      </if>
+      <if test="isImport != null" >
+        #{isImport,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.product.ProductParametersExample" resultType="java.lang.Integer" >
+    select count(*) from product_parameters
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update product_parameters
+    <set >
+      <if test="record.prodId != null" >
+        PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paraSpecId != null" >
+        PARA_SPEC_ID = #{record.paraSpecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pName != null" >
+        P_NAME = #{record.pName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pValues != null" >
+        P_VALUES = #{record.pValues,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isImport != null" >
+        IS_IMPORT = #{record.isImport,jdbcType=SMALLINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update product_parameters
+    set PROD_ID = #{record.prodId,jdbcType=BIGINT},
+      PARA_SPEC_ID = #{record.paraSpecId,jdbcType=BIGINT},
+      P_NAME = #{record.pName,jdbcType=VARCHAR},
+      P_VALUES = #{record.pValues,jdbcType=VARCHAR},
+      IS_IMPORT = #{record.isImport,jdbcType=SMALLINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.log.LogDataBatchFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.log.LogDataBatchFeedback" >
+    <id column="LOG_FEEDBACK_ID" property="logFeedbackId" jdbcType="INTEGER" />
+    <result column="PUSH_SEQ" property="pushSeq" jdbcType="VARCHAR" />
+    <result column="PUSH_VERSION" property="pushVersion" jdbcType="INTEGER" />
+    <result column="SOURCE_FILE_PATH" property="sourceFilePath" jdbcType="VARCHAR" />
+    <result column="CREATE_STATUS" property="createStatus" jdbcType="INTEGER" />
+    <result column="SPLIT_STATUS" property="splitStatus" jdbcType="INTEGER" />
+    <result column="PUSH_STATUS" property="pushStatus" jdbcType="INTEGER" />
+    <result column="FILE_CREATE_TIME" property="fileCreateTime" jdbcType="TIMESTAMP" />
+    <result column="SPLIT_TIME" property="splitTime" jdbcType="TIMESTAMP" />
+    <result column="PUSH_TIME" property="pushTime" jdbcType="TIMESTAMP" />
+    <result column="PUSH_COMPLETE_TIME" property="pushCompleteTime" jdbcType="TIMESTAMP" />
+    <result column="SPLIT_FAIL_REASON" property="splitFailReason" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_FEEDBACK_ID, PUSH_SEQ, PUSH_VERSION, SOURCE_FILE_PATH, CREATE_STATUS, SPLIT_STATUS, 
+    PUSH_STATUS, FILE_CREATE_TIME, SPLIT_TIME, PUSH_TIME, PUSH_COMPLETE_TIME, SPLIT_FAIL_REASON, 
+    CREATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedbackExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from log_data_batch_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from log_data_batch_feedback
+    where LOG_FEEDBACK_ID = #{logFeedbackId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from log_data_batch_feedback
+    where LOG_FEEDBACK_ID = #{logFeedbackId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedbackExample" >
+    delete from log_data_batch_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedback" >
+    insert into log_data_batch_feedback (LOG_FEEDBACK_ID, PUSH_SEQ, PUSH_VERSION, 
+      SOURCE_FILE_PATH, CREATE_STATUS, SPLIT_STATUS, 
+      PUSH_STATUS, FILE_CREATE_TIME, SPLIT_TIME, 
+      PUSH_TIME, PUSH_COMPLETE_TIME, SPLIT_FAIL_REASON, 
+      CREATE_TIME)
+    values (#{logFeedbackId,jdbcType=INTEGER}, #{pushSeq,jdbcType=VARCHAR}, #{pushVersion,jdbcType=INTEGER}, 
+      #{sourceFilePath,jdbcType=VARCHAR}, #{createStatus,jdbcType=INTEGER}, #{splitStatus,jdbcType=INTEGER}, 
+      #{pushStatus,jdbcType=INTEGER}, #{fileCreateTime,jdbcType=TIMESTAMP}, #{splitTime,jdbcType=TIMESTAMP}, 
+      #{pushTime,jdbcType=TIMESTAMP}, #{pushCompleteTime,jdbcType=TIMESTAMP}, #{splitFailReason,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedback"
+          useGeneratedKeys="true" keyProperty="logFeedbackId">
+    insert into log_data_batch_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logFeedbackId != null" >
+        LOG_FEEDBACK_ID,
+      </if>
+      <if test="pushSeq != null" >
+        PUSH_SEQ,
+      </if>
+      <if test="pushVersion != null" >
+        PUSH_VERSION,
+      </if>
+      <if test="sourceFilePath != null" >
+        SOURCE_FILE_PATH,
+      </if>
+      <if test="createStatus != null" >
+        CREATE_STATUS,
+      </if>
+      <if test="splitStatus != null" >
+        SPLIT_STATUS,
+      </if>
+      <if test="pushStatus != null" >
+        PUSH_STATUS,
+      </if>
+      <if test="fileCreateTime != null" >
+        FILE_CREATE_TIME,
+      </if>
+      <if test="splitTime != null" >
+        SPLIT_TIME,
+      </if>
+      <if test="pushTime != null" >
+        PUSH_TIME,
+      </if>
+      <if test="pushCompleteTime != null" >
+        PUSH_COMPLETE_TIME,
+      </if>
+      <if test="splitFailReason != null" >
+        SPLIT_FAIL_REASON,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logFeedbackId != null" >
+        #{logFeedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="pushSeq != null" >
+        #{pushSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="pushVersion != null" >
+        #{pushVersion,jdbcType=INTEGER},
+      </if>
+      <if test="sourceFilePath != null" >
+        #{sourceFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="createStatus != null" >
+        #{createStatus,jdbcType=INTEGER},
+      </if>
+      <if test="splitStatus != null" >
+        #{splitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pushStatus != null" >
+        #{pushStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fileCreateTime != null" >
+        #{fileCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="splitTime != null" >
+        #{splitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushTime != null" >
+        #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushCompleteTime != null" >
+        #{pushCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="splitFailReason != null" >
+        #{splitFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedbackExample" resultType="java.lang.Integer" >
+    select count(*) from log_data_batch_feedback
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update log_data_batch_feedback
+    <set >
+      <if test="record.logFeedbackId != null" >
+        LOG_FEEDBACK_ID = #{record.logFeedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushSeq != null" >
+        PUSH_SEQ = #{record.pushSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pushVersion != null" >
+        PUSH_VERSION = #{record.pushVersion,jdbcType=INTEGER},
+      </if>
+      <if test="record.sourceFilePath != null" >
+        SOURCE_FILE_PATH = #{record.sourceFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createStatus != null" >
+        CREATE_STATUS = #{record.createStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.splitStatus != null" >
+        SPLIT_STATUS = #{record.splitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushStatus != null" >
+        PUSH_STATUS = #{record.pushStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileCreateTime != null" >
+        FILE_CREATE_TIME = #{record.fileCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.splitTime != null" >
+        SPLIT_TIME = #{record.splitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushTime != null" >
+        PUSH_TIME = #{record.pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.pushCompleteTime != null" >
+        PUSH_COMPLETE_TIME = #{record.pushCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.splitFailReason != null" >
+        SPLIT_FAIL_REASON = #{record.splitFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update log_data_batch_feedback
+    set LOG_FEEDBACK_ID = #{record.logFeedbackId,jdbcType=INTEGER},
+      PUSH_SEQ = #{record.pushSeq,jdbcType=VARCHAR},
+      PUSH_VERSION = #{record.pushVersion,jdbcType=INTEGER},
+      SOURCE_FILE_PATH = #{record.sourceFilePath,jdbcType=VARCHAR},
+      CREATE_STATUS = #{record.createStatus,jdbcType=INTEGER},
+      SPLIT_STATUS = #{record.splitStatus,jdbcType=INTEGER},
+      PUSH_STATUS = #{record.pushStatus,jdbcType=INTEGER},
+      FILE_CREATE_TIME = #{record.fileCreateTime,jdbcType=TIMESTAMP},
+      SPLIT_TIME = #{record.splitTime,jdbcType=TIMESTAMP},
+      PUSH_TIME = #{record.pushTime,jdbcType=TIMESTAMP},
+      PUSH_COMPLETE_TIME = #{record.pushCompleteTime,jdbcType=TIMESTAMP},
+      SPLIT_FAIL_REASON = #{record.splitFailReason,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedback" >
+    update log_data_batch_feedback
+    <set >
+      <if test="pushSeq != null" >
+        PUSH_SEQ = #{pushSeq,jdbcType=VARCHAR},
+      </if>
+      <if test="pushVersion != null" >
+        PUSH_VERSION = #{pushVersion,jdbcType=INTEGER},
+      </if>
+      <if test="sourceFilePath != null" >
+        SOURCE_FILE_PATH = #{sourceFilePath,jdbcType=VARCHAR},
+      </if>
+      <if test="createStatus != null" >
+        CREATE_STATUS = #{createStatus,jdbcType=INTEGER},
+      </if>
+      <if test="splitStatus != null" >
+        SPLIT_STATUS = #{splitStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pushStatus != null" >
+        PUSH_STATUS = #{pushStatus,jdbcType=INTEGER},
+      </if>
+      <if test="fileCreateTime != null" >
+        FILE_CREATE_TIME = #{fileCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="splitTime != null" >
+        SPLIT_TIME = #{splitTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushTime != null" >
+        PUSH_TIME = #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pushCompleteTime != null" >
+        PUSH_COMPLETE_TIME = #{pushCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="splitFailReason != null" >
+        SPLIT_FAIL_REASON = #{splitFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LOG_FEEDBACK_ID = #{logFeedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.log.LogDataBatchFeedback" >
+    update log_data_batch_feedback
+    set PUSH_SEQ = #{pushSeq,jdbcType=VARCHAR},
+      PUSH_VERSION = #{pushVersion,jdbcType=INTEGER},
+      SOURCE_FILE_PATH = #{sourceFilePath,jdbcType=VARCHAR},
+      CREATE_STATUS = #{createStatus,jdbcType=INTEGER},
+      SPLIT_STATUS = #{splitStatus,jdbcType=INTEGER},
+      PUSH_STATUS = #{pushStatus,jdbcType=INTEGER},
+      FILE_CREATE_TIME = #{fileCreateTime,jdbcType=TIMESTAMP},
+      SPLIT_TIME = #{splitTime,jdbcType=TIMESTAMP},
+      PUSH_TIME = #{pushTime,jdbcType=TIMESTAMP},
+      PUSH_COMPLETE_TIME = #{pushCompleteTime,jdbcType=TIMESTAMP},
+      SPLIT_FAIL_REASON = #{splitFailReason,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where LOG_FEEDBACK_ID = #{logFeedbackId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.user.SysUserRoleReleationMapper">
+    <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.user.SysUserRoleReleation">
+        <result column="SURR_ID" property="surrId" jdbcType="DECIMAL" />
+        <result column="SYS_USER_ID" property="sysUserId" jdbcType="DECIMAL" />
+        <result column="SYS_ROLE_ID" property="sysRoleId" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="EFFECTIVE_TIME" property="effectiveTime" jdbcType="TIMESTAMP" />
+        <result column="FAIL_TIME" property="failTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <resultMap id="CascadeResultMap" type="com.ai.ge.platform.dto.user.SysUserRoleReleationDto" extends="BaseResultMap">
+        <result column="SYS_ROLE_NAME" property="sysRoleName" jdbcType="VARCHAR" />
+        <result column="SYS_ROLE_DESC" property="sysRoleDesc" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        SURR_ID, SYS_USER_ID, SYS_ROLE_ID, CREATE_TIME, EFFECTIVE_TIME, FAIL_TIME, UPDATE_TIME
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.user.SysUserRoleReleationExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List" />
+        from SYS_USER_ROLE_RELEATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.user.SysUserRoleReleationExample">
+        delete from SYS_USER_ROLE_RELEATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.ai.ge.platform.model.user.SysUserRoleReleation">
+        <selectKey resultType="long" keyProperty="surrId" order="AFTER">
+            select last_insert_id() as surrId
+        </selectKey>
+        insert into SYS_USER_ROLE_RELEATION (SYS_USER_ID, SYS_ROLE_ID,
+        CREATE_TIME, EFFECTIVE_TIME, FAIL_TIME,
+        UPDATE_TIME)
+        values (#{sysUserId,jdbcType=DECIMAL}, #{sysRoleId,jdbcType=DECIMAL},
+        now(), #{effectiveTime,jdbcType=TIMESTAMP}, #{failTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.ai.ge.platform.model.user.SysUserRoleReleation">
+        <selectKey resultType="long" keyProperty="surrId" order="AFTER">
+            select last_insert_id() as surrId
+        </selectKey>
+        insert into SYS_USER_ROLE_RELEATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sysUserId != null">
+                SYS_USER_ID,
+            </if>
+            <if test="sysRoleId != null">
+                SYS_ROLE_ID,
+            </if>
+
+            CREATE_TIME,
+
+            <if test="effectiveTime != null">
+                EFFECTIVE_TIME,
+            </if>
+            <if test="failTime != null">
+                FAIL_TIME,
+            </if>
+            <if test="updateTime != null">
+                UPDATE_TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sysUserId != null">
+                #{sysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="sysRoleId != null">
+                #{sysRoleId,jdbcType=DECIMAL},
+            </if>
+            now(),
+            <if test="effectiveTime != null">
+                #{effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="failTime != null">
+                #{failTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.ai.ge.platform.model.user.SysUserRoleReleationExample" resultType="java.lang.Integer">
+        select count(*) from SYS_USER_ROLE_RELEATION
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update SYS_USER_ROLE_RELEATION
+        <set>
+            <if test="record.surrId != null">
+                SURR_ID = #{record.surrId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.sysUserId != null">
+                SYS_USER_ID = #{record.sysUserId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.sysRoleId != null">
+                SYS_ROLE_ID = #{record.sysRoleId,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.effectiveTime != null">
+                EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.failTime != null">
+                FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update SYS_USER_ROLE_RELEATION
+        set SURR_ID = #{record.surrId,jdbcType=DECIMAL},
+        SYS_USER_ID = #{record.sysUserId,jdbcType=DECIMAL},
+        SYS_ROLE_ID = #{record.sysRoleId,jdbcType=DECIMAL},
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+        EFFECTIVE_TIME = #{record.effectiveTime,jdbcType=TIMESTAMP},
+        FAIL_TIME = #{record.failTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause" />
+        </if>
+    </update>
+
+
+    <sql id="select_valid_table">
+        select * from sys_user_role_releation ur where 1=1
+        <![CDATA[ and ((ur.effective_time is not null and now() > ur.effective_time) or
+        ur.effective_time is null)
+        and ((ur.fail_time is not null and ur.fail_time > now()) or
+        ur.fail_time is null) ]]>
+    </sql>
+
+    <select id="selectSysUserRoleByUserId" resultMap="CascadeResultMap" parameterType="map">
+        select
+        t.*,
+        r.ROLE SYS_ROLE_NAME,
+        r.DESCRIPTION SYS_ROLE_DESC
+        from SYS_USER_ROLE_RELEATION t left join SYS_ROLE r on t.SYS_ROLE_ID = r.id
+        where t.SYS_USER_ID = #{userId}
+    </select>
+
+    <delete id="deleteByUserIdOrRoleId">
+        delete from SYS_USER_ROLE_RELEATION t where 1=1
+        <if test="null != userId">
+            and t.SYS_USER_ID = #{userId}
+        </if>
+        <if test="null != roleId">
+            and t.SYS_ROLE_ID = #{roleId}
+        </if>
+
+    </delete>
+</mapper>

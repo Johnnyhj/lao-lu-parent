@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.schedule.ScheduleJobClassMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.schedule.ScheduleJobClass" >
+    <id column="JOB_ID" property="jobId" jdbcType="DECIMAL" />
+    <result column="HANDLE_CLASS" property="handleClass" jdbcType="VARCHAR" />
+    <result column="JOB_CN" property="jobCn" jdbcType="VARCHAR" />
+    <result column="JOB_EN" property="jobEn" jdbcType="VARCHAR" />
+    <result column="JOB_DESC" property="jobDesc" jdbcType="VARCHAR" />
+    <result column="JOB_PARAM" property="jobParam" jdbcType="VARCHAR" />
+    <result column="STATE" property="state" jdbcType="CHAR" />
+    <result column="VERSION" property="version" jdbcType="TIMESTAMP" />
+    <result column="JOB_GROUP" property="jobGroup" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    JOB_ID, HANDLE_CLASS, JOB_CN, JOB_EN, JOB_DESC, JOB_PARAM, STATE, VERSION, JOB_GROUP
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SCHEDULE_JOB_CLASS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from SCHEDULE_JOB_CLASS
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from SCHEDULE_JOB_CLASS
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClassExample" >
+    delete from SCHEDULE_JOB_CLASS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClass" >
+    insert into SCHEDULE_JOB_CLASS (JOB_ID, HANDLE_CLASS, JOB_CN, 
+      JOB_EN, JOB_DESC, JOB_PARAM, 
+      STATE, VERSION, JOB_GROUP)
+    values (#{jobId,jdbcType=DECIMAL}, #{handleClass,jdbcType=VARCHAR}, #{jobCn,jdbcType=VARCHAR}, 
+      #{jobEn,jdbcType=VARCHAR}, #{jobDesc,jdbcType=VARCHAR}, #{jobParam,jdbcType=VARCHAR}, 
+      #{state,jdbcType=CHAR}, #{version,jdbcType=DATE}, #{jobGroup,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClass" >
+    insert into SCHEDULE_JOB_CLASS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        JOB_ID,
+      </if>
+      <if test="handleClass != null" >
+        HANDLE_CLASS,
+      </if>
+      <if test="jobCn != null" >
+        JOB_CN,
+      </if>
+      <if test="jobEn != null" >
+        JOB_EN,
+      </if>
+      <if test="jobDesc != null" >
+        JOB_DESC,
+      </if>
+      <if test="jobParam != null" >
+        JOB_PARAM,
+      </if>
+      <if test="state != null" >
+        STATE,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="jobGroup != null" >
+        JOB_GROUP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=DECIMAL},
+      </if>
+      <if test="handleClass != null" >
+        #{handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCn != null" >
+        #{jobCn,jdbcType=VARCHAR},
+      </if>
+      <if test="jobEn != null" >
+        #{jobEn,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null" >
+        #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="jobParam != null" >
+        #{jobParam,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=DATE},
+      </if>
+      <if test="jobGroup != null" >
+        #{jobGroup,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClassExample" resultType="java.lang.Integer" >
+    select count(*) from SCHEDULE_JOB_CLASS
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SCHEDULE_JOB_CLASS
+    <set >
+      <if test="record.jobId != null" >
+        JOB_ID = #{record.jobId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.handleClass != null" >
+        HANDLE_CLASS = #{record.handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobCn != null" >
+        JOB_CN = #{record.jobCn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobEn != null" >
+        JOB_EN = #{record.jobEn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobDesc != null" >
+        JOB_DESC = #{record.jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobParam != null" >
+        JOB_PARAM = #{record.jobParam,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        STATE = #{record.state,jdbcType=CHAR},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=DATE},
+      </if>
+      <if test="record.jobGroup != null" >
+        JOB_GROUP = #{record.jobGroup,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SCHEDULE_JOB_CLASS
+    set JOB_ID = #{record.jobId,jdbcType=DECIMAL},
+      HANDLE_CLASS = #{record.handleClass,jdbcType=VARCHAR},
+      JOB_CN = #{record.jobCn,jdbcType=VARCHAR},
+      JOB_EN = #{record.jobEn,jdbcType=VARCHAR},
+      JOB_DESC = #{record.jobDesc,jdbcType=VARCHAR},
+      JOB_PARAM = #{record.jobParam,jdbcType=VARCHAR},
+      STATE = #{record.state,jdbcType=CHAR},
+      VERSION = #{record.version,jdbcType=DATE},
+      JOB_GROUP = #{record.jobGroup,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClass" >
+    update SCHEDULE_JOB_CLASS
+    <set >
+      <if test="handleClass != null" >
+        HANDLE_CLASS = #{handleClass,jdbcType=VARCHAR},
+      </if>
+      <if test="jobCn != null" >
+        JOB_CN = #{jobCn,jdbcType=VARCHAR},
+      </if>
+      <if test="jobEn != null" >
+        JOB_EN = #{jobEn,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null" >
+        JOB_DESC = #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="jobParam != null" >
+        JOB_PARAM = #{jobParam,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        STATE = #{state,jdbcType=CHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=DATE},
+      </if>
+      <if test="jobGroup != null" >
+        JOB_GROUP = #{jobGroup,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.schedule.ScheduleJobClass" >
+    update SCHEDULE_JOB_CLASS
+    set HANDLE_CLASS = #{handleClass,jdbcType=VARCHAR},
+      JOB_CN = #{jobCn,jdbcType=VARCHAR},
+      JOB_EN = #{jobEn,jdbcType=VARCHAR},
+      JOB_DESC = #{jobDesc,jdbcType=VARCHAR},
+      JOB_PARAM = #{jobParam,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=CHAR},
+      VERSION = #{version,jdbcType=DATE},
+      JOB_GROUP = #{jobGroup,jdbcType=DECIMAL}
+    where JOB_ID = #{jobId,jdbcType=DECIMAL}
+  </update>
+</mapper>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.ge.platform.mapper.log.LogMessageSendMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.ge.platform.model.log.LogMessageSend" >
+    <id column="MESSAGE_SEND_ID" property="messageSendId" jdbcType="DECIMAL" />
+    <result column="RECEIVE_NUM" property="receiveNum" jdbcType="VARCHAR" />
+    <result column="CHANNEL" property="channel" jdbcType="DECIMAL" />
+    <result column="TYPE" property="type" jdbcType="DECIMAL" />
+    <result column="SEND_TEXT" property="sendText" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="FAIL_REASON" property="failReason" jdbcType="VARCHAR" />
+    <result column="REPEAT_SEND_NUM" property="repeatSendNum" jdbcType="DECIMAL" />
+    <result column="AREA" property="area" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="READ_STATUS" property="readStatus" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MESSAGE_SEND_ID, RECEIVE_NUM, CHANNEL, TYPE, SEND_TEXT, CREATE_TIME, STATUS, FAIL_REASON, 
+    REPEAT_SEND_NUM, AREA, REMARKS, TITLE, READ_STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogMessageSendExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from LOG_MESSAGE_SEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from LOG_MESSAGE_SEND
+    where MESSAGE_SEND_ID = #{messageSendId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from LOG_MESSAGE_SEND
+    where MESSAGE_SEND_ID = #{messageSendId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.ge.platform.model.log.LogMessageSendExample" >
+    delete from LOG_MESSAGE_SEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.ge.platform.model.log.LogMessageSend" >
+    insert into LOG_MESSAGE_SEND (MESSAGE_SEND_ID, RECEIVE_NUM, CHANNEL, 
+      TYPE, SEND_TEXT, CREATE_TIME, 
+      STATUS, FAIL_REASON, REPEAT_SEND_NUM, 
+      AREA, REMARKS, TITLE, 
+      READ_STATUS)
+    values (#{messageSendId,jdbcType=DECIMAL}, #{receiveNum,jdbcType=VARCHAR}, #{channel,jdbcType=DECIMAL}, 
+      #{type,jdbcType=DECIMAL}, #{sendText,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{status,jdbcType=DECIMAL}, #{failReason,jdbcType=VARCHAR}, #{repeatSendNum,jdbcType=DECIMAL}, 
+      #{area,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{readStatus,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.ge.platform.model.log.LogMessageSend" >
+    insert into LOG_MESSAGE_SEND
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageSendId != null" >
+        MESSAGE_SEND_ID,
+      </if>
+      <if test="receiveNum != null" >
+        RECEIVE_NUM,
+      </if>
+      <if test="channel != null" >
+        CHANNEL,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="sendText != null" >
+        SEND_TEXT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON,
+      </if>
+      <if test="repeatSendNum != null" >
+        REPEAT_SEND_NUM,
+      </if>
+      <if test="area != null" >
+        AREA,
+      </if>
+      <if test="remarks != null" >
+        REMARKS,
+      </if>
+      <if test="title != null" >
+        TITLE,
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageSendId != null" >
+        #{messageSendId,jdbcType=DECIMAL},
+      </if>
+      <if test="receiveNum != null" >
+        #{receiveNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="sendText != null" >
+        #{sendText,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="failReason != null" >
+        #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="repeatSendNum != null" >
+        #{repeatSendNum,jdbcType=DECIMAL},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null" >
+        #{readStatus,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.ge.platform.model.log.LogMessageSendExample" resultType="java.lang.Integer" >
+    select count(*) from LOG_MESSAGE_SEND
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update LOG_MESSAGE_SEND
+    <set >
+      <if test="record.messageSendId != null" >
+        MESSAGE_SEND_ID = #{record.messageSendId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receiveNum != null" >
+        RECEIVE_NUM = #{record.receiveNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        CHANNEL = #{record.channel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sendText != null" >
+        SEND_TEXT = #{record.sendText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.failReason != null" >
+        FAIL_REASON = #{record.failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repeatSendNum != null" >
+        REPEAT_SEND_NUM = #{record.repeatSendNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.area != null" >
+        AREA = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        TITLE = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.readStatus != null" >
+        READ_STATUS = #{record.readStatus,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update LOG_MESSAGE_SEND
+    set MESSAGE_SEND_ID = #{record.messageSendId,jdbcType=DECIMAL},
+      RECEIVE_NUM = #{record.receiveNum,jdbcType=VARCHAR},
+      CHANNEL = #{record.channel,jdbcType=DECIMAL},
+      TYPE = #{record.type,jdbcType=DECIMAL},
+      SEND_TEXT = #{record.sendText,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=DATE},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      FAIL_REASON = #{record.failReason,jdbcType=VARCHAR},
+      REPEAT_SEND_NUM = #{record.repeatSendNum,jdbcType=DECIMAL},
+      AREA = #{record.area,jdbcType=VARCHAR},
+      REMARKS = #{record.remarks,jdbcType=VARCHAR},
+      TITLE = #{record.title,jdbcType=VARCHAR},
+      READ_STATUS = #{record.readStatus,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.ge.platform.model.log.LogMessageSend" >
+    update LOG_MESSAGE_SEND
+    <set >
+      <if test="receiveNum != null" >
+        RECEIVE_NUM = #{receiveNum,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        CHANNEL = #{channel,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=DECIMAL},
+      </if>
+      <if test="sendText != null" >
+        SEND_TEXT = #{sendText,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="failReason != null" >
+        FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      </if>
+      <if test="repeatSendNum != null" >
+        REPEAT_SEND_NUM = #{repeatSendNum,jdbcType=DECIMAL},
+      </if>
+      <if test="area != null" >
+        AREA = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="readStatus != null" >
+        READ_STATUS = #{readStatus,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where MESSAGE_SEND_ID = #{messageSendId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.ge.platform.model.log.LogMessageSend" >
+    update LOG_MESSAGE_SEND
+    set RECEIVE_NUM = #{receiveNum,jdbcType=VARCHAR},
+      CHANNEL = #{channel,jdbcType=DECIMAL},
+      TYPE = #{type,jdbcType=DECIMAL},
+      SEND_TEXT = #{sendText,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=DATE},
+      STATUS = #{status,jdbcType=DECIMAL},
+      FAIL_REASON = #{failReason,jdbcType=VARCHAR},
+      REPEAT_SEND_NUM = #{repeatSendNum,jdbcType=DECIMAL},
+      AREA = #{area,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      READ_STATUS = #{readStatus,jdbcType=DECIMAL}
+    where MESSAGE_SEND_ID = #{messageSendId,jdbcType=DECIMAL}
+  </update>
+
+    <select id="selectBySelective" resultMap="BaseResultMap" parameterType="com.ai.ge.platform.model.log.LogMessageSend" >
+        SELECT <include refid="Base_Column_List"/> from LOG_MESSAGE_SEND WHERE 1=1
+        <if test="channel != null" >
+            and CHANNEL = #{channel,jdbcType=DECIMAL}
+        </if>
+        <if test="type != null" >
+            and TYPE = #{type,jdbcType=DECIMAL}
+        </if>
+        <if test="sendText != null" >
+            and SEND_TEXT like '%' || #{sendText,jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="createTime != null" >
+            and CREATE_TIME = #{createTime,jdbcType=DATE}
+        </if>
+        <if test="status != null" >
+            and STATUS = #{status,jdbcType=DECIMAL}
+        </if>
+        <if test="failReason != null" >
+            and FAIL_REASON = #{failReason,jdbcType=VARCHAR}
+        </if>
+        <if test="repeatSendNum != null" >
+            and REPEAT_SEND_NUM = #{repeatSendNum,jdbcType=DECIMAL}
+        </if>
+        <if test="area != null" >
+            and AREA = #{area,jdbcType=VARCHAR}
+        </if>
+        <if test="remarks != null" >
+            and REMARKS = #{remarks,jdbcType=VARCHAR}
+        </if>
+        <if test="title != null" >
+            and TITLE like '%' || #{title,jdbcType=VARCHAR} || '%'
+        </if>
+        <if test="readStatus != null" >
+            and READ_STATUS = #{readStatus,jdbcType=DECIMAL}
+        </if>
+        <if test="messageSendId != null" >
+            and MESSAGE_SEND_ID = #{messageSendId,jdbcType=DECIMAL}
+        </if>
+
+        <if test="keyword != null" >
+            and SEND_TEXT like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+            or  TITLE like '%' || #{keyword,jdbcType=VARCHAR} || '%'
+        </if>
+        order by CREATE_TIME desc
+    </select>
+</mapper>
